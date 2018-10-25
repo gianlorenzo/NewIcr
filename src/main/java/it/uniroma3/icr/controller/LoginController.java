@@ -49,13 +49,6 @@ public class LoginController  {
 	    }
 	    return "redirect:/login?logout";
 	}
-	
-	/*@RequestMapping(value="/logout2", method = RequestMethod.GET)
-	public String logoutPage2 (HttpServletRequest request, HttpServletResponse response) {
-	    
-	    return "redirect:/login?logout";
-	}*/
-	
 
 	@RequestMapping(value="/role", method = RequestMethod.GET)
 	public String loginRole(Model model,HttpServletRequest request) {

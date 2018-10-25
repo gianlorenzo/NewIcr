@@ -63,8 +63,6 @@ public class NegativeSampleService {
 						int height = f.getHeight();
 						int xImg = x;
 						int yImg = y;
-//						String path = pathFile.substring(pathFile.indexOf("main/resources/static")+22, pathFile.length());
-//						String path = pathFile.substring(pathFile.indexOf("classes/static") + 15, pathFile.length());
 						String path = pathFile.substring(pathFile.indexOf("/static") + 8, pathFile.length());
 
 						
@@ -75,9 +73,6 @@ public class NegativeSampleService {
 
 						negativeSample.setSymbol(s);
 						manuscript.addNegativeSample(negativeSample);
-//						this.negativeSampleDao.save(negativeSample);
-
-
 					}
 					finally {
 						if (in != null) {

@@ -5,7 +5,6 @@ import it.uniroma3.icr.service.editor.SymbolEditor;
 import it.uniroma3.icr.service.impl.*;
 import it.uniroma3.icr.validator.AdminValidator;
 import it.uniroma3.icr.validator.jobValidator;
-import it.uniroma3.icr.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -31,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-
 public class AdminController {
 
 	@Autowired
@@ -52,8 +50,7 @@ public class AdminController {
 	private SymbolFacade symbolFacade;;
 	@Autowired
 	private ImageFacade imageFacade;
-	// @Autowired
-	// private WordFacade wordFacade;
+
 	@Autowired
 	private ManuscriptService manuscriptService;
 
@@ -86,11 +83,6 @@ public class AdminController {
 		Student s1 = studentFacade.findUser(administrator.getUsername());
 
 		if (AdminValidator.validate(administrator, model, a1, s1)) {
-			/*
-			 * PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); String
-			 * passwordEncode = passwordEncoder.encode(administrator.getPassword());
-			 * administrator.setPassword(passwordEncode);
-			 */
 			administrator.setPassword(administrator.getPassword());
 			model.addAttribute("administrator", administrator);
 			adminFacade.addAdmin(administrator);
@@ -147,7 +139,6 @@ public class AdminController {
 		model.addAttribute("task", task);
 		model.addAttribute("manuscript", manuscript);
 		Boolean bool = false;
-		// List<Word> jobWords = null;
 		List<Image> imagesTask = null;
 		imagesTask = this.imageFacade.getImagesFromManuscriptName(manuscript.getId());
 		bool = true;
@@ -167,7 +158,6 @@ public class AdminController {
 		}
 	}
 
-	/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
 	/*--------------------------------------------INSERISCI MANOSCRITTO DB--------------------------------------------------------------------------------*/
 	@RequestMapping(value = "admin/selectManuscript")
 	public String selectManuscript(Model model, @ModelAttribute Manuscript manuscript)
@@ -214,137 +204,6 @@ public class AdminController {
 		return "administration/insertRecap";
 	}
 
-	/*-----------------------------------------------------------------------------------------------------------------------------------------*/
-	@RequestMapping(value = "admin/listJobs")
-	public String jobList(Model model) {
-
-		List<Job> jobs = facadeJob.retriveAlljobs();
-		model.addAttribute("jobs", jobs);
-		return "administration/listJobs";
-	}
-
-	@RequestMapping(value = "admin/resultConsole")
-	public String resultConsole() {
-		return "administration/resultConsole/resultConsole";
-	}
-
-	/*-----------------------------CONSOLE DEI RISULTATI------------------------------------------------- */
-	@RequestMapping(value = "admin/majorityVoting")
-	public String majorityVoting(Model model) {
-		List<Object> voting = facadeTask.majorityVoting();
-		List<MajorityVoting> majority = new ArrayList<>();
-		for (Object o : voting) {
-			MajorityVoting mj = new MajorityVoting();
-			mj.setImageId(((Number) ((Object[]) o)[0]).intValue());
-			mj.setTranscription((String) ((Object[]) o)[1]);
-			mj.setNumberOfYes(((Number) ((Object[]) o)[2]).intValue());
-			majority.add(mj);
-		}
-		model.addAttribute("majority", majority);
-
-		return "administration/resultConsole/majorityVoting";
-	}
-
-	@RequestMapping(value = "admin/symbolsAnswer")
-	public String symbolsAnswer(Model model) {
-		List<Object> answers = facadeTask.symbolAnswers();
-		List<SymbolsAnswers> symbolsAnswers = new ArrayList<>();
-		for (Object o : answers) {
-			SymbolsAnswers sa = new SymbolsAnswers();
-			sa.setTranscription((String) ((Object[]) o)[0]);
-			sa.setCompletedTasks(((Number) ((Object[]) o)[1]).intValue());
-			symbolsAnswers.add(sa);
-		}
-		model.addAttribute("symbolsAnswers", symbolsAnswers);
-
-		return "administration/resultConsole/symbolsAnswer";
-	}
-
-	@RequestMapping(value = "admin/symbolsMajorityAnswer")
-	public String symbolsMajorityAnswer(Model model) {
-		List<Object> majorityAnswers = facadeTask.symbolsMajorityAnswers();
-		model.addAttribute("pf", majorityAnswers.size());
-		return "NewFile";
-		// List<MajorityAnswers> majority = new ArrayList<>();
-		// for(Object o : majorityAnswers) {
-		// MajorityAnswers ma = new MajorityAnswers();
-		// ma.setTranscription((String)((Object[])o)[0]);
-		// ma.setCount(((Number)((Object[])o)[1]).intValue());
-		// majority.add(ma);
-		// }
-		// model.addAttribute("majority", majority);
-		//
-		// return "administration/resultConsole/symbolsMajorityAnswer";
-	}
-
-	@RequestMapping(value = "admin/tasksTimes")
-	public String tasksTimes(Model model) {
-		List<Object> times = facadeTask.taskTimes();
-		List<TaskTimes> taskTimes = new ArrayList<>();
-		for (Object o : times) {
-			TaskTimes ts = new TaskTimes();
-			ts.setJobId(((Number) ((Object[]) o)[0]).longValue());
-			ts.setBatch(((Number) ((Object[]) o)[1]).intValue());
-			ts.setAvgDate(((String) ((Object[]) o)[2]).toString());
-			ts.setMaxDate(((String) ((Object[]) o)[3]).toString());
-			ts.setMinDate(((String) ((Object[]) o)[4]).toString());
-			taskTimes.add(ts);
-		}
-		model.addAttribute("taskTimes", taskTimes);
-		return "administration/resultConsole/tasksTimes";
-	}
-
-	@RequestMapping(value = "admin/correctStudentsAnswer")
-	public String correctStudentsAnswer(Model model) {
-		List<Object> correct = facadeTask.correctStudentsAnswers();
-		List<CorrectStudentsAnswer> correctAnswers = new ArrayList<>();
-		for (Object o : correct) {
-			CorrectStudentsAnswer cs = new CorrectStudentsAnswer();
-			cs.setId(((Number) ((Object[]) o)[0]).intValue());
-			cs.setName((String) ((Object[]) o)[1]);
-			cs.setSurname((String) ((Object[]) o)[2]);
-			cs.setCorrectAnswers(((Number) ((Object[]) o)[3]).intValue());
-			correctAnswers.add(cs);
-		}
-		model.addAttribute("correctAnswers", correctAnswers);
-		return "administration/resultConsole/correctStudentsAnswer";
-	}
-
-	@RequestMapping(value = "admin/voting")
-	public String voting(Model model) {
-		List<Object> voting = facadeTask.voting();
-		List<Voting> listVoting = new ArrayList<>();
-		for (Object o : voting) {
-			Voting v = new Voting();
-			v.setImageId(((Number) ((Object[]) o)[0]).intValue());
-			v.setTranscription((String) ((Object[]) o)[1]);
-			v.setNumbersOfYes(((Number) ((Object[]) o)[2]).intValue());
-			listVoting.add(v);
-		}
-
-		model.addAttribute("listVoting", listVoting);
-		return "administration/resultConsole/voting";
-	}
-
-	@RequestMapping(value = "admin/studentsProductivity")
-	public String studentsProductivity(Model model) throws IllegalArgumentException, IllegalAccessException {
-		List<Object> tasks = facadeTask.studentsProductivity();
-		List<Object> tasks2 = facadeTask.studentsProductivity2();
-		tasks.addAll(tasks2);
-		List<StudentsProductivity> produttivita = new ArrayList<>();
-		for (Object o : tasks) {
-			StudentsProductivity ps = new StudentsProductivity();
-			ps.setId(((Number) ((Object[]) o)[0]).longValue());
-			ps.setName((String) ((Object[]) o)[1]);
-			ps.setSurname((String) ((Object[]) o)[2]);
-			ps.setNumeroTask(((Number) ((Object[]) o)[3]).intValue());
-			produttivita.add(ps);
-		}
-		model.addAttribute("produttivita", produttivita);
-
-		return "administration/resultConsole/studentsProductivity";
-	}
-
 	@RequestMapping(value = "admin/toChangeAdminPassword")
 	public String toChangeAdminPassword(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -352,7 +211,6 @@ public class AdminController {
 		Administrator a = this.adminFacade.findAdmin(username);
 		a.setPassword("");
 		model.addAttribute("administrator", a);
-
 		return "administration/changeAdminPassword";
 	}
 
@@ -363,12 +221,6 @@ public class AdminController {
 			model.addAttribute("administrator", administrator);
 			return "administration/changeAdminPassword";
 		}
-
-		/*
-		 * PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); String
-		 * passwordEncode = passwordEncoder.encode(administrator.getPassword());
-		 * administrator.setPassword(passwordEncode);
-		 */
 		administrator.setPassword(administrator.getPassword());
 		adminFacade.addAdmin(administrator);
 		return "administration/homeAdmin";

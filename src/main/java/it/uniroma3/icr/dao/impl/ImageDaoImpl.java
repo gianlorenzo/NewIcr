@@ -20,14 +20,6 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findImageForTypeAndManuscriptName(String type,String manuscript, int limit) {
-		/*String s = "FROM Image i WHERE i.manuscript = :manuscript ORDER BY RANDOM()";
-		Query query = this.entityManager.createQuery(s);
-		query.setParameter("type", type);
-		query.setParameter("manuscript", manuscript);
-		List<Image> images = query.setMaxResults(limit).getResultList();
-		
-		
-		return images;*/
 		String s = "FROM Image i WHERE i.type = :type and i.manuscript = :manuscript";
 		Query query = entityManager.createNativeQuery(s,Image.class).setMaxResults(limit);
 		query.setParameter("type", type);
@@ -39,14 +31,6 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findImageFromManuscriptName(long manuscript) {
-		/*String s = "FROM Image i WHERE i.manuscript = :manuscript ORDER BY RANDOM()";
-		Query query = this.entityManager.createQuery(s);
-		query.setParameter("type", type);
-		query.setParameter("manuscript", manuscript);
-		List<Image> images = query.setMaxResults(limit).getResultList();
-		
-		
-		return images;*/
 		String s = "SELECT * FROM Image i WHERE i.manuscript_id = :manuscript";
 		Query query = entityManager.createNativeQuery(s,Image.class);
 		query.setParameter("manuscript", manuscript);
@@ -59,7 +43,6 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	public List<String> findAllManuscript() {
 		String s = "SELECT distinct manuscript FROM Image";
 		return entityManager.createQuery(s).getResultList();
-		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,12 +68,10 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	@Override
 	public List<Image> findImageForTypeAndWidthAndManuscript(String type, String manuscript, int width, int limit) {
 		String s = "FROM Image i WHERE i.type = :type and i.width = :width and i.manuscript = :manuscript";
-		
 		Query query = entityManager.createQuery(s);
 		query.setParameter("type", type);
 		query.setParameter("width", width);
 		query.setParameter("manuscript", manuscript);
-		
 		List<Image> images = query.setMaxResults(limit).getResultList();
 		return images;	}
 

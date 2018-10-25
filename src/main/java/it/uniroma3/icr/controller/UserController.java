@@ -98,7 +98,6 @@ public class UserController {
 			model.addAttribute("student", student);
 			userFacade.saveUser(student);
 			return "registrationRecap";
-//			return "users/homeStudent";
 			} else {
 			return "registration";
 		}
@@ -132,14 +131,11 @@ public class UserController {
 			userFacadesocial.saveUser(student);
 			model.addAttribute("social", "fb");
 			return "registrationRecap";
-//			return "users/homeStudent";
 		} else {
 			return "registrationFacebook";
 		}
 
 	}
-
-
 
 	@RequestMapping(value = "/addUserFromGoogle", method = RequestMethod.POST)
 	public String confirmUserGoogle(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
@@ -168,7 +164,6 @@ public class UserController {
 			userFacadesocial.saveUser(student);
 			model.addAttribute("social", "goo");
 			return "registrationRecap";
-//			return "users/homeStudent";
 
 		} else {
 			return "registrationGoogle";
@@ -242,19 +237,5 @@ public class UserController {
 		schools.put("Volontario esterno","Volontario esterno");
 		return schools;
 	}
-	
-	/*
-	 * @RequestMapping(value = "/user/homeStudentSocial") public String
-	 * toHomeStudentSocial(@ModelAttribute StudentSocial student, Model model,
-	 * 
-	 * @ModelAttribute("social") String social) { Authentication auth =
-	 * SecurityContextHolder.getContext().getAuthentication(); String username =
-	 * auth.getName(); student = userFacadesocial.findUser(username);
-	 * model.addAttribute("student", student);
-	 * 
-	 * model.addAttribute("social", social);
-	 * 
-	 * return "users/homeStudentSocial"; }
-	 */
 
 }

@@ -31,7 +31,6 @@ public class ResultDaoImpl implements ResultDaoCustom {
 			if (query.executeUpdate()!=1) {
 				LOGGER.debug("PROBLEM IN updateListResult - task " + r.getTask().getId() + " student " + r.getTask().getStudent().getId() + " result " +  r.getId());
 			}				
-//			this.entityManager.merge(r);
 		}
 	}
 	@Override

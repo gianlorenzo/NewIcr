@@ -11,8 +11,6 @@
 						<ul>
 							<li><a href="toSelectManuscript">Crea un nuovo Job</a></li>
 							<li><a href="selectManuscript">Inserisci un manoscritto</a></li>
-							<li><a href="listJobs">Job Creati</a></li>
-							<li><a href="resultConsole">Console dei Risultati</a></li>
 							<li><a href="../registration">Registra un nuovo
 									studente</a></li>
 							<li><a href="logout">Logout</a></li>

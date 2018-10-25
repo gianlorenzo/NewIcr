@@ -54,8 +54,6 @@ public class SampleService {
 						int height = f.getHeight();
 						int xImg = x;
 						int yImg = y;
-//						String path = pathFile.substring(pathFile.indexOf("main/resources/static")+22, pathFile.length());
-//						String path = pathFile.substring(pathFile.indexOf("classes/static") + 15, pathFile.length());
 						String path = pathFile.substring(pathFile.indexOf("/static") + 8, pathFile.length());
 
 						
@@ -66,9 +64,6 @@ public class SampleService {
 
 						sample.setSymbol(s);
 						manuscript.addSample(sample);
-//						this.sampleDao.save(sample);
-
-
 					}
 					finally {
 						if (in != null) {

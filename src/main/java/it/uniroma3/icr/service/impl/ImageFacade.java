@@ -37,12 +37,8 @@ public class ImageFacade {
 					File[] images = files[1].listFiles(); // prendo solo la cartella cut_point_view
 					for (int z = 0; z < images.length; z++) {
 						String image = FilenameUtils.getBaseName(images[z].getName());
-						//Word word = new Word();
 						String path = images[z].getPath();
-//						path = path.substring(path.indexOf("main/resources/static") + 22, path.length());
-//						path = path.substring(path.indexOf("classes/static") + 15, path.length());
 						path = path.substring(path.indexOf("/static") + 8, path.length());
-
 						Image img = new Image();
 						this.updateImage(img, image, manuscript, page, row, path);
 
@@ -52,64 +48,18 @@ public class ImageFacade {
 		}
 	}
 
-	/*
-	 * File[] files = new File(p).listFiles();
-	 * 
-	 * for(int i=0;i<files.length;i++) {
-	 * 
-	 * String namePage = files[i].getName();
-	 * 
-	 * File[] types = files[i].listFiles(); for(int m=0;m<types.length;m++) { String
-	 * typeName = types[m].getName(); File[] images = types[m].listFiles(); for(int
-	 * n=0;n<images.length;n++) { String nameComplete = images[n].getName(); String
-	 * pathFile = images[n].getPath();
-	 * 
-	 * String name = FilenameUtils.getBaseName(nameComplete); String[] parts =
-	 * name.split("_");
-	 * 
-	 * int width = Integer.valueOf(parts[0]); int x = Integer.valueOf(parts[1]); int
-	 * y = Integer.valueOf(parts[2]);
-	 * 
-	 * 
-	 * BufferedInputStream in = null;
-	 * 
-	 * try { BufferedImage b = ImageIO.read(images[n]);
-	 * 
-	 * int height = b.getHeight(); int xImg = x; int yImg = y; String page =
-	 * namePage; String type = typeName; String path = pathFile.substring(69,
-	 * pathFile.length()); Image img = new
-	 * Image(width,height,type,manuscript,page,xImg,yImg,path);
-	 * 
-	 * // this.imageDao.save(img);
-	 * 
-	 * } finally { if (in != null) { try {
-	 * 
-	 * in.close(); } catch (IOException e) { e.printStackTrace(); } } } } } } }
-	 */
-
 	@Transactional
 	public void updateImagesAll(String p, Manuscript manuscript) throws IOException {
 		File file = new File(p);
 		File[] subFiles = file.listFiles();
 		for (int i = 0; i < subFiles.length; i++) {
 			String page = subFiles[i].getName();
-			// File[] rows = subFiles[i].listFiles();
 			String row = subFiles[i].getName();
-
 			File[] images = subFiles[i].listFiles();
 
-			/*
-			 * for(int m=0; m<rows.length; m++) { String row = rows[m].getName(); File[]
-			 * words = rows[m].listFiles(); for(int y=0; y<words.length; y++){ String
-			 * wordName = words[y].getName(); Word word = new Word(); File[] files =
-			 * words[y].listFiles(); File[] images = files[1].listFiles(); //prendo solo la
-			 * cartella cut_point_view
-			 */
 			for (int z = 0; z < images.length; z++) {
 				String image = FilenameUtils.getBaseName(images[z].getName());
 				String path = images[z].getPath().replace("\\", "/");
-//				path = path.substring(path.indexOf("main/resources/static") + 22, path.length());
-//				path = path.substring(path.indexOf("classes/static") + 15, path.length());
 				path = path.substring(path.indexOf("/static") + 8, path.length());
 
 				Image img = new Image();
@@ -118,8 +68,6 @@ public class ImageFacade {
 			}
 
 		}
-		// }
-		// }
 	}
 	
 	public Image updateImage(Image img, String name, Manuscript manuscript, String page, String row,
@@ -129,15 +77,7 @@ public class ImageFacade {
 		img.setManuscript(manuscript);
 		img.setPage(page);
 		img.setRow(row);
-		//img.setWord(word);
 		img.setPath(path);
-		/*
-		 * //divido il nome della parola String[] listType = name.split("\\_");
-		 * img.setX(Integer.valueOf(listType[0]));
-		 * img.setY(Integer.valueOf(listType[1]));
-		 * img.setWidth(Integer.valueOf(listType[2]));
-		 * img.setHeight(Integer.valueOf(listType[3]));
-		 */
 		manuscript.addImage(img);
 		return img;
 	}

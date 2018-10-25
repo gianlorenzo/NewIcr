@@ -11,3 +11,4 @@ public interface TaskDao extends JpaRepository<Task, Long>, TaskDaoCustom{
 	public List<Task> findByStudentIsNull();
 	public List<Task> findByStudentId(Long id);
 }
+

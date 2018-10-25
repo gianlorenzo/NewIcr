@@ -32,28 +32,21 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-
             <groupId>org.codehaus.jackson</groupId>
-
             <artifactId>jackson-mapper-asl</artifactId>
-
             <version>1.9.13</version>
-
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-google -->
         <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-google -->
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-google</artifactId>
             <version>1.0.0.RC1</version>
         </dependency>
-
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
@@ -67,14 +60,12 @@
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-security</artifactId>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>2.1.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
@@ -89,27 +80,22 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
         <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <!-- Web with Tomcat + Embed -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-web-jsp</artifactId>
-            <version>1.0</version> <type>war</type> </dependency> -->
         <!-- JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
-
         <!-- Need this to compile JSP -->
         <dependency>
             <groupId>org.eclipse.jdt.core.compiler</groupId>
@@ -117,20 +103,16 @@
             <version>4.6.1</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -140,7 +122,6 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -160,6 +141,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

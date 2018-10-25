@@ -37,9 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	    http.csrf().disable();
-	  
-	
-	 		
 		 http.authorizeRequests()
 		 	.antMatchers("/").permitAll()
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
@@ -50,14 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
             .logout()
             .permitAll();
-		 
-//	        http
-//            .sessionManagement()
-//                .maximumSessions(1)
-//                    .maxSessionsPreventsLogin(true)
-//                    .sessionRegistry(sessionRegistry());
-		 
-		
 	}
 	
 	
@@ -67,12 +56,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.ignoring()
 		.antMatchers("/resources/**", "/static/**", "/css/**","/fonts/**","/img/**","/sass/**", "/js/**", "/images/**");
 	}
-	
-//	// Work around https://jira.spring.io/browse/SEC-2855
-//	@Bean
-//	public SessionRegistry sessionRegistry() {
-//	    SessionRegistry sessionRegistry = new SessionRegistryImpl();
-//	    return sessionRegistry;
-//	}	
-	
 }

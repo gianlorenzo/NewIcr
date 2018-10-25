@@ -20,7 +20,7 @@ public class SampleDaoImpl implements SampleDaoCustom {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Sample> findAllSamplesBySymbolId(long id) {
-		String s = "FROM Sample s Where s.symbol.id = :id";
+		String s = "from Sample s Where s.symbol.id = :id";
 		Query query = this.entityManager.createQuery(s);
 		query.setParameter("id", id);
 		List<Sample> samples = query.getResultList();
