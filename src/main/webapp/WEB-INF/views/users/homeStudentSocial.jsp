@@ -26,21 +26,12 @@
 
 	<!-- Banner -->
 	<section id="banner">
-	
-	
-	
 		<div class="inner">
-		
 		<h2>Pagina dello studente: 
 				 <span class="container" ></span>
-			
 				${student.name} ${student.surname}</h2>
 		</div>
 	</section>
-	
-	
-	
-	
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery.scrollex.min.js"></script>
