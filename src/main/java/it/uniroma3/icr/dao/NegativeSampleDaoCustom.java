@@ -1,9 +1,9 @@
 package it.uniroma3.icr.dao;
 
-import it.uniroma3.icr.model.Sample;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import it.uniroma3.icr.model.Sample;
 
 @Repository
 public interface NegativeSampleDaoCustom {

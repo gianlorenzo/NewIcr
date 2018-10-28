@@ -1,19 +1,25 @@
 package it.uniroma3.icr.service.impl;
 
-import it.uniroma3.icr.dao.TaskDao;
-import it.uniroma3.icr.model.*;
+import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.List;
+import it.uniroma3.icr.dao.TaskDao;
+import it.uniroma3.icr.model.Image;
+import it.uniroma3.icr.model.Job;
+import it.uniroma3.icr.model.Result;
+import it.uniroma3.icr.model.Student;
+import it.uniroma3.icr.model.Task;
 
 @Service
 public class TaskFacade {
@@ -72,11 +78,12 @@ public class TaskFacade {
 		}
 		else {
 			select = "SELECT t FROM Task t "
-					+ "WHERE (t.batch, t.job.id) not in ( "
+					+ "WHERE (t.batch, t.job.id) not in ( "                               // task già fatti dallo studente
 						+ " SELECT distinct t2.batch, t2.job.id "  
 						+ " FROM Task t2 "
 						+ " WHERE t2.student.id= ?1 and t2.endDate IS NOT NULL) "
 					+ "AND (t.student.id IS NULL)"; // task non assegnati
+			
 			query1 = this.entityManager.createQuery(select).setMaxResults(53).setParameter(1, student.getId());
 			taskList = query1.getResultList(); // trova il task da eseguire
 
@@ -87,6 +94,7 @@ public class TaskFacade {
 				Calendar calendar = Calendar.getInstance();
 				java.util.Date now = calendar.getTime();
 				java.sql.Timestamp date = new java.sql.Timestamp(now.getTime());
+
 				LOGGER.debug("SQL UPDATE update task set start_date = "+ date + " student_id = " + student.getId() + " where id = " + taskList.get(position));
 
 				String update = "update task set start_date = ?1, student_id = ?2 where id = ?3 and student_id is null";
@@ -126,6 +134,7 @@ public class TaskFacade {
 			hint = (String) temp.get(0)[0];
 		return hint;
 	}
+
 	public void updateEndDate(Task t) {
 		taskDao.updateEndDate(t);
 	}
@@ -156,6 +165,7 @@ public class TaskFacade {
 
 	@Transactional
 	public void updateStudent(Student student) {
+
 		String update = "update student set task_effettuati = ?1, tempo_effettuato = ?2 where id = ?3";
 		Query query1 = this.entityManager.createNativeQuery(update).setParameter(1, student.getTaskEffettuati()).setParameter(2, student.getTempoEffettuato()).setParameter(3, student.getId());
 		if (query1.executeUpdate()!=1)

@@ -28,7 +28,7 @@
 			<h2>In Codice Ratio</h2>
 			<p>Sistema di addestramento della rete neurale</p> 
 			<p>per la trascrizione di manoscritti medievali</p>
-			<p>dell'Archivio Vaticano Segreto</p>
+			<p>dell'Archivio Segreto Vaticano</p>
 		</div>
 	</section>
 	

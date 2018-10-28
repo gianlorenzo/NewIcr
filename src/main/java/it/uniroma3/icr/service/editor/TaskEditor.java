@@ -1,11 +1,12 @@
 package it.uniroma3.icr.service.editor;
 
-import it.uniroma3.icr.model.Task;
-import it.uniroma3.icr.service.impl.TaskFacade;
+import java.beans.PropertyEditorSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.beans.PropertyEditorSupport;
+import it.uniroma3.icr.model.Task;
+import it.uniroma3.icr.service.impl.TaskFacade;
 
 @Component
 public class TaskEditor extends PropertyEditorSupport{

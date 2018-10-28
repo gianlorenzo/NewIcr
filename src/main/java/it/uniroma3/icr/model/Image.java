@@ -1,7 +1,14 @@
 package it.uniroma3.icr.model;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Image {
@@ -17,8 +24,6 @@ public class Image {
 	private String row;
 	@ManyToOne
 	private Manuscript manuscript;
-	//@ManyToOne
-	//private Word word;
 	@ManyToMany(mappedBy="images")
 	private List<Job> jobs;
 	@OneToMany(mappedBy="image")
@@ -130,15 +135,7 @@ public class Image {
 	public void setPath(String path) {
 		this.path = path.replace("\\", "/");
 	}
-/*
-	public Word getWord() {
-		return word;
-	}
 
-	public void setWord(Word word) {
-		this.word = word;
-	}
-*/
 	@Override
 	public String toString() {
 		return "Image [id=" + id ;

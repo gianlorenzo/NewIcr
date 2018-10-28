@@ -1,13 +1,8 @@
 package it.uniroma3.icr.controller;
 
-import it.uniroma3.icr.model.Administrator;
-import it.uniroma3.icr.model.Student;
-import it.uniroma3.icr.model.StudentSocial;
-import it.uniroma3.icr.service.impl.AdminFacade;
-import it.uniroma3.icr.service.impl.StudentFacade;
-import it.uniroma3.icr.service.impl.StudentFacadeSocial;
-import it.uniroma3.icr.validator.StudentValidator2;
-import it.uniroma3.icr.validator.studentValidator;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +24,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.HashMap;
-import java.util.Map;
+import it.uniroma3.icr.model.Administrator;
+import it.uniroma3.icr.model.Student;
+import it.uniroma3.icr.model.StudentSocial;
+import it.uniroma3.icr.service.impl.AdminFacade;
+import it.uniroma3.icr.service.impl.StudentFacade;
+import it.uniroma3.icr.service.impl.StudentFacadeSocial;
+import it.uniroma3.icr.validator.studentValidator;
+import it.uniroma3.icr.validator.StudentValidator2;
 
 @Controller
 public class UserController {
@@ -137,6 +138,8 @@ public class UserController {
 
 	}
 
+
+
 	@RequestMapping(value = "/addUserFromGoogle", method = RequestMethod.POST)
 	public String confirmUserGoogle(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
 			BindingResult bindingResult) {
@@ -237,5 +240,4 @@ public class UserController {
 		schools.put("Volontario esterno","Volontario esterno");
 		return schools;
 	}
-
 }

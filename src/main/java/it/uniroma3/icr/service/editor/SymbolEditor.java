@@ -1,11 +1,12 @@
 package it.uniroma3.icr.service.editor;
 
-import it.uniroma3.icr.model.Symbol;
-import it.uniroma3.icr.service.impl.SymbolFacade;
+import java.beans.PropertyEditorSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.beans.PropertyEditorSupport;
+import it.uniroma3.icr.model.Symbol;
+import it.uniroma3.icr.service.impl.SymbolFacade;
 
 @Component
 public class SymbolEditor extends PropertyEditorSupport {

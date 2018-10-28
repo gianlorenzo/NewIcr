@@ -1,14 +1,16 @@
 package it.uniroma3.icr.dao.impl;
 
-import it.uniroma3.icr.dao.ImageDaoCustom;
-import it.uniroma3.icr.model.Image;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import it.uniroma3.icr.dao.ImageDaoCustom;
+import it.uniroma3.icr.model.Image;
 
 @Repository
 @Transactional(readOnly=false)
@@ -43,6 +45,7 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	public List<String> findAllManuscript() {
 		String s = "SELECT distinct manuscript FROM Image";
 		return entityManager.createQuery(s).getResultList();
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -68,13 +71,15 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	@Override
 	public List<Image> findImageForTypeAndWidthAndManuscript(String type, String manuscript, int width, int limit) {
 		String s = "FROM Image i WHERE i.type = :type and i.width = :width and i.manuscript = :manuscript";
+		
 		Query query = entityManager.createQuery(s);
 		query.setParameter("type", type);
 		query.setParameter("width", width);
 		query.setParameter("manuscript", manuscript);
+		
 		List<Image> images = query.setMaxResults(limit).getResultList();
-		return images;	}
-
+		return images;
+	}
 }
 
 

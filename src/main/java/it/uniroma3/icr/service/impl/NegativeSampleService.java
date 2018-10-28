@@ -1,5 +1,18 @@
 package it.uniroma3.icr.service.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import it.uniroma3.icr.dao.NegativeSampleDao;
 import it.uniroma3.icr.dao.SymbolDao;
 import it.uniroma3.icr.insertImageInDb.utils.GetNegativeSamplePath;
@@ -7,17 +20,6 @@ import it.uniroma3.icr.model.Manuscript;
 import it.uniroma3.icr.model.NegativeSample;
 import it.uniroma3.icr.model.Sample;
 import it.uniroma3.icr.model.Symbol;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
 
 @Service
 public class NegativeSampleService {
@@ -42,10 +44,7 @@ public class NegativeSampleService {
 				for(int m=0;m<images.length;m++) {
 
 					String nameComplete = images[m].getName();
-
 					String pathFile = images[m].getPath().replace("\\", "/");
-
-
 					String name = FilenameUtils.getBaseName(nameComplete);
 					String parts[] = name.split("_");
 
@@ -64,13 +63,9 @@ public class NegativeSampleService {
 						int xImg = x;
 						int yImg = y;
 						String path = pathFile.substring(pathFile.indexOf("/static") + 8, pathFile.length());
-
-						
 						String type = typeSymbol;
-
 						NegativeSample negativeSample = new NegativeSample(width,height,xImg,yImg,manuscript,
 								type,path);
-
 						negativeSample.setSymbol(s);
 						manuscript.addNegativeSample(negativeSample);
 					}

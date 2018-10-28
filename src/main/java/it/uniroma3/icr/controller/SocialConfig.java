@@ -1,12 +1,11 @@
 package it.uniroma3.icr.controller;
 
+import java.util.UUID;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-
-import java.util.UUID;
 
 @Configuration
 public class SocialConfig extends SocialConfigurerAdapter

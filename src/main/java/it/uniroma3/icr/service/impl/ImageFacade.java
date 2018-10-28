@@ -1,18 +1,19 @@
 package it.uniroma3.icr.service.impl;
 
-import it.uniroma3.icr.dao.ImageDao;
-import it.uniroma3.icr.insertImageInDb.utils.GetImagePath;
-import it.uniroma3.icr.model.Image;
-import it.uniroma3.icr.model.Manuscript;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
+import it.uniroma3.icr.dao.ImageDao;
+import it.uniroma3.icr.insertImageInDb.utils.GetImagePath;
+import it.uniroma3.icr.model.Image;
+import it.uniroma3.icr.model.Manuscript;
 
 @Service
 public class ImageFacade {
@@ -39,6 +40,7 @@ public class ImageFacade {
 						String image = FilenameUtils.getBaseName(images[z].getName());
 						String path = images[z].getPath();
 						path = path.substring(path.indexOf("/static") + 8, path.length());
+
 						Image img = new Image();
 						this.updateImage(img, image, manuscript, page, row, path);
 
@@ -55,11 +57,12 @@ public class ImageFacade {
 		for (int i = 0; i < subFiles.length; i++) {
 			String page = subFiles[i].getName();
 			String row = subFiles[i].getName();
-			File[] images = subFiles[i].listFiles();
 
+			File[] images = subFiles[i].listFiles();
 			for (int z = 0; z < images.length; z++) {
 				String image = FilenameUtils.getBaseName(images[z].getName());
 				String path = images[z].getPath().replace("\\", "/");
+
 				path = path.substring(path.indexOf("/static") + 8, path.length());
 
 				Image img = new Image();
@@ -77,6 +80,7 @@ public class ImageFacade {
 		img.setManuscript(manuscript);
 		img.setPage(page);
 		img.setRow(row);
+		//img.setWord(word);
 		img.setPath(path);
 		manuscript.addImage(img);
 		return img;

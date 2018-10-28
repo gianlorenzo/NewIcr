@@ -1,9 +1,8 @@
 package it.uniroma3.icr.validator;
 
+import org.springframework.validation.*;
+
 import it.uniroma3.icr.model.Student;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 public class UserValidatorInutile implements Validator {
 

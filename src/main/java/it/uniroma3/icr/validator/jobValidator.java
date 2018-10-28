@@ -1,7 +1,9 @@
 package it.uniroma3.icr.validator;
 
-import it.uniroma3.icr.model.Job;
 import org.springframework.ui.Model;
+
+import it.uniroma3.icr.model.Job;
+
 
 
 public class jobValidator {

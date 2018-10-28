@@ -1,8 +1,16 @@
 package it.uniroma3.icr.model;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Job {
@@ -25,8 +33,6 @@ public class Job {
 	private Manuscript manuscript;
 	@ManyToMany
 	private List<Image> images;
-	/*@ManyToMany
-	private List<Word> words;*/
 	@OneToMany(mappedBy = "job")
 	private List<Task> tasks;
 	@ManyToOne
@@ -150,15 +156,7 @@ public class Job {
 	public void setNumberOfWords(Integer numberOfWords) {
 		this.numberOfWords = numberOfWords;
 	}
-/*
-	public List<Word> getWords() {
-		return words;
-	}
 
-	public void setWords(List<Word> words) {
-		this.words = words;
-	}
-*/
 	public void addTask(Task task) {
 		this.tasks.add(task);
 	}

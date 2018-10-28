@@ -1,13 +1,13 @@
 package it.uniroma3.icr.dao;
 
-import it.uniroma3.icr.model.Task;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import org.springframework.stereotype.Repository;
+import it.uniroma3.icr.model.Task;
 
 @Repository
 public interface TaskDaoCustom {
 
 	public void updateEndDate(Task t);
+	public List<Object> taskTimes();
 
 }

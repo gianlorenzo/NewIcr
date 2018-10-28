@@ -1,14 +1,17 @@
 package it.uniroma3.icr.dao.impl;
 
-import it.uniroma3.icr.dao.NegativeSampleDaoCustom;
-import it.uniroma3.icr.model.Sample;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
+
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import it.uniroma3.icr.dao.NegativeSampleDaoCustom;
+import it.uniroma3.icr.model.Sample;
 
 @Repository
 @Transactional(readOnly=false)

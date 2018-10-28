@@ -1,9 +1,10 @@
 package it.uniroma3.icr.dao;
 
-import it.uniroma3.icr.model.Image;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import it.uniroma3.icr.model.Image;
 
 @Repository
 public interface ImageDaoCustom {

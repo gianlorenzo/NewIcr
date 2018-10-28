@@ -1,18 +1,20 @@
 package it.uniroma3.icr.dao.impl;
 
 
-import it.uniroma3.icr.dao.TaskDaoCustom;
-import it.uniroma3.icr.model.Task;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.Calendar;
-import java.util.List;
+import it.uniroma3.icr.dao.TaskDaoCustom;
+import it.uniroma3.icr.model.Task;
 
 @Repository
 @Transactional(readOnly=false)
@@ -36,4 +38,18 @@ public class TaskDaoImpl implements TaskDaoCustom {
 			LOGGER.info("PROBLEM IN updateEndDate - task " + task.getId() + " student " + task.getStudent().getId());
 		}			
 	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> taskTimes() {
+		String sql= " select task.job.id,task.batch,to_char(avg(task.endDate - task.startDate), 'HH24:MI:SS:MS') as tempo_medio, to_char(max(task.endDate - task.startDate), 'HH24:MI:SS:MS') "
+				+ "as tempo_massimo, to_char(min(task.endDate - task.startDate), 'HH24:MI:SS:MS') as tempo_minimo from Task task where task.endDate IS NOT NULL "
+				+ "group by task.job.id,task.batch order by task.job.id,task.batch";
+		Query query = this.entityManager.createQuery(sql);
+		List<Object> times = query.getResultList();
+		System.out.println(times);
+		return times;
+	}
+
 }

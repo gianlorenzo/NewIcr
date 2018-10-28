@@ -1,8 +1,9 @@
 package it.uniroma3.icr.validator;
 
+import org.springframework.ui.Model;
+
 import it.uniroma3.icr.model.Administrator;
 import it.uniroma3.icr.model.Student;
-import org.springframework.ui.Model;
 
 
 public class AdminValidator {

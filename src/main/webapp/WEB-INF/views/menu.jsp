@@ -10,6 +10,8 @@
 						<div id="menu">
 							<ul>
 								<li><a href="login">Log In</a></li>
+								<li><a href="/login_admin">Log In Admin</a></li>
+
 							</ul>
 						</div></li>
 				</ul>

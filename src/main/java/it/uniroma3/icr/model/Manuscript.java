@@ -1,8 +1,15 @@
 package it.uniroma3.icr.model;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -32,7 +39,6 @@ public class Manuscript {
 		this.samples = new ArrayList<>();
 		this.symbols = new ArrayList<>();
 		this.negativeSamples = new ArrayList<>();
-		//this.words = new ArrayList<>();
 	}
 	
 	public Manuscript(String name){
@@ -87,14 +93,6 @@ public class Manuscript {
 		this.symbols = symbols;
 	}
 
-/*	public List<Word> getWords() {
-		return words;
-	}
-
-	public void setWords(List<Word> words) {
-		this.words = words;
-	}*/
-
 	public List<NegativeSample> getNegativeSamples() {
 		return negativeSamples;
 	}
@@ -102,6 +100,7 @@ public class Manuscript {
 	public void setNegativeSamples(List<NegativeSample> negativeSamples) {
 		this.negativeSamples = negativeSamples;
 	}
+
 	// add to list
 	
 	public void addSymbol(Symbol symbol) {
@@ -116,10 +115,7 @@ public class Manuscript {
 		this.negativeSamples.add(negativeSample);
 	}
 
-/*	public void addWord(Word word) {
-		this.words.add(word);
-	}
-*/
+
 	public void addImage(Image img) {
 		this.images.add(img);
 	}

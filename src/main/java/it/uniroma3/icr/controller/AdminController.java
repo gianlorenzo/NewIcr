@@ -1,10 +1,15 @@
 package it.uniroma3.icr.controller;
 
-import it.uniroma3.icr.model.*;
-import it.uniroma3.icr.service.editor.SymbolEditor;
-import it.uniroma3.icr.service.impl.*;
-import it.uniroma3.icr.validator.AdminValidator;
-import it.uniroma3.icr.validator.jobValidator;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -20,16 +25,32 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import it.uniroma3.icr.model.Administrator;
+import it.uniroma3.icr.model.ComparatoreSimboloPerNome;
+import it.uniroma3.icr.model.Image;
+import it.uniroma3.icr.model.Job;
+import it.uniroma3.icr.model.Manuscript;
+import it.uniroma3.icr.model.NegativeSample;
+import it.uniroma3.icr.model.Result;
+import it.uniroma3.icr.model.Sample;
+import it.uniroma3.icr.model.Student;
+import it.uniroma3.icr.model.Symbol;
+import it.uniroma3.icr.model.Task;
+import it.uniroma3.icr.service.editor.SymbolEditor;
+import it.uniroma3.icr.service.impl.AdminFacade;
+import it.uniroma3.icr.service.impl.ImageFacade;
+import it.uniroma3.icr.service.impl.JobFacade;
+import it.uniroma3.icr.service.impl.ManuscriptService;
+import it.uniroma3.icr.service.impl.NegativeSampleService;
+import it.uniroma3.icr.service.impl.SampleService;
+import it.uniroma3.icr.service.impl.StudentFacade;
+import it.uniroma3.icr.service.impl.SymbolFacade;
+import it.uniroma3.icr.service.impl.TaskFacade;
+import it.uniroma3.icr.validator.AdminValidator;
+import it.uniroma3.icr.validator.jobValidator;
 
 @Controller
+
 public class AdminController {
 
 	@Autowired
@@ -50,7 +71,6 @@ public class AdminController {
 	private SymbolFacade symbolFacade;;
 	@Autowired
 	private ImageFacade imageFacade;
-
 	@Autowired
 	private ManuscriptService manuscriptService;
 
@@ -204,6 +224,12 @@ public class AdminController {
 		return "administration/insertRecap";
 	}
 
+	@RequestMapping(value = "admin/resultConsole")
+	public String resultConsole() {
+		return "administration/resultConsole/resultConsole";
+	}
+
+
 	@RequestMapping(value = "admin/toChangeAdminPassword")
 	public String toChangeAdminPassword(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -211,6 +237,7 @@ public class AdminController {
 		Administrator a = this.adminFacade.findAdmin(username);
 		a.setPassword("");
 		model.addAttribute("administrator", a);
+
 		return "administration/changeAdminPassword";
 	}
 

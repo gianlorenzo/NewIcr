@@ -13,6 +13,8 @@
 							<li><a href="selectManuscript">Inserisci un manoscritto</a></li>
 							<li><a href="../registration">Registra un nuovo
 									studente</a></li>
+							<li><a href="/admin/registrationAdmin">Registra un nuovo
+								Amministratore</a></li>
 							<li><a href="logout">Logout</a></li>
 						</ul>
 					</div></li>

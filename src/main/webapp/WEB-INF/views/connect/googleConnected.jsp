@@ -30,6 +30,32 @@
 			<h1>
 				<a href="index.html">In Codice Ratio</a>
 			</h1>
+<!--  			<nav id="nav">
+				<ul>
+					<li class="special"><a href="#menu" class="menuToggle"><span>Menu</span></a>
+						<div id="menu">
+							<ul>
+								
+								
+								<li>
+								<form name="submitForm2" method="POST" action="${pageContext.request.contextPath}/connect/google">
+    								<input type="hidden" name="_method" value="delete" />
+   									 <A HREF="javascript:document.submitForm2.submit()" style="
+   									 		border: 0;
+											font-size: 0.8em;
+											letter-spacing: 0.225em;
+											text-decoration: none;
+											text-transform: uppercase;">
+									Logout
+									</A>
+								</form>
+								</li>
+							
+							</ul>
+						</div></li>
+				</ul>
+			</nav>
+-->
 		</header>
 	</div>
 

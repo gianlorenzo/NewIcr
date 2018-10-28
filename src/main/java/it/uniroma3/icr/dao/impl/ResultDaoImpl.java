@@ -1,16 +1,21 @@
 package it.uniroma3.icr.dao.impl;
 
 
-import it.uniroma3.icr.dao.ResultDaoCustom;
-import it.uniroma3.icr.model.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import it.uniroma3.icr.dao.ResultDaoCustom;
+import it.uniroma3.icr.model.Image;
+import it.uniroma3.icr.model.Job;
+import it.uniroma3.icr.model.Result;
+import it.uniroma3.icr.model.Task;
+import it.uniroma3.icr.model.TaskWrapper;
 
 @Repository
 @Transactional(readOnly=false)

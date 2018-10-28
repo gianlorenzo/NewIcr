@@ -1,9 +1,12 @@
 package it.uniroma3.icr.controller;
 
-import it.uniroma3.icr.model.*;
-import it.uniroma3.icr.service.editor.ImageEditor;
-import it.uniroma3.icr.service.editor.TaskEditor;
-import it.uniroma3.icr.service.impl.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +15,30 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import it.uniroma3.icr.model.Image;
+import it.uniroma3.icr.model.Job;
+import it.uniroma3.icr.model.Result;
+import it.uniroma3.icr.model.Sample;
+import it.uniroma3.icr.model.Student;
+import it.uniroma3.icr.model.Task;
+import it.uniroma3.icr.model.TaskWrapper;
+import it.uniroma3.icr.service.editor.ImageEditor;
+import it.uniroma3.icr.service.editor.TaskEditor;
+import it.uniroma3.icr.service.impl.ImageFacade;
+import it.uniroma3.icr.service.impl.JobFacade;
+import it.uniroma3.icr.service.impl.NegativeSampleService;
+import it.uniroma3.icr.service.impl.ResultFacade;
+import it.uniroma3.icr.service.impl.SampleService;
+import it.uniroma3.icr.service.impl.StudentFacade;
+import it.uniroma3.icr.service.impl.StudentFacadeSocial;
+import it.uniroma3.icr.service.impl.SymbolFacade;
+import it.uniroma3.icr.service.impl.TaskFacade;
 
 @Controller
 public class TaskController {
@@ -246,9 +266,12 @@ public class TaskController {
 		Student s;
 		if (social == null || social.isEmpty()) {
 			s = studentFacade.findUser(auth.getName());
+			//studentTasks = taskFacade.findTaskByStudent(s.getId());
 		} else {
 			s = studentFacadesocial.findUser(auth.getName());
+			//studentTasks = taskFacade.findTaskByStudentSocial(s.getId());
 		}
+		
 		long secs = this.taskFacade.getWorkTime(s);
 		
 		long hours = secs / 3600;
