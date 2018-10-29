@@ -23,7 +23,7 @@ div.social-wrap.c button {
 
 
 div.social-wrap.c > .facebook {
-    background: url(/css/facebook-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #3b5998));
+    background: url(facebook-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #3b5998));
     background-size: 25px 25px, cover;
     background-position: 10px center, center center;
     background-repeat: no-repeat, repeat;
@@ -32,9 +32,7 @@ div.social-wrap.c > .facebook {
 }
 div.social-wrap.c > .googleplus {
     background-size: 30px 30px, cover;
-    background-image: url(/css/google-plus.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #DD4B39));
-  
-    ;
+    background-image: url(google-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #DD4B39));
 }
 
 .form-inline1{

@@ -73,8 +73,27 @@ public class GoogleController {
 		}
 		else{
 			String userprofile=google.userOperations().getUserInfo().getName();
-			if(userprofile.equals(""))
-				return "users/noGooglePlus";
+			if(userprofile == null) {
+				String name = "";
+				String surname = "";
+				String email = google.userOperations().getUserInfo().getEmail();
+
+				model.addAttribute("nome", name);
+				model.addAttribute("cognome", surname);
+				model.addAttribute("email", email);
+				model.addAttribute("id", id);
+				model.addAttribute("student", new StudentSocial());
+
+				Map<String, String> schools = setSchools();
+				model.addAttribute("schools", schools);
+
+				Map<String,String> schoolGroups = new HashMap<String,String>();
+				schoolGroups.put("3", "3");
+				schoolGroups.put("4", "4");
+				schoolGroups.put("5", "5");
+				model.addAttribute("schoolGroups", schoolGroups);
+				return "/registrationGoogle";
+			}
 
 			String name = google.userOperations().getUserInfo().getFirstName();
 			String surname = google.userOperations().getUserInfo().getLastName();

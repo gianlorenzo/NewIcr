@@ -25,8 +25,8 @@
 
 
 <!-- Favicon -->
-<link rel="shortcut icon"
-	href="<c:url value="${pageContext.request.contextPath}/img/siteImages/favicon.ico"/>">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
 	

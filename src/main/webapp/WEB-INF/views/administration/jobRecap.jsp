@@ -16,8 +16,8 @@
 
 
 <!-- Favicon -->
-<link rel="shortcut icon"
-	href="<c:url value="${pageContext.request.contextPath}/img/siteImages/favicon.ico"/>">
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
+
 
 </head>
 <body class="landing" onload="">
