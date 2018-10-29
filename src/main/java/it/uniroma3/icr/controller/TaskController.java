@@ -199,8 +199,6 @@ public class TaskController {
 					LOGGER.debug("8 - before save: task "+ result.getTask().getId() +" accomplished by student " + student.getId() + " - result " + result.getId());
 				}
 				taskFacade.updateStudent(student);
-				//userFacade.saveUser(student);  
-
 				for (Result result : taskResults.getResultList()) {
 					LOGGER.info("9 - after save: task "+ result.getTask().getId() +" accomplished by student " + student.getId() + " - result " + result.getId());
 				}
@@ -255,9 +253,7 @@ public class TaskController {
 			}
 			targetUrl = "users/homeStudent";
 		}
-
 		return targetUrl;
-
 	}
 
 	@RequestMapping(value = "user/studentTasks")
@@ -266,10 +262,8 @@ public class TaskController {
 		Student s;
 		if (social == null || social.isEmpty()) {
 			s = studentFacade.findUser(auth.getName());
-			//studentTasks = taskFacade.findTaskByStudent(s.getId());
 		} else {
 			s = studentFacadesocial.findUser(auth.getName());
-			//studentTasks = taskFacade.findTaskByStudentSocial(s.getId());
 		}
 		
 		long secs = this.taskFacade.getWorkTime(s);

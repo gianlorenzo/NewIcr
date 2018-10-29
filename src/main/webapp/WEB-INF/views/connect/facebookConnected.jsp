@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>ICR</title>
-
 
 <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet"
@@ -18,15 +16,10 @@
 <!-- Favicon -->
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
-
 </head>
 <body class="landing">
-
 	<!-- Page Wrapper -->
 	<div id="page-wrapper">
-
 		<!-- Header -->
 		<header id="header" class="alt">
 			<h1>
@@ -34,16 +27,10 @@
 			</h1>
 		</header>
 	</div>
-
 	<!-- Banner -->
 	<section id="banner">
-
-
-
 		<div class="inner">
-
 			<h2>Hai eseguito il login dal tuo account Facebook con successo</h2>
-
 			<form id="nextpagebutton"
 				action="${pageContext.request.contextPath}/facebookLogin"
 				method="post">
@@ -51,16 +38,9 @@
 				<input type="hidden" name="daFB" /> <input type="hidden"
 					name="social" value="fb" />
 			</form>
-
 			<span class="container"></span>
-
-
-
 		</div>
 	</section>
-
-
-
 
 	<!-- Scripts -->
 	<script>
@@ -78,6 +58,5 @@
 	<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/js/backButton.js"></script>
-
 </body>
 </html>

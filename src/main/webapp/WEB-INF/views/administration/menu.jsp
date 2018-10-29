@@ -1,9 +1,7 @@
 <!-- Page Wrapper -->
 <div id="page-wrapper">
-
 	<!-- Header -->
 	<header id="header" class="alt">
-
 		<nav id="nav">
 			<ul>
 				<li class="special"><a href="#menu" class="menuToggle"><span>Menu</span></a>

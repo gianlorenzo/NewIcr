@@ -24,64 +24,38 @@
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
 
-
 </head>
 <body class="landing">
 	<jsp:include page="menu.jsp" />
 	<br>
 	<h1>Creazione del Job</h1>
-
 	<div class="form">
-
-
 		<div class="tab-content">
 			<div id="signup">
 				<h1>Seleziona Manoscritto da cui caricare i simboli</h1>
-
 				<form:form method="post" action="selectImageByManuscript" modelAttribute="manuscript"
 					name="form">
-
-					
-
 					<div class="field-wrap">
-
-						
-						
 						<div class="field-wrap">
 							<label> Manoscritto </label>
 							<form:select path="name">
-
 								<form:options items="${manuscripts}" />
-
 							</form:select>
 						</div>
-						
-						
 						<div id="formsubmitbutton">
-
 						<button type="submit" class="button button-block" onclick="ButtonClicked()">Conferma</button>
 					</div>
-					
 					</div>
 				</form:form>
-
 			</div>
-			
 			<div id="buttonreplacement" style="margin-left:60px; display:none;">
-
 				<img src="${pageContext.request.contextPath}/img/siteImages/loadIcon.gif" alt="">
-
 			</div>
-
 			<div id="login"></div>
-
 		</div>
 		<!-- tab-content -->
-
 	</div>
 	<!-- /form -->
-
-
 
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
@@ -94,7 +68,5 @@
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/js/file.js"></script>
 	<script src="${pageContext.request.contextPath}/js/load.js"></script>
-	
-
 </body>
 </html>

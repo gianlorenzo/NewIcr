@@ -21,54 +21,33 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
-
-
 </head>
 <body class="landing">
 	<jsp:include page="menu.jsp" />
 	<div class="form">
-
-
-
 		<div class="tab-content">
 			<div id="signup">
 				<h1>Registrazione Admin</h1>
-
 				<form:form method="post" action="addAdmin"
 					modelAttribute="administrator" name="form">
-
-
-
 					<div class="field-wrap">
 						<label> Username </label>
 						<form:input type="text" path='username' placeholder="Username" />
 						<font size="3" color="red">${usernameError}</font> ${errUsername}
 					</div>
-
 					<div class="field-wrap">
 						<label> Password </label>
 						<form:input type="password" path='password' placeholder="Password" />
 						${errPassword}
-
 					</div>
-
 					<font color="white"><springForm:errors path="username" /></font>
 					<font color="white"><springForm:errors path="password" /></font>
-
 					<button type="submit" class="button button-block">Conferma</button>
 				</form:form>
 			</div>
-
-
-
-
 			<div id="login"></div>
-
 		</div>
 		<!-- tab-content -->
-
 	</div>
 	<!-- /form -->
 

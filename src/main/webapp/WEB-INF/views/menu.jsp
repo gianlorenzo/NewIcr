@@ -1,6 +1,5 @@
 <!-- Page Wrapper -->
 	<div id="page-wrapper">
-
 		<!-- Header -->
 		<header id="header" class="alt">
 			
@@ -11,7 +10,6 @@
 							<ul>
 								<li><a href="login">Log In</a></li>
 								<li><a href="/login_admin">Log In Admin</a></li>
-
 							</ul>
 						</div></li>
 				</ul>

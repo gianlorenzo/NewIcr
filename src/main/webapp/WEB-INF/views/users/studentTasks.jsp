@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="it.uniroma3.icr.model.Task"%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form"
@@ -9,7 +8,6 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 
 <!DOCTYPE html>
 <html>
@@ -25,23 +23,16 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
-
 </head>
 <body class="landing">
-
 	<jsp:include page="menu.jsp" />
-
 	<div class="relative">
 		<h2>Task Effettuati da: ${s.name}</h2>
 	</div>
-
 	<table>
 		<tr>
 			<th>Numero di Task Effettuati</th>
 		</tr>
-
 		<tr>
 			<th><c:out value="${s.taskEffettuati}"></c:out></th>
 		</tr>
@@ -66,13 +57,10 @@
 		<tr>
 			<th>Tempo medio per task (in secondi)</th>
 		</tr>
-
 		<tr>
 			<th><c:out value="${(s.tempoEffettuato- s.tempoEffettuato%s.taskEffettuati)/s.taskEffettuati}"></c:out></th>
 		</tr>
-
 	</table>
-
 		<!-- Scripts -->
 		<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 		<script

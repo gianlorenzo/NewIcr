@@ -20,25 +20,19 @@
 
 <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
-
-
 <!-- Favicon -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
-
 </head>
-
 <body class="landing">
 	<jsp:include page="menu.jsp" />
 	<div class="form">
 		<div class="tab-content" style='margin-top: -10px'>
 			<div id="signup">
 				<h1>Login</h1>
-
 				<form method="POST"
 					action="${pageContext.request.contextPath}/login">
 					<div class="top-row">
@@ -81,11 +75,8 @@
 			<div id="login"></div>
 		</div>
 		<!-- tab-content -->
-
-
 	</div>
 	<!-- /form -->
-
 
 	<!-- Scripts -->
 	<script>
@@ -108,6 +99,5 @@
 	<script src="${pageContext.request.contextPath}/js/util.js"></script>
 	<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-
 </body>
 </html>

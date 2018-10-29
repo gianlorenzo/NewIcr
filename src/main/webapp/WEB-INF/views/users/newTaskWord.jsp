@@ -2,7 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="it.uniroma3.icr.model.Job"%>
 <%@ page import="it.uniroma3.icr.model.Task"%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form"
@@ -24,37 +23,28 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
 </head>
-
 <body class="landing">
 	<ul>
 		<li>
 			<h2>${student.name}${student.surname}</h2>
-
 			<h2>Stai svolgendo il task relativo al ${task.job.title}
 				${task.job.symbol.transcription}</h2>
 		</li>
-
 	</ul>
-
 	<div align="center">
 		<h3>Seleziona le parti della lettera che ti sembrano simili agli esempi
 			sottostanti</h3>
-
 		<table class="pos">
 			<tr>
 				<c:forEach varStatus="vs" var="sample" items="${positiveSamples}">
-
 					<td><img
 						src="${pageContext.request.contextPath}/${sample.path}"
 						alt="${sample.id}" /></td>
 				</c:forEach>
 			</tr>
 		</table>
-
 	</div>
-
 	<div align="center">
 		<h3>Attenzione: non vanno bene immagini come queste</h3>
 		<table class="neg">
@@ -63,17 +53,12 @@
 					<td><img
 						src="${pageContext.request.contextPath}/${sample.path}"
 						alt="${sample.id}" /></td>
-
 				</c:forEach>
 			</tr>
 		</table>
 	</div>
-
-
 	<form:form method="post" action="secondConsoleWord"
 		modelAttribute="taskResults" name="form">
-
-
 		<div align="center">
 			<c:forEach varStatus="vs" var="result"
 				items="${taskResults.resultList}">
@@ -111,24 +96,17 @@
 			<input type="submit" name="action"
 				value="Conferma e vai al prossimo task">
 		</div>
-
 		<br />
-
 		<div align="center">
 			<input type="submit" name="action"
 				value="Conferma e torna alla pagina dello studente">
 		</div>
-
 	</form:form>
-
 	<div align="center">
 		<form:form method="post" action="homeStudent">
 			<input type="submit" value="Torna alla pagina dello studente">
 		</form:form>
-
 	</div>
-
-
 	<!-- Scripts -->
 	<script>
 var ExtendedCanvas = (function() {

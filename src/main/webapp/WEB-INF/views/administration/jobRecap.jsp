@@ -14,19 +14,14 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 
-
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
 </head>
 <body class="landing" onload="">
-
 	<jsp:include page="menu.jsp" />
 	<div class="relative">
 		<h2>Riepilogo del Job creato</h2>
 	</div>
-
 	<table>
 		<tr>
 			<th>Titolo</th>
@@ -36,7 +31,6 @@
 			<th>Manoscritto</th>
 			<th>Simbolo</th>
 		</tr>
-
 		<tr>
 			<th>${job.title}</th>
 			<th>${job.students}</th>
@@ -56,6 +50,5 @@
 	<!--[if lte IE 8]>-->
 	<script src="${pageContext.request.contextPath}/js/ie/respond.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-
 </body>
 </html>

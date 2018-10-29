@@ -5,9 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>ICR</title>
-
-
-
 <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
@@ -16,11 +13,8 @@
 <!-- Favicon -->
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
 </head>
-
 <body class="landing">
-
 	<jsp:include page="menu.jsp" />
-
 	<!-- Banner -->
 	<section id="banner">
 		<div class="inner">
@@ -38,6 +32,5 @@
 	<script src="${pageContext.request.contextPath}/js/util.js"></script>
 	<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-
 </body>
 </html>

@@ -38,15 +38,13 @@
 
 			<h2>Stai svolgendo il task ${student.taskEffettuati}</h2>
 		</li>
-
 	</ul>
-
 	<div align="center">
 		<h3 class="selectword">
 			Guarda la parola al centro della pagina.<br/>
 			Se al suo interno individui uno o piu' simboli simili a quelli marcati in 
 			nero negli esempi in alto (riquadro verde)<br/>
-			marcane le regioni (clickandoci sopra) e premi <em>Conferma e vai al prossimo task</em>. <br/>
+			marcane le regioni (cliccandoci sopra) e premi <em>Conferma e vai al prossimo task</em>. <br/>
 			Se non individui il simbolo cercato, premi <em>Conferma e vai al prossimo task</em> 
 			(senza marcare niente).<br/>
 			Attenzione: gli esempi in basso (riquadro rosso), rappresentano 
@@ -59,27 +57,19 @@
 			Attenzione: gli esempi in basso (riquadro rosso) rappresentano falsi amici: simboli 
 			simili a questi non sono corretti.
 		</h3>
-
 		<table class="pos">
 			<tr>
 				<c:forEach varStatus="vs" var="sample" items="${positiveSamples}">
-
 					<td><img
 						src="${pageContext.request.contextPath}/${sample.path}"
 						alt="${sample.id}" /></td>
 				</c:forEach>
 			</tr>
 		</table>
-
 	</div>
-
-
 	<form:form method="post" action="secondConsoleWord"
 		modelAttribute="taskResults" name="form">
-
-
 		<div align="center">
-			
 			<table>
 				<c:forEach varStatus="vs" var="result"
 					items="${taskResults.resultList}">
@@ -99,53 +89,38 @@
 					<form:hidden path="resultList[${vs.index}].task.batch" />
 					<form:hidden path="resultList[${vs.index}].task.job.id" />
 					<form:hidden path="resultList[${vs.index}].task.startDate" />
-
-
-
 				</c:forEach>
 			</table>
 		</div>
-
 		<div align="center" class="selectword">
 			<input type="submit" name="action" id="confermaForm"
 				value="Conferma e vai al prossimo task">
 		</div>
-
 		<div align="center" class="wrongAnswer">
 			<br>
 			<h3><font color="red">Risposta sbagliata, vuoi vedere la soluzione?</font></h3>
 			<button type=button id="showHint"><font color="red">Tieni premuto qui per vedere la soluzione</font></button>
 			<br> <br>
 		</div>
-
-		<br />
-
+		<br/>
 		<div align="center">
 			<h3>Attenzione: non vanno bene immagini come queste</h3>
 			<table class="neg">
 				<tr>
 					<c:forEach varStatus="vs" var="sample" items="${negativeSamples}">
-
 						<td><img
 							src="${pageContext.request.contextPath}/${sample.path}"
 							alt="${sample.id}" /></td>
-
 					</c:forEach>
 				</tr>
 			</table>
 		</div>
-
 	</form:form>
-
 	<div align="center">
 		<form:form method="post" action="homeStudent">
 			<input type="submit" value="Torna alla pagina dello studente">
 		</form:form>
-
 	</div>
-
-
-
 	<!-- Scripts -->
 	<script>
 var ExtendedCanvas = (function() {
@@ -174,7 +149,6 @@ var ExtendedCanvas = (function() {
         wrapper.appendChild(this.element);
         this.output = [];
     }
-
     function loadImage(src, canvas2, cb) {
         var image = new Image();
         var canvas = this.element;
@@ -422,7 +396,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/js/backButton.js"></script>
-
-
 </body>
 </html>

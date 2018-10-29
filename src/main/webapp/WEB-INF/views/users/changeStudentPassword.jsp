@@ -18,10 +18,6 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
-
-
 </head>
 <body class="landing">
 	<jsp:include page="menu.jsp" />
@@ -43,7 +39,6 @@
 							<label> Conferma Password </label> <input type="password"
 								placeholder="Conferma Password" name="password2" />
 						</div>
-
 						<form:hidden path="id" />
 						<form:hidden path="name" />
 						<form:hidden path="surname" />
@@ -51,18 +46,13 @@
 						<form:hidden path="schoolGroup" />
 						<form:hidden path="section" />
 						<form:hidden path="username" />
-
 						<button type="submit" class="button button-block">Conferma</button>
 					</div>
 				</form:form>
-
 			</div>
-
 			<div id="login"></div>
-
 		</div>
 		<!-- tab-content -->
-
 	</div>
 	<!-- /form -->
 
@@ -75,8 +65,5 @@
 	<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/js/checkPassword.js"></script>
-
-
-
 </body>
 </html>

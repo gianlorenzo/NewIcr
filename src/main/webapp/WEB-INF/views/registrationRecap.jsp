@@ -15,25 +15,19 @@
 
 <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" />
-
-
 <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
 </head>
 <body class="landing">
 
 <jsp:include page="menu.jsp" />
-	
 	<div class="relative">
 		<h2>Hai completato  la registrazione</h2>
 		<h2>Ora puoi effettuare il login (dal menu in alto a destra)</h2>		
 	</div>
-	
 	<table>
 		<tr>
 			<th>Nome</th>
@@ -43,7 +37,6 @@
 			<th>Sezione</th>
 			<th>Email</th>
 		</tr>
-
 		<tr>
 			<th>${student.name}</th>
 			<th>${student.surname}</th>
@@ -53,9 +46,7 @@
 			<th>${student.email}</th>
 		</tr>
 	</table>
-	
-	
-	
+
 	<!-- Scripts -->
 	
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
@@ -65,6 +56,5 @@
 	<script src="${pageContext.request.contextPath}/js/util.js"></script>
 	<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-
 </body>
 </html>

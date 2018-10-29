@@ -138,8 +138,6 @@ public class UserController {
 
 	}
 
-
-
 	@RequestMapping(value = "/addUserFromGoogle", method = RequestMethod.POST)
 	public String confirmUserGoogle(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
 			BindingResult bindingResult) {

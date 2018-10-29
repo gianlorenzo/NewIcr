@@ -24,7 +24,6 @@
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
 
-
 </head>
 <body class="landing">
 	<jsp:include page="menu.jsp" />
@@ -39,40 +38,25 @@
 							<div class="field-wrap">
 								<label> Manoscritto </label>
 								<form:select path="name">
-
 									<form:options items="${manuscripts}" />
-
 								</form:select>
 							</div>
-
 							<div id="formsubmitbutton">
-
-								
 								<button type="submit" class="button button-block"
 									onclick="ButtonClicked()" name="action" value="WORD"> PROSEGUI CON PAROLE</button>
-								
 							</div>
 						</div>
 					</form:form>
-
 				</div>
-
 				<div id="buttonreplacement"
 					style="margin-left: 60px; display: none;">
-
 					<img src="${pageContext.request.contextPath}/img/siteImages/loadIcon.gif" alt="">
-
 				</div>
-
 				<div id="login"></div>
-
 			</div>
 			<!-- tab-content -->
-
 		</div>
 		<!-- /form -->
-
-
 
 		<!-- Scripts -->
 		<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>

@@ -13,15 +13,11 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 
-
 <!-- Favicon -->
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
 </head>
 <body class="landing">
-
 	<jsp:include page="menu.jsp" />
-
 	<!-- Banner -->
 	<section id="banner">
 		<div class="inner">
@@ -31,7 +27,6 @@
 			<p>dell'Archivio Segreto Vaticano</p>
 		</div>
 	</section>
-	
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery.scrollex.min.js"></script>
@@ -41,6 +36,5 @@
 	<!--[if lte IE 8]>-->
 	<script src="${pageContext.request.contextPath}/js/ie/respond.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-
 </body>
 </html>

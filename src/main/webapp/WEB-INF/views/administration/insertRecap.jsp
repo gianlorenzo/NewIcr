@@ -17,20 +17,15 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
 </head>
 <body class="landing" onload="">
-
 	<jsp:include page="menu.jsp" />
 	<!-- Banner -->
 	<section id="banner">
 		<div class="inner">
-
 			<h2>Manoscritto inserito con successo</h2>
 		</div>
 	</section>
-
 
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
@@ -41,6 +36,5 @@
 	<!--[if lte IE 8]>-->
 	<script src="${pageContext.request.contextPath}/js/ie/respond.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
-
 </body>
 </html>

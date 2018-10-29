@@ -24,44 +24,32 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
-
-
 </head>
 <body class="landing">
 	<jsp:include page="menu.jsp" />
 	<br>
 	<h1>Creazione del Job</h1>
 	<div class="form">
-
-
-
 		<div class="tab-content">
 			<div id="signup">
 				<h1>Inserisci Dati del Job</h1>
-
 				<form:form method="post" action="addJobByManuscript"
 					modelAttribute="job" name="form">
-
 					<div class="field-wrap">
 						<label> Titolo </label>
 						<form:input type="text" value="${job.title}" path="title"
 							placeholder="Titolo" />
 						${errTitle}
 					</div>
-
 					<div class="field-wrap">
-
 						<div class="field-wrap">
 							<label> #Studenti </label>
 							<form:input type="text" value="${job.students}" path='students'
 								placeholder="Numero di Studenti" onBlur="isnum(this)" />
 							${errStudenti}
 						</div>
-
-
 						<form:input type="hidden" value="1" path='taskSize'
 							placeholder="Dimensione Task" onBlur="isnum(this)" />
-
 						<div class="field-wrap">
 							<label> Simbolo </label>
 							<form:select path="symbol">
@@ -69,18 +57,14 @@
 										itemLabel="transcription" itemValue="id" /> </font>
 							</form:select>
 						</div>
-
 						<div class="field-wrap">
 							<label> E' un tutorial? </label>
 							<form:select path="tutorial">
 								<option value="false">NO</option>
 								<option value="true">SI</option>
 							</form:select>
-										
 						<form:checkbox path='tutorial' />
 						</div>
-
-
 						<div id="formsubmitbutton">
 							<button type="submit" class="button button-block" name="action"
 								value="WORD" onclick="ButtonClicked()">Conferma</button>
@@ -88,25 +72,16 @@
 					</div>
 				</form:form>
 			</div>
-
 			<div id="buttonreplacement" style="margin-left: 60px; display: none;">
-
 				<img
 					src="${pageContext.request.contextPath}/img/siteImages/loadIcon.gif"
 					alt="">
-
 			</div>
-
 			<div id="login"></div>
-
 		</div>
 		<!-- tab-content -->
-
 	</div>
 	<!-- /form -->
-
-
-
 
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
@@ -121,7 +96,5 @@
 	<script src="${pageContext.request.contextPath}/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/js/file.js"></script>
 	<script src="${pageContext.request.contextPath}/js/load.js"></script>
-
-
 </body>
 </html>
