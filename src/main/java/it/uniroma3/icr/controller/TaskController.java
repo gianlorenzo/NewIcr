@@ -219,19 +219,21 @@ public class TaskController {
 		} else {
 			s = studentFacadesocial.findUser(auth.getName());
 		}
-		
-		long secs = this.taskFacade.getWorkTime(s);
-		
-		long hours = secs / 3600;
-		long minutes = (secs % 3600) / 60;
-		long seconds = secs % 60;
+		if (s.getTaskEffettuati() > 0) {
+			long secs = this.taskFacade.getWorkTime(s);
 
-		String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-		
-		model.addAttribute("time", timeString);		
-		model.addAttribute("s", s);
-		model.addAttribute("social", social);
-		return "users/studentTasks";
+			long hours = secs / 3600;
+			long minutes = (secs % 3600) / 60;
+			long seconds = secs % 60;
+
+			String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+			model.addAttribute("time", timeString);
+			model.addAttribute("s", s);
+			model.addAttribute("social", social);
+			return "users/studentTasks";
+		}
+		return "users/noStudentTasks";
 	}
 
 }
