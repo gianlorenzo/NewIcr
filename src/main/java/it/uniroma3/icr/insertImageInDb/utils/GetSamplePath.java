@@ -8,6 +8,7 @@ public class GetSamplePath extends GetManuscriptPath{
 	@Override
 	public String getPath() {
 		String path = System.getProperty("user.dir") + this.getServletContext().getInitParameter("pathSample");
+		System.out.println(path);
 		return path;
 	}
     
