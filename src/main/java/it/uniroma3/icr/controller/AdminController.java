@@ -50,7 +50,6 @@ import it.uniroma3.icr.validator.AdminValidator;
 import it.uniroma3.icr.validator.jobValidator;
 
 @Controller
-
 public class AdminController {
 
 	@Autowired
@@ -215,7 +214,6 @@ public class AdminController {
 		path = negativeSampleService.getNegativePath();
 		path = path.concat(manuscriptName).concat("/");
 		negativeSampleService.getNegativeSampleImage(path, m); // negativeSampleImage(path);
-
 		path = imageFacade.getPath();
 		path = path.concat(manuscriptName).concat("/");
 		imageFacade.updateImagesAll(path, m); 
@@ -223,12 +221,6 @@ public class AdminController {
 		this.manuscriptService.saveManuscript(manuscript);
 		return "administration/insertRecap";
 	}
-
-	@RequestMapping(value = "admin/resultConsole")
-	public String resultConsole() {
-		return "administration/resultConsole/resultConsole";
-	}
-
 
 	@RequestMapping(value = "admin/toChangeAdminPassword")
 	public String toChangeAdminPassword(Model model) {

@@ -210,52 +210,6 @@ public class TaskController {
 		return targetUrl;
 	}
 
-	@RequestMapping(value = "user/secondConsole_", method = RequestMethod.POST)
-	public String taskRecap(@ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
-			HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(name = "social", required = false) String social) throws IOException {
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String s = auth.getName();
-		Student student;
-		if (social == null || social.isEmpty())
-			student = studentFacade.findUser(s);
-		else
-			student = studentFacadesocial.findUser(s);
-		model.addAttribute("student", student);
-		model.addAttribute("social", social);
-		String action = request.getParameter("action");
-		String targetUrl = "";
-
-		String conferma1 = "Conferma e vai al prossimo task";
-		String conferma2 = "Conferma e torna alla pagina dello studente";
-
-		if (conferma1.equals(action)) {
-			for (Result result : taskResults.getResultList()) {
-				Task task = result.getTask();
-				taskFacade.updateEndDate(task);
-				if (result.getAnswer() == null)
-					result.setAnswer("No");
-			}
-			resultFacade.updateListResult(taskResults);
-			response.sendRedirect("newTask");
-
-			targetUrl = "users/newTask";
-		} else {
-			if (conferma2.equals(action)) {
-				for (Result result : taskResults.getResultList()) {
-					Task task = result.getTask();
-					taskFacade.updateEndDate(task);
-					if (result.getAnswer() == null)
-						result.setAnswer("No");
-				}
-				resultFacade.updateListResult(taskResults);
-			}
-			targetUrl = "users/homeStudent";
-		}
-		return targetUrl;
-	}
-
 	@RequestMapping(value = "user/studentTasks")
 	public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -17,6 +17,8 @@ public class StudentFacade {
 	public void saveUser(Student user) {
 		userDao.save(user);
 	}
+
+	public Student findById(long id) { return this.userDao.findById(id);}
 	
 	public Student findUser(String username) {
 		return this.userDao.findByUsername(username);

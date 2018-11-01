@@ -48,7 +48,7 @@
 					</div>
 				</form:form>
 			</div>
-			<div id="buttonreplacement" style="margin-left:60px; display:none;">
+			<div id="buttonreplacement" style="margin-left:80px; display:none;">
 				<img src="${pageContext.request.contextPath}/img/siteImages/loadIcon.gif" alt="">
 			</div>
 			<div id="login"></div>
