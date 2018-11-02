@@ -27,6 +27,8 @@ public class SymbolFacade {
 		File[] files = new File(p).listFiles();
 		for(int i=0;i<files.length;i++) {
 			String typeSymbol = files[i].getName();
+			if(files[i].getName().equals(".DS_Store"))
+				files[i].delete();
 			File[] transcriptionsSymbol = files[i].listFiles();
 			for(int j=0;j<transcriptionsSymbol.length;j++) {
 				String transcriptionSymbol = transcriptionsSymbol[j].getName();

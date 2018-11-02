@@ -33,6 +33,8 @@ public class SampleService {
 		File[] files = new File(p).listFiles();
 
 		for(int i=0;i<files.length;i++) {
+			if(files[i].getName().equals(".DS_Store"))
+				files[i].delete();
 			String typeSymbol = files[i].getName();
 			File[] transcriptionsSymbol = files[i].listFiles();
 			for(int j=0;j<transcriptionsSymbol.length;j++) {

@@ -27,11 +27,12 @@ public abstract class GetManuscriptPath implements ServletContextAware{
 		
 		File[] files = new File(path).listFiles();
 		for(int i=0;i<files.length;i++) {
+			if(files[i].getName().equals(".DS_Store"))
+				files[i].delete();
 			Manuscript manuscript = new Manuscript(files[i].getName());
 			manuscripts.add(manuscript);
 		}
 		return manuscripts;
-		
 	}
 	public ServletContext getServletContext(){
 		return this.servletContext;

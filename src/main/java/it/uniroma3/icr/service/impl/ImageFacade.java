@@ -24,10 +24,11 @@ public class ImageFacade {
 	private ImageDao imageDao;
 
 	public void getListImageProperties(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
-
 		File file = new File(p);
 		File[] subFiles = file.listFiles();
 		for (int i = 0; i < subFiles.length; i++) {
+			if(subFiles[i].getName().equals(".DS_Store"))
+				subFiles[i].delete();
 			String page = subFiles[i].getName();
 			File[] rows = subFiles[i].listFiles();
 			for (int m = 0; m < rows.length; m++) {
@@ -40,10 +41,8 @@ public class ImageFacade {
 						String image = FilenameUtils.getBaseName(images[z].getName());
 						String path = images[z].getPath();
 						path = path.substring(path.indexOf("/static") + 8, path.length());
-
 						Image img = new Image();
 						this.updateImage(img, image, manuscript, page, row, path);
-
 					}
 				}
 			}
