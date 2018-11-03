@@ -11,9 +11,12 @@
             padding:10px;
         }
     </style>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
 </head>
 <body>
-<h1>ICR ERROR PAGE</h1>
+<h1>Ops...Qualcosa è andato storto!</h1>
+<a href="/index">Torna alla pagina di login</a>
 <table>
     <tr>
         <td>Date:</td>
@@ -33,7 +36,12 @@
     </tr>
     <tr>
         <td>Exception:</td>
-        <td><c:out value="${expetion}"/></td>
+        <td><c:out value="${exception}"/></td>
+    </tr>
+    </tr>
+    <tr>
+        <td>Trace:</td>
+        <td><c:out value="${trace}"/></td>
     </tr>
     <tr>
         <td>Date:</td>

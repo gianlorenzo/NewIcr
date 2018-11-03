@@ -26,9 +26,9 @@ public class SymbolFacade {
 	public void insertSymbolInDb(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
 		File[] files = new File(p).listFiles();
 		for(int i=0;i<files.length;i++) {
-			String typeSymbol = files[i].getName();
 			if(files[i].getName().equals(".DS_Store"))
 				files[i].delete();
+			String typeSymbol = files[i].getName();
 			File[] transcriptionsSymbol = files[i].listFiles();
 			for(int j=0;j<transcriptionsSymbol.length;j++) {
 				String transcriptionSymbol = transcriptionsSymbol[j].getName();
