@@ -27,26 +27,34 @@ public class ImageFacade {
 		File file = new File(p);
 		File[] subFiles = file.listFiles();
 		for (int i = 0; i < subFiles.length; i++) {
-			if(subFiles[i].getName().equals(".DS_Store"))
-				subFiles[i].delete();
-			String page = subFiles[i].getName();
-			File[] rows = subFiles[i].listFiles();
-			for (int m = 0; m < rows.length; m++) {
-				String row = rows[m].getName();
-				File[] words = rows[m].listFiles();
-				for (int y = 0; y < words.length; y++) {
-					File[] files = words[y].listFiles();
-					File[] images = files[1].listFiles(); // prendo solo la cartella cut_point_view
-					for (int z = 0; z < images.length; z++) {
-						String image = FilenameUtils.getBaseName(images[z].getName());
-						String path = images[z].getPath();
-						path = path.substring(path.indexOf("/static") + 8, path.length());
-						Image img = new Image();
-						this.updateImage(img, image, manuscript, page, row, path);
-					}
-				}
-			}
-		}
+            if (subFiles[i].isDirectory()) {
+                String page = subFiles[i].getName();
+                File[] rows = subFiles[i].listFiles();
+                for (int m = 0; m < rows.length; m++) {
+                    if (rows[m].isDirectory()) {
+                        String row = rows[m].getName();
+                        File[] words = rows[m].listFiles();
+                        for (int y = 0; y < words.length; y++) {
+                            if (words[y].isDirectory()) {
+                                File[] files = words[y].listFiles();
+                                if (files[1].isDirectory()) {
+                                    File[] images = files[1].listFiles(); // prendo solo la cartella cut_point_view
+                                    for (int z = 0; z < images.length; z++) {
+                                        if (!images[z].getName().equals(".DS_Store")) {
+                                            String image = FilenameUtils.getBaseName(images[z].getName());
+                                            String path = images[z].getPath();
+                                            path = path.substring(path.indexOf("/static") + 8, path.length());
+                                            Image img = new Image();
+                                            this.updateImage(img, image, manuscript, page, row, path);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 
 	@Transactional
@@ -54,22 +62,23 @@ public class ImageFacade {
 		File file = new File(p);
 		File[] subFiles = file.listFiles();
 		for (int i = 0; i < subFiles.length; i++) {
-			String page = subFiles[i].getName();
-			String row = subFiles[i].getName();
+            if (subFiles[i].isDirectory()) {
+                String page = subFiles[i].getName();
+                String row = subFiles[i].getName();
+                File[] images = subFiles[i].listFiles();
+                for (int z = 0; z < images.length; z++) {
+                    if (!images[z].getName().equals(".DS_Store")) {
+                        String image = FilenameUtils.getBaseName(images[z].getName());
+                        String path = images[z].getPath().replace("\\", "/");
+                        path = path.substring(path.indexOf("/static") + 8, path.length());
+                        Image img = new Image();
+                        this.updateImage(img, image, manuscript, page, row, path);
 
-			File[] images = subFiles[i].listFiles();
-			for (int z = 0; z < images.length; z++) {
-				String image = FilenameUtils.getBaseName(images[z].getName());
-				String path = images[z].getPath().replace("\\", "/");
+                    }
+                }
 
-				path = path.substring(path.indexOf("/static") + 8, path.length());
-
-				Image img = new Image();
-				this.updateImage(img, image, manuscript, page, row, path);
-
-			}
-
-		}
+            }
+        }
 	}
 	
 	public Image updateImage(Image img, String name, Manuscript manuscript, String page, String row,

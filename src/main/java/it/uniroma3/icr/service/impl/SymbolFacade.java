@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.*;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import it.uniroma3.icr.model.Symbol;
 
 @Service
 public class SymbolFacade {
+    private static final Logger LOGGER = Logger.getLogger(SymbolFacade.class.getName());
 
 	@Autowired
 	private SymbolDao symbolDao;
@@ -24,56 +26,54 @@ public class SymbolFacade {
 	private GetSamplePath getSamplePath;
 	
 	public void insertSymbolInDb(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
-		File[] files = new File(p).listFiles();
+        File[] files = new File(p).listFiles();
 		for(int i=0;i<files.length;i++) {
-			if(files[i].getName().equals(".DS_Store"))
-				files[i].delete();
-			String typeSymbol = files[i].getName();
-			File[] transcriptionsSymbol = files[i].listFiles();
-			for(int j=0;j<transcriptionsSymbol.length;j++) {
-				String transcriptionSymbol = transcriptionsSymbol[j].getName();
-				File[] images = transcriptionsSymbol[j].listFiles();
-				File image = images[0];
-				String nameComplete = image.getName();
-				String name = FilenameUtils.getBaseName(nameComplete);
-				String parts[] = name.split("_");
-				int width = Integer.valueOf(parts[0]);
-				BufferedInputStream in = null;
-				try {
-					String transcription = transcriptionSymbol;
-					String type = typeSymbol;
-					
-					Symbol symbol = new Symbol(transcription,type,manuscript,width);
-					manuscript.addSymbol(symbol);
-					this.insertSymbol(symbol);
-				}
-				finally {
-					if (in != null) {
-						try {
+            if (files[i].isDirectory()) {
+                String typeSymbol = files[i].getName();
+                File[] transcriptionsSymbol = files[i].listFiles();
+                for (int j = 0; j < transcriptionsSymbol.length; j++) {
+                    if (transcriptionsSymbol[j].isDirectory()) {
+                        String transcriptionSymbol = transcriptionsSymbol[j].getName();
+                        File[] images = transcriptionsSymbol[j].listFiles();
+                        if (!images[0].getName().equals(".DS_Store")) {
+                            File image = images[0];
+                            String nameComplete = image.getName();
+                            String name = FilenameUtils.getBaseName(nameComplete);
+                            String parts[] = name.split("_");
+                            int width = Integer.valueOf(parts[0]);
+                            BufferedInputStream in = null;
+                            try {
+                                String transcription = transcriptionSymbol;
+                                String type = typeSymbol;
+                                Symbol symbol = new Symbol(transcription, type, manuscript, width);
+                                manuscript.addSymbol(symbol);
+                                this.insertSymbol(symbol);
+                            } finally {
+                                if (in != null) {
+                                    try {
+                                        in.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
 
-							in.close();
-						}
-						catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		}
+                        }
+                    }
+                }
+            }
+        }
 	}
-	
+
 	public Symbol retrieveSymbol(long id) {
 		return this.symbolDao.findOne(id);
 	}
-		
 	public List<Symbol> retrieveAllSymbols() {
 		return this.symbolDao.findAll();
 	}
-	
 	public void insertSymbol(Symbol symbol) {
 		symbolDao.save(symbol);
 	}
-
 	public List<Symbol> findSymbolByManuscriptName(String manuscript) {
 		return this.symbolDao.findByManuscriptName(manuscript);
 	}
@@ -83,5 +83,4 @@ public class SymbolFacade {
     public List<Manuscript> getManuscript() throws FileNotFoundException, IOException {
     	return this.getSamplePath.getManuscript();
     }
-	
 }

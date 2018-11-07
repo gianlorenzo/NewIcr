@@ -45,7 +45,6 @@ public class ImageDaoImpl implements ImageDaoCustom {
 	public List<String> findAllManuscript() {
 		String s = "SELECT distinct manuscript FROM Image";
 		return entityManager.createQuery(s).getResultList();
-		
 	}
 
 	@SuppressWarnings("unchecked")

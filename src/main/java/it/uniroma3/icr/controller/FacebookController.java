@@ -45,29 +45,20 @@ public class FacebookController {
 			@ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
 
 		Facebook facebook = connectionRepository.findPrimaryConnection(Facebook.class).getApi();
-		
 		if (daFB == null)
 			return "redirect:/login";
-
 		if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
 			return "redirect:/connect/facebook";
 		}
-
 		String[] fields = { "first_name", "last_name", "email" };
-
-		
 		User user = facebook.fetchObject("me", User.class, fields);
-
 		String email = user.getEmail();
 		String id = user.getId();
-
 		StudentSocial student = userFacadesocial.findUser(id);
-
 		if (student != null) {
 			SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 			List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
 			updatedAuthorities.add(authority);
-
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(student.getUsername(),
 					"", updatedAuthorities);
 			auth.setDetails(student);
@@ -78,19 +69,15 @@ public class FacebookController {
 			redirectAttributes.addFlashAttribute("social", social);
 			return "redirect:/user/homeStudent";
 		}
-
 		String name = user.getFirstName();
 		String surname = user.getLastName();
-		
 		model.addAttribute("nome", name);
 		model.addAttribute("cognome", surname);
 		model.addAttribute("email", email);
 		model.addAttribute("id", id);
 		model.addAttribute("student", new StudentSocial());
-		
 		Map<String, String> schools = setSchools();
 		model.addAttribute("schools", schools);
-
 		Map<String, String> schoolGroups = new HashMap<String, String>();
 		schoolGroups.put("3", "3");
 		schoolGroups.put("4", "4");

@@ -65,7 +65,7 @@ public class TaskController {
 	public StudentFacadeSocial studentFacadesocial;
 
 	@Autowired
-	ResultFacade resultFacade;
+	public ResultFacade resultFacade;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -74,7 +74,6 @@ public class TaskController {
 	}
 
 	public @ModelAttribute("taskResults") TaskWrapper setupWrapper() {
-
 		return new TaskWrapper();
 	}
 
@@ -83,7 +82,7 @@ public class TaskController {
 			@ModelAttribute("taskResults") TaskWrapper taskResults, Model model, HttpServletRequest request,
 			@RequestParam(name = "social", required = false) String social) {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //prendo username dello studente
 		String s = auth.getName();
 		model.addAttribute("social", social);
 		Student student;
@@ -91,32 +90,24 @@ public class TaskController {
 			student = studentFacade.findUser(s);
 		else
 			student = studentFacadesocial.findUser(s);
-		model.addAttribute("student", student);
-
-		task = taskFacade.assignTask(student);  
-
+		model.addAttribute("student", student);  //verifico se lo studente ha effettuato un login con i social o meno
+		task = taskFacade.assignTask(student); //assegno task allo studente
 		if ((task != null) && (task.getStudent() !=null)) {
 			task.setStudent(student);
-			
 			LOGGER.debug("1 - assigned Task " + task.getId() + " to student "+ student.getId() + " (" + task.getStudent().getId() +")");
 			List<Sample> positiveSamples = sampleService.findAllSamplesBySymbolId(task.getJob().getSymbol().getId());
 			List<Sample> negativeSamples = negativeSampleService.findAllNegativeSamplesBySymbolId(task.getJob().getSymbol().getId());
 			List<Result> listResults = taskFacade.findTaskResult(task, student);
-			
 			taskResults.setResultList(listResults);
 			for (Result r : taskResults.getResultList()) {
 				LOGGER.debug("2 - retrieved task " + r.getTask().getId() +" student " + r.getTask().getStudent().getId() + " (for " + student.getId() + ")");
 				r.getImage().setPath(r.getImage().getPath().replace(File.separatorChar, '/'));
 			}
-
 			String hint = taskFacade.findHintByTask(taskResults.getResultList().get(0).getTask());
-					
 			LOGGER.debug("3 - hint on task "+ task.getId() +" to student "+ student.getId());
-
 			for (Result r : taskResults.getResultList()) {
 				LOGGER.debug("3.1 - hint on task "+ task.getId() + "(" + r.getTask().getId() +") to student " + student.getId() + "(" + r.getTask().getStudent().getId() +")" + " result "+r.getId());
 			}
-
 			task.setStudent(student);
 			model.addAttribute("student", student);
 			model.addAttribute("positiveSamples", positiveSamples);
@@ -124,17 +115,14 @@ public class TaskController {
 			model.addAttribute("task", task);
 			model.addAttribute("taskResults", taskResults);
 			model.addAttribute("hint", hint);
-			
 			LOGGER.debug("4 - end taskChoose task " + 
 					task.getId() + "(task results " + 
 					taskResults.getResultList().get(0).getTask().getId() + 
 					" size " + taskResults.getResultList().size() + 
 					") by student " + student.getId() + " (" + 
-					taskResults.getResultList().get(0).getTask().getStudent().getId() + " - " +task.getStudent().getId() +")");				
-
+					taskResults.getResultList().get(0).getTask().getStudent().getId() + " - " +task.getStudent().getId() +")");
 			return "users/newTaskImage";
 		}
-
 		return "users/goodBye";
 	}
 
@@ -220,18 +208,18 @@ public class TaskController {
 			s = studentFacadesocial.findUser(auth.getName());
 		}
 		if (s.getTaskEffettuati() > 0) {
-		long secs = this.taskFacade.getWorkTime(s);
+			long secs = this.taskFacade.getWorkTime(s);
 
-		long hours = secs / 3600;
-		long minutes = (secs % 3600) / 60;
-		long seconds = secs % 60;
+			long hours = secs / 3600;
+			long minutes = (secs % 3600) / 60;
+			long seconds = secs % 60;
 
-		String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+			String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-		model.addAttribute("time", timeString);
-		model.addAttribute("s", s);
-		model.addAttribute("social", social);
-		return "users/studentTasks";
+			model.addAttribute("time", timeString);
+			model.addAttribute("s", s);
+			model.addAttribute("social", social);
+			return "users/studentTasks";
 		}
 		return "users/noStudentTasks";
 	}

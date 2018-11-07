@@ -52,7 +52,6 @@ public class GoogleController {
 		if (connectionRepository.findPrimaryConnection(Google.class) == null) {
 			return "redirect:/connect/google";
 		}
-
 		String id = google.userOperations().getUserInfo().getId();
 		StudentSocial student= userFacadesocial.findUser(id);
 		

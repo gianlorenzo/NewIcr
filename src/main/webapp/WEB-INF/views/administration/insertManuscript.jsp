@@ -49,7 +49,7 @@
 					</form:form>
 				</div>
 				<div id="buttonreplacement"
-					style="margin-left: 60px; display: none;">
+					style="margin-left: 100px; display: none;">
 					<img src="${pageContext.request.contextPath}/img/siteImages/loadIcon.gif" alt="">
 				</div>
 				<div id="login"></div>
