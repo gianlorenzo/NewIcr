@@ -18,14 +18,5 @@ public class IndexController {
 	public String goToLoginAdmin(){
 		return "login_admin";
 	}
-	
-	@RequestMapping(value="/login_studente", method=RequestMethod.GET)
-	public String goToLoginStudente(){
-		return "login_admin";
-	}
-	
-	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String goToIndex1(){
-		return "login";
-	}
+
 }

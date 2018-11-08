@@ -3,6 +3,7 @@ package it.uniroma3.icr.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniroma3.icr.SupportControllerMethod.SetSchools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class UserController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
+	private SetSchools setSchools = new SetSchools();
+
 	@Autowired
 	private Facebook facebook;
 
@@ -69,19 +72,14 @@ public class UserController {
 		schoolGroups.put("4", "4");
 		schoolGroups.put("5", "5");
 		model.addAttribute("schoolGroups", schoolGroups);
-
-		Map<String, String> schools = setSchools();
-		model.addAttribute("schools", schools);
-		
+		model.addAttribute("schools", setSchools.setSchools());
 		return "registration";
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public String confirmUser(@ModelAttribute Student student, Model model) {
 
-		Map<String, String> schools = setSchools();
-		model.addAttribute("schools", schools);
-		
+		model.addAttribute("schools", setSchools.setSchools());
 		Map<String, String> schoolGroups = new HashMap<String, String>();
 		schoolGroups.put("3", "3");
 		schoolGroups.put("4", "4");
@@ -89,7 +87,6 @@ public class UserController {
 		model.addAttribute("schoolGroups", schoolGroups);
 
 		Student u = userFacade.findUser(student.getUsername());
-
 		Administrator a = adminFacade.findAdmin(student.getUsername());
 
 		if (studentValidator.validate(student, model, u, a)) {
@@ -108,9 +105,7 @@ public class UserController {
 	@RequestMapping(value = "/addUserFromFB", method = RequestMethod.POST)
 	public String confirmUserFB(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
 			BindingResult bindingResult) {
-
-		Map<String, String> schools = setSchools();
-		model.addAttribute("schools", schools);
+		model.addAttribute("schools", setSchools.setSchools());
 
 		Map<String, String> schoolGroups = new HashMap<String, String>();
 		schoolGroups.put("3", "3");
@@ -141,9 +136,7 @@ public class UserController {
 	@RequestMapping(value = "/addUserFromGoogle", method = RequestMethod.POST)
 	public String confirmUserGoogle(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
 			BindingResult bindingResult) {
-
-		Map<String, String> schools = setSchools();
-		model.addAttribute("schools", schools);
+		model.addAttribute("schools", setSchools.setSchools());
 		
 		Map<String, String> schoolGroups = new HashMap<String, String>();
 		schoolGroups.put("3", "3");
@@ -190,7 +183,6 @@ public class UserController {
 			model.addAttribute("student", student);
 			return "users/changeStudentPassword";
 		}
-
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String passwordEncode = passwordEncoder.encode(student.getPassword());
 		student.setPassword(passwordEncode);
@@ -211,31 +203,4 @@ public class UserController {
 		return "users/homeStudent";
 	}
 
-	private Map<String, String> setSchools() {
-		Map<String, String> schools = new HashMap<>();
-		schools.put("Anco Marzio","Anco Marzio");
-		schools.put("Aristofane","Aristofane");
-		schools.put("Aristotele","Aristotele");
-		schools.put("Augusto","Augusto");
-		schools.put("C.Cavour","C.Cavour");
-		schools.put("Croce Aleramo","Croce Aleramo");
-		schools.put("Democrito","Democrito");
-		schools.put("Ettore Majorana","Ettore Majorana");
-		schools.put("Farnesina","Farnesina");
-		schools.put("Giordano Bruno","Giordano Bruno");
-		schools.put("Giulio Cesare","Giulio Cesare");
-		schools.put("Giuseppe Peano","Giuseppe Peano");
-		schools.put("Guidonia Montecelio","Guidonia Montecelio");
-		schools.put("IIS via Albergotti 35","IIS via Albergotti 35");
-		schools.put("Istituto Minerva","Istituto Minerva");
-		schools.put("Kennedy","Kennedy");
-		schools.put("Keplero","Keplero");
-		schools.put("Luciano Manara","Luciano Manara");
-		schools.put("Massimiliano Massimo","Massimiliano Massimo");
-		schools.put("Primo Levi","Primo Levi");
-		schools.put("Sandro Pertini","Sandro Pertini");
-		schools.put("Tacito","Tacito");
-		schools.put("Volontario esterno","Volontario esterno");
-		return schools;
-	}
 }

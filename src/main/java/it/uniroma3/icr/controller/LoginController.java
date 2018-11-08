@@ -34,7 +34,6 @@ public class LoginController  {
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String login (ModelMap model,@RequestParam(value = "error", required = false) String error) {
-
 		if (error != null) {
 			model.addAttribute("error", "Username o password non validi");
 		}
@@ -57,7 +56,6 @@ public class LoginController  {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String role = auth.getAuthorities().toString();
 		Student student = studentFacade.findUser(auth.getName());
-		
 		String targetUrl = "";
 		if(role.contains("ROLE_USER")) {
 			model.addAttribute("student", student);
