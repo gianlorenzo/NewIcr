@@ -40,8 +40,7 @@ public class GoogleController {
 		this.google = google;
 		this.connectionRepository = connectionRepository;
 	}
-
-
+	
 	@RequestMapping(value="/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String helloGoogle(@RequestParam(value = "daGoogle", required = false)String daGoogle, Model model,
 			@ModelAttribute("social") String social,RedirectAttributes redirectAttributes) {

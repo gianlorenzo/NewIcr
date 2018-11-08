@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.uniroma3.icr.SupportControllerMethod.FacebookControllerSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class FacebookController {
 	@Autowired
 	private StudentFacadeSocial userFacadesocial;
 
+	private FacebookControllerSupport facebookControllerSupport = new FacebookControllerSupport();
+
 	public FacebookController(Facebook facebook, ConnectionRepository connectionRepository) {
 		this.connectionRepository = connectionRepository;
 	}
@@ -47,71 +50,10 @@ public class FacebookController {
 		Facebook facebook = connectionRepository.findPrimaryConnection(Facebook.class).getApi();
 		if (daFB == null)
 			return "redirect:/login";
-		if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
+		if (connectionRepository.findPrimaryConnection(Facebook.class) == null)
 			return "redirect:/connect/facebook";
-		}
-		String[] fields = { "first_name", "last_name", "email" };
-		User user = facebook.fetchObject("me", User.class, fields);
-		String email = user.getEmail();
-		String id = user.getId();
-		StudentSocial student = userFacadesocial.findUser(id);
-		if (student != null) {
-			SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-			List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
-			updatedAuthorities.add(authority);
-			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(student.getUsername(),
-					"", updatedAuthorities);
-			auth.setDetails(student);
-			SecurityContextHolder.getContext().setAuthentication(auth);
-			model.addAttribute("student", student);
-		    LOGGER.info("Login: " + student.toString());
-			social = "fb";
-			redirectAttributes.addFlashAttribute("social", social);
-			return "redirect:/user/homeStudent";
-		}
-		String name = user.getFirstName();
-		String surname = user.getLastName();
-		model.addAttribute("nome", name);
-		model.addAttribute("cognome", surname);
-		model.addAttribute("email", email);
-		model.addAttribute("id", id);
-		model.addAttribute("student", new StudentSocial());
-		Map<String, String> schools = setSchools();
-		model.addAttribute("schools", schools);
-		Map<String, String> schoolGroups = new HashMap<String, String>();
-		schoolGroups.put("3", "3");
-		schoolGroups.put("4", "4");
-		schoolGroups.put("5", "5");
-		model.addAttribute("schoolGroups", schoolGroups);
-		return "/registrationFacebook";
-	}
-	
-	private Map<String, String> setSchools() {
-		Map<String, String> schools = new HashMap<>();
-		schools.put("Anco Marzio","Anco Marzio");
-		schools.put("Aristofane","Aristofane");
-		schools.put("Aristotele","Aristotele");
-		schools.put("Augusto","Augusto");
-		schools.put("C.Cavour","C.Cavour");
-		schools.put("Croce Aleramo","Croce Aleramo");
-		schools.put("Democrito","Democrito");
-		schools.put("Ettore Majorana","Ettore Majorana");
-		schools.put("Farnesina","Farnesina");
-		schools.put("Giordano Bruno","Giordano Bruno");
-		schools.put("Giulio Cesare","Giulio Cesare");
-		schools.put("Giuseppe Peano","Giuseppe Peano");
-		schools.put("Guidonia Montecelio","Guidonia Montecelio");
-		schools.put("IIS via Albergotti 35","IIS via Albergotti 35");
-		schools.put("Istituto Minerva","Istituto Minerva");
-		schools.put("Kennedy","Kennedy");
-		schools.put("Keplero","Keplero");
-		schools.put("Luciano Manara","Luciano Manara");
-		schools.put("Massimiliano Massimo","Massimiliano Massimo");
-		schools.put("Primo Levi","Primo Levi");
-		schools.put("Sandro Pertini","Sandro Pertini");
-		schools.put("Tacito","Tacito");
-		schools.put("Volontario esterno","Volontario esterno");
-		return schools;
-	}
 
+		return facebookControllerSupport.facebookLogin(facebook,userFacadesocial,model,social,redirectAttributes);
+
+	}
 }

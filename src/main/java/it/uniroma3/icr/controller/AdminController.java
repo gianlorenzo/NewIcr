@@ -213,11 +213,10 @@ public class AdminController {
 		sampleService.getSampleImage(path, m);
 		path = negativeSampleService.getNegativePath();
 		path = path.concat(manuscriptName).concat("/");
-		negativeSampleService.getNegativeSampleImage(path, m); // negativeSampleImage(path);
+		negativeSampleService.getNegativeSampleImage(path, m); //
 		path = imageFacade.getPath();
 		path = path.concat(manuscriptName).concat("/");
-		imageFacade.updateImagesAll(path, m); 
-
+		imageFacade.updateImagesAll(path, m);
 		this.manuscriptService.saveManuscript(manuscript);
 		return "administration/insertRecap";
 	}
@@ -229,7 +228,6 @@ public class AdminController {
 		Administrator a = this.adminFacade.findAdmin(username);
 		a.setPassword("");
 		model.addAttribute("administrator", a);
-
 		return "administration/changeAdminPassword";
 	}
 
