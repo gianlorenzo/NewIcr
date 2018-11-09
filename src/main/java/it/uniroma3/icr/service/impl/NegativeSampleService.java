@@ -30,7 +30,6 @@ public class NegativeSampleService {
 	private GetNegativeSamplePath negativeSamplePath;
 
 	public void getNegativeSampleImage(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
-		Runtime.getRuntime().exec("find . -name \".DS_Store\" -exec rm -rf {} \\;");
 		File[] files = new File(p).listFiles();
 		for(int i=0;i<files.length;i++) {
 			if(files[i].isDirectory()) {

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -51,6 +53,8 @@ import it.uniroma3.icr.validator.jobValidator;
 
 @Controller
 public class AdminController {
+
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private SymbolEditor symbolEditor;
@@ -181,7 +185,7 @@ public class AdminController {
 	@RequestMapping(value = "admin/selectManuscript")
 	public String selectManuscript(Model model, @ModelAttribute Manuscript manuscript)
 			throws FileNotFoundException, IOException {
-		List<Manuscript> listManuscripts = this.imageFacade.getManuscript(); // da dove prendo tutti i manoscritti?
+		List<Manuscript> listManuscripts = this.imageFacade.getManuscript();
 
 		List<String> listManuscriptsName = new ArrayList<>();
 		for (Manuscript m : listManuscripts) {

@@ -2,9 +2,7 @@ package it.uniroma3.icr.controller;
 
 
 
-import it.uniroma3.icr.SupportControllerMethod.GoogleControllerSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import it.uniroma3.icr.supportControllerMethod.GoogleControllerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.social.connect.ConnectionRepository;

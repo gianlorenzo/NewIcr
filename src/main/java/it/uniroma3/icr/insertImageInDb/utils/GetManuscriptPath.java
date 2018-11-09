@@ -31,6 +31,8 @@ public abstract class GetManuscriptPath implements ServletContextAware{
 		String path = this.getPath();
 		LOGGER.info("manuscript path: "+path);
 
+
+		//qui prendo tutti i manoscritti che sono le subdirectory di images
 		File[] files = new File(path).listFiles();
 		for(int i=0;i<files.length;i++) {
 			if(files[i].getName().equals(".DS_Store"))

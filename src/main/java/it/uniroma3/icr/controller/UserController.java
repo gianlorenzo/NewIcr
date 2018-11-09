@@ -3,7 +3,7 @@ package it.uniroma3.icr.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.uniroma3.icr.SupportControllerMethod.SetSchools;
+import it.uniroma3.icr.supportControllerMethod.SetSchools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
