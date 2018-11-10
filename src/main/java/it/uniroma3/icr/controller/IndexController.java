@@ -13,6 +13,9 @@ public class IndexController {
 	public String goToIndex() {
 		return "index";
 	}
+
+	@RequestMapping(value = "/errorIndex", method = RequestMethod.GET)
+	public String errorToIndex() { return "index";}
 	
 	@RequestMapping(value="/login_admin", method=RequestMethod.GET)
 	public String goToLoginAdmin(){

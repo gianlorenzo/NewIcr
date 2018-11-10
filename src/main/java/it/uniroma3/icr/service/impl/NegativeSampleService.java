@@ -9,6 +9,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,10 @@ public class NegativeSampleService {
 	@Autowired
 	private GetNegativeSamplePath negativeSamplePath;
 
-	public void getNegativeSampleImage(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
+
+    public void getNegativeSampleImage(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
 		File[] files = new File(p).listFiles();
 		for(int i=0;i<files.length;i++) {
 			if(files[i].isDirectory()) {
@@ -43,6 +48,7 @@ public class NegativeSampleService {
 							if (!images[m].getName().equals(".DS_Store")) {
 								String nameComplete = images[m].getName();
 								String pathFile = images[m].getPath().replace("\\", "/");
+								LOGGER.info("NegativeSampleService pathFile:" + pathFile);
 								String name = FilenameUtils.getBaseName(nameComplete);
 								String parts[] = name.split("_");
 								int width = Integer.valueOf(parts[0]);
@@ -55,7 +61,8 @@ public class NegativeSampleService {
 									int height = f.getHeight();
 									int xImg = x;
 									int yImg = y;
-									String path = pathFile.substring(pathFile.indexOf("/static") + 8, pathFile.length());
+									String path = pathFile.substring(pathFile.indexOf("img") , pathFile.length());
+                                    LOGGER.info("NegativeSampleService pathFile:" + path);
 									String type = typeSymbol;
 									NegativeSample negativeSample = new NegativeSample(width, height, xImg, yImg, manuscript,
 											type, path);

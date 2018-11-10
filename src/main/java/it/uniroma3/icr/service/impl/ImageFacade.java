@@ -70,7 +70,7 @@ public class ImageFacade {
                     if (!images[z].getName().equals(".DS_Store")) {
                         String image = FilenameUtils.getBaseName(images[z].getName());
                         String path = images[z].getPath().replace("\\", "/");
-                        path = path.substring(path.indexOf("/static") + 8, path.length());
+                        path = path.substring(path.indexOf("img") , path.length());
                         Image img = new Image();
                         this.updateImage(img, image, manuscript, page, row, path);
 

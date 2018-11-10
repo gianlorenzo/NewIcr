@@ -16,7 +16,7 @@
 </head>
 <body>
 <h1>Ops...Qualcosa è andato storto!</h1>
-<a href="/index">Torna alla pagina di login</a>
+<a href="errorIndex">Torna alla pagina di login</a>
 <table>
     <tr>
         <td>Date:</td>

@@ -55,7 +55,7 @@ public class SampleService {
                                     int height = f.getHeight();
                                     int xImg = x;
                                     int yImg = y;
-                                    String path = pathFile.substring(pathFile.indexOf("/static") + 8, pathFile.length());
+                                    String path = pathFile.substring(pathFile.indexOf("img"), pathFile.length());
                                     String type = typeSymbol;
                                     Sample sample = new Sample(width, height, xImg, yImg, manuscript,
                                             type, path);

@@ -10,8 +10,7 @@ public class GetImagePath extends GetManuscriptPath{
 
 	@Override
 	public String getPath() {
-		String path = System.getProperty("user.dir") + this.getServletContext().getInitParameter("pathImage");
-
+		String path = this.getServletContext().getInitParameter("pathImage");
 		LOGGER.info("image path: "+path);
 		return path;
 	}
