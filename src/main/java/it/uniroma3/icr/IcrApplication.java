@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,6 +17,11 @@ public class IcrApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) throws Exception{
 
 		SpringApplication.run(IcrApplication.class, args);
+	}
+
+	@Bean
+	public HibernateJpaSessionFactoryBean sessionFactory() {
+		return new HibernateJpaSessionFactoryBean();
 	}
 
 	@Bean

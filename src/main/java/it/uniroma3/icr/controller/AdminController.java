@@ -220,7 +220,7 @@ public class AdminController {
 		negativeSampleService.getNegativeSampleImage(path, m); //
 		path = imageFacade.getPath();
 		path = path.concat(manuscriptName).concat("/");
-		imageFacade.updateImagesAll(path, m);
+		imageFacade.updateAllImages(path, m);
 		this.manuscriptService.saveManuscript(manuscript);
 		return "administration/insertRecap";
 	}

@@ -1,4 +1,4 @@
-package it.uniroma3.icr.insertImageInDb.utils;
+package it.uniroma3.icr.insertImageInDb;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

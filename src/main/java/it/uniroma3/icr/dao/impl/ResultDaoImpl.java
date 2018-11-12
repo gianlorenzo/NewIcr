@@ -24,12 +24,12 @@ public class ResultDaoImpl implements ResultDaoCustom {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+
 	
 	@Override
 	public void updateListResult(TaskWrapper taskResults) {
 		for(Result r : taskResults.getResultList()) {
 			LOGGER.debug("UPDATE result: task " + r.getTask().getId() + " student " + r.getTask().getStudent().getId() + " result " +  r.getId());
-
 			String update = "update result set answer = ?1 where id = ?2";
 			Query query = this.entityManager.createNativeQuery(update).setParameter(1, r.getAnswer()).
 					setParameter(2, r.getId());

@@ -1,4 +1,4 @@
-package it.uniroma3.icr.insertImageInDb.utils;
+package it.uniroma3.icr.insertImageInDb;
 
 import java.io.File;
 import java.io.FileNotFoundException;
