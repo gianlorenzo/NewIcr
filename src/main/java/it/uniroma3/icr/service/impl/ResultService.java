@@ -12,7 +12,7 @@ import it.uniroma3.icr.model.Task;
 import it.uniroma3.icr.model.TaskWrapper;
 
 @Service
-public class ResultFacade {
+public class ResultService {
 
 	@Autowired
 	private ResultDao resultDao;

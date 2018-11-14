@@ -28,15 +28,15 @@ import it.uniroma3.icr.model.Task;
 import it.uniroma3.icr.model.TaskWrapper;
 import it.uniroma3.icr.service.editor.ImageEditor;
 import it.uniroma3.icr.service.editor.TaskEditor;
-import it.uniroma3.icr.service.impl.ImageFacade;
-import it.uniroma3.icr.service.impl.JobFacade;
+import it.uniroma3.icr.service.impl.ImageService;
+import it.uniroma3.icr.service.impl.JobService;
 import it.uniroma3.icr.service.impl.NegativeSampleService;
-import it.uniroma3.icr.service.impl.ResultFacade;
+import it.uniroma3.icr.service.impl.ResultService;
 import it.uniroma3.icr.service.impl.SampleService;
-import it.uniroma3.icr.service.impl.StudentFacade;
-import it.uniroma3.icr.service.impl.StudentFacadeSocial;
-import it.uniroma3.icr.service.impl.SymbolFacade;
-import it.uniroma3.icr.service.impl.TaskFacade;
+import it.uniroma3.icr.service.impl.StudentService;
+import it.uniroma3.icr.service.impl.StudentServiceSocial;
+import it.uniroma3.icr.service.impl.SymbolService;
+import it.uniroma3.icr.service.impl.TaskService;
 
 @Controller
 public class TaskController {
@@ -45,25 +45,25 @@ public class TaskController {
 	private @Autowired ImageEditor imageEditor;
 	private @Autowired TaskEditor taskEditor;
 	@Autowired
-	public SymbolFacade symbolFacade;
+	public SymbolService symbolService;
 	@Autowired
 	public SampleService sampleService;
 	@Autowired
 	public NegativeSampleService negativeSampleService;
 	@Autowired
-	public JobFacade facadeJob;
+	public JobService facadeJob;
 	@Autowired
-	public ImageFacade imageFacade;
+	public ImageService imageService;
 	@Autowired
-	public TaskFacade taskFacade;
+	public TaskService taskService;
 	@Autowired
-	public StudentFacade studentFacade;
+	public StudentService studentService;
 
 	@Autowired
-	public StudentFacadeSocial studentFacadesocial;
+	public StudentServiceSocial studentFacadesocial;
 
 	@Autowired
-	public ResultFacade resultFacade;
+	public ResultService resultService;
 
 	private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
 
@@ -87,12 +87,12 @@ public class TaskController {
 		model.addAttribute("social", social);
 		Student student;
 		if (social == null || social.isEmpty())
-			student = studentFacade.findUser(s);
+			student = studentService.findUser(s);
 		else
 			student = studentFacadesocial.findUser(s);
 		model.addAttribute("student", student);
-		task = taskFacade.assignTask(student);
-		return taskControllerSupport.assingStudentTask(task,student,model,taskResults,taskFacade,sampleService,negativeSampleService);
+		task = taskService.assignTask(student);
+		return taskControllerSupport.assingStudentTask(task,student,model,taskResults, taskService,sampleService,negativeSampleService);
 
 	}
 
@@ -105,13 +105,13 @@ public class TaskController {
 		model.addAttribute("social", social);
 		Student student;
 		if (social == null || social.isEmpty())
-			student = studentFacade.findUser(username);
+			student = studentService.findUser(username);
 		else
 			student = studentFacadesocial.findUser(username);
 		LOGGER.info("5 - Auth name " + username + ", student: " + student.getId());
 		String action = request.getParameter("action");
 		String targetUrl = "";
-		taskControllerSupport.setResult(model,action,taskResults,student,taskFacade,resultFacade);
+		taskControllerSupport.setResult(model,action,taskResults,student, taskService, resultService);
 		response.sendRedirect("newTask");
 		targetUrl = "users/newTaskImage";
 		model.addAttribute("student", student);
@@ -123,11 +123,11 @@ public class TaskController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Student s;
 		if (social == null || social.isEmpty()) {
-			s = studentFacade.findUser(auth.getName());
+			s = studentService.findUser(auth.getName());
 		} else {
 			s = studentFacadesocial.findUser(auth.getName());
 		}
-		taskControllerSupport.viewStudentTasks(s,model,taskFacade,social);
+		taskControllerSupport.viewStudentTasks(s,model, taskService,social);
 		return "users/noStudentTasks";
 	}
 

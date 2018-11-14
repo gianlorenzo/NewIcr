@@ -14,7 +14,7 @@ import it.uniroma3.icr.model.Image;
 import it.uniroma3.icr.model.Manuscript;
 
 @Service
-public class ImageFacade {
+public class ImageService {
 	@Autowired
 	private GetImagePath getImagePath;
 

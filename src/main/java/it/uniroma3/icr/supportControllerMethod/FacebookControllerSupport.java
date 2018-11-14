@@ -1,7 +1,7 @@
 package it.uniroma3.icr.supportControllerMethod;
 
 import it.uniroma3.icr.model.StudentSocial;
-import it.uniroma3.icr.service.impl.StudentFacadeSocial;
+import it.uniroma3.icr.service.impl.StudentServiceSocial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ public class FacebookControllerSupport {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-    public String facebookLogin(Facebook facebook, StudentFacadeSocial userFacadesocial,
+    public String facebookLogin(Facebook facebook, StudentServiceSocial userFacadesocial,
                                 Model model, String social, RedirectAttributes redirectAttributes) {
         String[] fields = { "first_name", "last_name", "email" };
         User user = facebook.fetchObject("me", User.class, fields);

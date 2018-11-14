@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.uniroma3.icr.model.Image;
-import it.uniroma3.icr.service.impl.ImageFacade;
+import it.uniroma3.icr.service.impl.ImageService;
 
 @Component
 public class ImageEditor extends PropertyEditorSupport {
-	private @Autowired ImageFacade imageFacade;
+	private @Autowired
+    ImageService imageService;
 	
 	@Override
 	public void setAsText(String text) {
-		Image i = this.imageFacade.retrieveImage(Long.valueOf(text));
+		Image i = this.imageService.retrieveImage(Long.valueOf(text));
 		this.setValue(i);
 	}
 	

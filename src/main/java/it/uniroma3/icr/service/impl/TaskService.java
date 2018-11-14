@@ -22,13 +22,13 @@ import it.uniroma3.icr.model.Student;
 import it.uniroma3.icr.model.Task;
 
 @Service
-public class TaskFacade {
+public class TaskService {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private TaskDao taskDao;
 	@Autowired
-	private ResultFacade resultFacade;
+	private ResultService resultService;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -157,7 +157,7 @@ public class TaskFacade {
 				Result result = new Result();
 				result.setImage(j);
 				result.setTask(task);
-				this.resultFacade.addResult(result);
+				this.resultService.addResult(result);
 			}
 		}
 

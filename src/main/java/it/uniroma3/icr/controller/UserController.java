@@ -28,9 +28,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.uniroma3.icr.model.Administrator;
 import it.uniroma3.icr.model.Student;
 import it.uniroma3.icr.model.StudentSocial;
-import it.uniroma3.icr.service.impl.AdminFacade;
-import it.uniroma3.icr.service.impl.StudentFacade;
-import it.uniroma3.icr.service.impl.StudentFacadeSocial;
+import it.uniroma3.icr.service.impl.AdminService;
+import it.uniroma3.icr.service.impl.StudentService;
+import it.uniroma3.icr.service.impl.StudentServiceSocial;
 import it.uniroma3.icr.validator.studentValidator;
 import it.uniroma3.icr.validator.StudentValidator2;
 
@@ -48,13 +48,13 @@ public class UserController {
 	private Google google;
 
 	@Autowired
-	private StudentFacade userFacade;
+	private StudentService userFacade;
 
 	@Autowired
-	private StudentFacadeSocial userFacadesocial;
+	private StudentServiceSocial userFacadesocial;
 
 	@Autowired
-	private AdminFacade adminFacade;
+	private AdminService adminService;
 
 	@Qualifier("userValidator")
 	private Validator validator;
@@ -87,7 +87,7 @@ public class UserController {
 		model.addAttribute("schoolGroups", schoolGroups);
 
 		Student u = userFacade.findUser(student.getUsername());
-		Administrator a = adminFacade.findAdmin(student.getUsername());
+		Administrator a = adminService.findAdmin(student.getUsername());
 
 		if (studentValidator.validate(student, model, u, a)) {
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -116,7 +116,7 @@ public class UserController {
 		StudentSocial u = userFacadesocial.findUser(student.getUsername());
 		LOGGER.info("FB authorized (student) for "+ student.toString());
 
-		Administrator a = adminFacade.findAdmin(student.getUsername());
+		Administrator a = adminService.findAdmin(student.getUsername());
 		if (u!=null) {
 			LOGGER.info("FB authorized (u) for "+ u.toString());
 			LOGGER.info("FB validation (u) for "+ u.toString() + " is " +StudentValidator2.validate(student, model, u, a));
@@ -147,7 +147,7 @@ public class UserController {
 		StudentSocial u = userFacadesocial.findUser(student.getUsername());
 		LOGGER.info("Goo authorized (student) for "+ student.toString());
 
-		Administrator a = adminFacade.findAdmin(student.getUsername());
+		Administrator a = adminService.findAdmin(student.getUsername());
 		if (u!=null) {
 			LOGGER.info("Goo authorized (u) for "+ u.toString());
 			LOGGER.info("Goo validation (u) for "+ u.toString() + " is " +StudentValidator2.validate(student, model, u, a));

@@ -1,7 +1,7 @@
 package it.uniroma3.icr.supportControllerMethod;
 
 import it.uniroma3.icr.model.StudentSocial;
-import it.uniroma3.icr.service.impl.StudentFacadeSocial;
+import it.uniroma3.icr.service.impl.StudentServiceSocial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +25,7 @@ public class GoogleControllerSupport {
     private SetSchools setSchools = new SetSchools();
 
     public String googleLogin(Google google, ConnectionRepository connectionRepository,
-                              StudentFacadeSocial userFacadesocial, Model model,
+                              StudentServiceSocial userFacadesocial, Model model,
                               String social, RedirectAttributes redirectAttributes) {
         String id = google.userOperations().getUserInfo().getId();
         StudentSocial student= userFacadesocial.findUser(id);

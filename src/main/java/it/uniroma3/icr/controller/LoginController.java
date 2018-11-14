@@ -3,34 +3,83 @@ package it.uniroma3.icr.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import it.uniroma3.icr.service.impl.StudentServiceSocial;
+import it.uniroma3.icr.supportControllerMethod.FacebookControllerSupport;
+import it.uniroma3.icr.supportControllerMethod.GoogleControllerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.google.api.Google;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.icr.model.Administrator;
 import it.uniroma3.icr.model.Student;
-import it.uniroma3.icr.service.impl.StudentFacade;
-import it.uniroma3.icr.service.impl.TaskFacade;
+import it.uniroma3.icr.service.impl.StudentService;
+import it.uniroma3.icr.service.impl.TaskService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class LoginController  {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	public TaskFacade taskFacade;
+	public TaskService taskService;
 
 	@Autowired
-	public StudentFacade studentFacade;
+	public StudentService studentService;
+
+	@Autowired
+	private StudentServiceSocial userFacadesocial;
+
+	private ConnectionRepository connectionRepository;
+
+	private Google google;
+
+	private FacebookControllerSupport facebookControllerSupport = new FacebookControllerSupport();
+
+	private GoogleControllerSupport googleControllerSupport = new GoogleControllerSupport();
+
+	public LoginController(Facebook facebook, Google google, ConnectionRepository connectionRepository) {
+		this.connectionRepository = connectionRepository;
+		this.google = google;
+		this.connectionRepository = connectionRepository;
+	}
+
+	@RequestMapping(value = "/facebookLogin", method = { RequestMethod.GET, RequestMethod.POST })
+	public String helloFacebook(@RequestParam(value = "daFB", required = false) String daFB, Model model,
+								@ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
+
+		Facebook facebook = connectionRepository.findPrimaryConnection(Facebook.class).getApi();
+		if (daFB == null)
+			return "redirect:/login";
+		if (connectionRepository.findPrimaryConnection(Facebook.class) == null)
+			return "redirect:/connect/facebook";
+
+		return facebookControllerSupport.facebookLogin(facebook,userFacadesocial,model,social,redirectAttributes);
+
+	}
+
+	@RequestMapping(value="/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
+	public String helloGoogle(@RequestParam(value = "daGoogle", required = false)String daGoogle, Model model,
+							  @ModelAttribute("social") String social,RedirectAttributes redirectAttributes) {
+
+		if(daGoogle==null)
+			return "redirect:/login";
+		if (this.connectionRepository.findPrimaryConnection(Google.class) == null)
+			return "redirect:/connect/google";
+
+		return googleControllerSupport.googleLogin(google,connectionRepository,userFacadesocial, model, social, redirectAttributes);
+
+	}
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String login (ModelMap model,@RequestParam(value = "error", required = false) String error) {
@@ -55,7 +104,7 @@ public class LoginController  {
 	public String loginRole(Model model,HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String role = auth.getAuthorities().toString();
-		Student student = studentFacade.findUser(auth.getName());
+		Student student = studentService.findUser(auth.getName());
 		String targetUrl = "";
 		if(role.contains("ROLE_USER")) {
 			model.addAttribute("student", student);

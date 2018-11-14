@@ -7,7 +7,7 @@ import it.uniroma3.icr.dao.AdminDao;
 import it.uniroma3.icr.model.Administrator;
 
 @Service
-public class AdminFacade {
+public class AdminService {
 
 	@Autowired
 	private AdminDao adminDao;

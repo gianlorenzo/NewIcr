@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.uniroma3.icr.model.Symbol;
-import it.uniroma3.icr.service.impl.SymbolFacade;
+import it.uniroma3.icr.service.impl.SymbolService;
 
 @Component
 public class SymbolEditor extends PropertyEditorSupport {
 	
-	private @Autowired SymbolFacade symbolFacade;
+	private @Autowired
+    SymbolService symbolService;
 	
 	@Override
 	public void setAsText(String text) {
-		Symbol s = this.symbolFacade.retrieveSymbol(Long.valueOf(text));
+		Symbol s = this.symbolService.retrieveSymbol(Long.valueOf(text));
 		this.setValue(s);
 	}
 

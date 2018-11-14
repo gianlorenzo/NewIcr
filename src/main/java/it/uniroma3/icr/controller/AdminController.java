@@ -39,15 +39,15 @@ import it.uniroma3.icr.model.Student;
 import it.uniroma3.icr.model.Symbol;
 import it.uniroma3.icr.model.Task;
 import it.uniroma3.icr.service.editor.SymbolEditor;
-import it.uniroma3.icr.service.impl.AdminFacade;
-import it.uniroma3.icr.service.impl.ImageFacade;
-import it.uniroma3.icr.service.impl.JobFacade;
+import it.uniroma3.icr.service.impl.AdminService;
+import it.uniroma3.icr.service.impl.ImageService;
+import it.uniroma3.icr.service.impl.JobService;
 import it.uniroma3.icr.service.impl.ManuscriptService;
 import it.uniroma3.icr.service.impl.NegativeSampleService;
 import it.uniroma3.icr.service.impl.SampleService;
-import it.uniroma3.icr.service.impl.StudentFacade;
-import it.uniroma3.icr.service.impl.SymbolFacade;
-import it.uniroma3.icr.service.impl.TaskFacade;
+import it.uniroma3.icr.service.impl.StudentService;
+import it.uniroma3.icr.service.impl.SymbolService;
+import it.uniroma3.icr.service.impl.TaskService;
 import it.uniroma3.icr.validator.AdminValidator;
 import it.uniroma3.icr.validator.jobValidator;
 
@@ -59,21 +59,21 @@ public class AdminController {
 	@Autowired
 	private SymbolEditor symbolEditor;
 	@Autowired
-	private StudentFacade studentFacade;
+	private StudentService studentService;
 	@Autowired
-	private AdminFacade adminFacade;
+	private AdminService adminService;
 	@Autowired
-	private JobFacade facadeJob;
+	private JobService facadeJob;
 	@Autowired
 	private SampleService sampleService;
 	@Autowired
 	private NegativeSampleService negativeSampleService;
 	@Autowired
-	private TaskFacade facadeTask;
+	private TaskService facadeTask;
 	@Autowired
-	private SymbolFacade symbolFacade;;
+	private SymbolService symbolService;;
 	@Autowired
-	private ImageFacade imageFacade;
+	private ImageService imageService;
 	@Autowired
 	private ManuscriptService manuscriptService;
 
@@ -102,13 +102,13 @@ public class AdminController {
 	public String confirmAdmin(@ModelAttribute Administrator administrator, @Validated Administrator a,
 			BindingResult bindingResult, Model model) {
 
-		Administrator a1 = adminFacade.findAdmin(administrator.getUsername());
-		Student s1 = studentFacade.findUser(administrator.getUsername());
+		Administrator a1 = adminService.findAdmin(administrator.getUsername());
+		Student s1 = studentService.findUser(administrator.getUsername());
 
 		if (AdminValidator.validate(administrator, model, a1, s1)) {
 			administrator.setPassword(administrator.getPassword());
 			model.addAttribute("administrator", administrator);
-			adminFacade.addAdmin(administrator);
+			adminService.addAdmin(administrator);
 			return "administration/adminRecap";
 		}
 
@@ -142,7 +142,7 @@ public class AdminController {
 	private String newJobByManuscript(HttpSession session, @ModelAttribute("manuscript") Manuscript manuscript,
 			@ModelAttribute Job job, @ModelAttribute Task task, Model model) {
 		String manuscriptName = manuscript.getName();
-		List<Symbol> symbols = symbolFacade.findSymbolByManuscriptName(manuscriptName);
+		List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
 		Collections.sort(symbols, new ComparatoreSimboloPerNome());
 		job.setManuscript(manuscript);
 		session.setAttribute("manuscript", manuscript);
@@ -163,7 +163,7 @@ public class AdminController {
 		model.addAttribute("manuscript", manuscript);
 		Boolean bool = false;
 		List<Image> imagesTask = null;
-		imagesTask = this.imageFacade.getImagesFromManuscriptName(manuscript.getId());
+		imagesTask = this.imageService.getImagesFromManuscriptName(manuscript.getId());
 		bool = true;
 
 		if (jobValidator.validate(job, model)) {
@@ -171,7 +171,7 @@ public class AdminController {
 			return "administration/jobRecap";
 		} else {
 			String manuscriptName = manuscript.getName();
-			List<Symbol> symbols = symbolFacade.findSymbolByManuscriptName(manuscriptName);
+			List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
 			Collections.sort(symbols, new ComparatoreSimboloPerNome());
 			job.setManuscript(manuscript);
 			session.setAttribute("manuscript", manuscript);
@@ -185,7 +185,7 @@ public class AdminController {
 	@RequestMapping(value = "admin/selectManuscript")
 	public String selectManuscript(Model model, @ModelAttribute Manuscript manuscript)
 			throws FileNotFoundException, IOException {
-		List<Manuscript> listManuscripts = this.imageFacade.getManuscript();
+		List<Manuscript> listManuscripts = this.imageService.getManuscript();
 
 		List<String> listManuscriptsName = new ArrayList<>();
 		for (Manuscript m : listManuscripts) {
@@ -209,18 +209,18 @@ public class AdminController {
 		String manuscriptName = manuscript.getName();
 		this.manuscriptService.saveManuscript(manuscript);
 		Manuscript m = this.manuscriptService.findManuscriptByName(manuscriptName);
-		String path = symbolFacade.getPath();
+		String path = symbolService.getPath();
 		path = path.concat(manuscriptName).concat("/");
-		symbolFacade.insertSymbolInDb(path, m);
+		symbolService.insertSymbolInDb(path, m);
 		path = sampleService.getPath();
 		path = path.concat(manuscriptName).concat("/");
 		sampleService.getSampleImage(path, m);
 		path = negativeSampleService.getNegativePath();
 		path = path.concat(manuscriptName).concat("/");
 		negativeSampleService.getNegativeSampleImage(path, m); //
-		path = imageFacade.getPath();
+		path = imageService.getPath();
 		path = path.concat(manuscriptName).concat("/");
-		imageFacade.updateAllImages(path, m);
+		imageService.updateAllImages(path, m);
 		this.manuscriptService.saveManuscript(manuscript);
 		return "administration/insertRecap";
 	}
@@ -229,7 +229,7 @@ public class AdminController {
 	public String toChangeAdminPassword(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
-		Administrator a = this.adminFacade.findAdmin(username);
+		Administrator a = this.adminService.findAdmin(username);
 		a.setPassword("");
 		model.addAttribute("administrator", a);
 		return "administration/changeAdminPassword";
@@ -243,7 +243,7 @@ public class AdminController {
 			return "administration/changeAdminPassword";
 		}
 		administrator.setPassword(administrator.getPassword());
-		adminFacade.addAdmin(administrator);
+		adminService.addAdmin(administrator);
 		return "administration/homeAdmin";
 	}
 }

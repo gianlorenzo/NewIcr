@@ -9,7 +9,7 @@ import it.uniroma3.icr.dao.StudentDao;
 import it.uniroma3.icr.model.Student;
 
 @Service
-public class StudentFacade {
+public class StudentService {
 	
 	@Autowired
 	private StudentDao userDao;
@@ -31,5 +31,7 @@ public class StudentFacade {
 	public Student findUserBySurname(String surname) {
 		return this.userDao.findBySurname(surname);
 	}
+
+
 
 }

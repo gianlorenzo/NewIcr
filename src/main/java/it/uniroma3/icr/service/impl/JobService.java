@@ -12,13 +12,13 @@ import it.uniroma3.icr.model.Manuscript;
 import it.uniroma3.icr.model.Task;
 
 @Service
-public class JobFacade {
+public class JobService {
 
 	@Autowired
 	private JobDao jobDao;
 	
 	@Autowired 
-	private TaskFacade taskFacade; 
+	private TaskService taskService;
 
 	public void addJob(Job j) {
 		jobDao.save(j);
@@ -36,6 +36,6 @@ public class JobFacade {
 		job.setManuscript(manuscript);
 		job.setImages(imagesTask);
 		this.addJob(job);
-		this.taskFacade.createTask(job, imagesTask.size(), bool,task);
+		this.taskService.createTask(job, imagesTask.size(), bool,task);
 	}
 }

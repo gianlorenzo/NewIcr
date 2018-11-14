@@ -15,7 +15,7 @@ import it.uniroma3.icr.model.Manuscript;
 import it.uniroma3.icr.model.Symbol;
 
 @Service
-public class SymbolFacade {
+public class SymbolService {
 
 	@Autowired
 	private SymbolDao symbolDao;
