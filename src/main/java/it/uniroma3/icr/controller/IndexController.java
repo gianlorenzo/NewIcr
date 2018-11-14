@@ -20,17 +20,6 @@ public class IndexController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/error", method = RequestMethod.GET)
-	public String errorToIndex() {
-		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String role = auth.getAuthorities().toString();
-		LOGGER.info(role);
-		if(role.contains("ROLE_USER")) {
-			return "users/error";
-		} else if(role.contains("ROLE_ADMIN")) {
-			return "administration/error";
-		} */
-		return "error";
-	}
+
 
 }
