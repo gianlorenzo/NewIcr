@@ -32,7 +32,6 @@
 <div class="form">
 	<div class="tab-content" style='margin-top: -10px'>
 		<div id="signup">
-			<h1>In Codice Ratio</h1>
 			<h1>Login</h1>
 			<form method="POST"
 				  action="${pageContext.request.contextPath}/login">

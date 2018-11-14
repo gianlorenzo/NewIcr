@@ -1,4 +1,4 @@
-package it.uniroma3.icr.GoogleConfig;
+package it.uniroma3.icr.googleConfig;
 
 import org.springframework.boot.autoconfigure.social.SocialProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -37,6 +37,7 @@ public class Sample {
 	
 	@ManyToOne
 	private Symbol symbol;
+
 	// costruttori
 	public Sample() {}
 

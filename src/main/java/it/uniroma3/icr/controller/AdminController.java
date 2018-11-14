@@ -54,8 +54,6 @@ import it.uniroma3.icr.validator.jobValidator;
 @Controller
 public class AdminController {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	private SymbolEditor symbolEditor;
 	@Autowired

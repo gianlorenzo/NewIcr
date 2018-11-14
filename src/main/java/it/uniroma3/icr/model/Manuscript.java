@@ -27,8 +27,6 @@ public class Manuscript {
 	private List<Sample> samples;
 	@OneToMany(mappedBy = "manuscript")
 	private List<Symbol> symbols;
-	//@OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
-	//private List<Word> words;
 	@OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
 	private List<NegativeSample> negativeSamples;
 	

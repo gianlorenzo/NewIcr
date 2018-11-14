@@ -1,4 +1,4 @@
-package it.uniroma3.icr.GoogleConfig;
+package it.uniroma3.icr.googleConfig;
 
 
 
