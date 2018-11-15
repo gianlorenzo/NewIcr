@@ -9,4 +9,5 @@ public interface StudentDaoSocial extends JpaRepository<StudentSocial,Long> {
 	public StudentSocial findById(Long id);
 	public StudentSocial findByUsername(String username);
 	public StudentSocial findBySurname(String surname);
+	public StudentSocial findDistinctById(Long id);
 }
