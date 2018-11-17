@@ -31,6 +31,7 @@ public class JobService {
 	public List<Job> retriveAlljobs() {
 		return this.jobDao.findAll();
 	}
+
 	public void createJob(Job job, Manuscript manuscript, List<Image> imagesTask, Boolean bool,Task task){
 		job.setNumberOfWords(imagesTask.size());	
 		job.setManuscript(manuscript);

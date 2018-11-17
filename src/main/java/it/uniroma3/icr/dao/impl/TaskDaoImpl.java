@@ -23,7 +23,7 @@ public class TaskDaoImpl implements TaskDaoCustom {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-		
+
 	public void updateEndDate(Task task) {
 		Calendar calendar = Calendar.getInstance();
 		java.util.Date now = calendar.getTime();

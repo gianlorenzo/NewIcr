@@ -32,6 +32,5 @@ public class StudentServiceSocial {
 		return this.studentDaoSocial.findBySurname(surname);
 	}
 
-	public StudentSocial findOne(Long id) { return this.studentDaoSocial.findDistinctById(id);}
 
 }

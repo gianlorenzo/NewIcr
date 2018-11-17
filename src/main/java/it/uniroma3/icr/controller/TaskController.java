@@ -127,8 +127,7 @@ public class TaskController {
 		} else {
 			s = studentFacadesocial.findUser(auth.getName());
 		}
-		taskControllerSupport.viewStudentTasks(s,model, taskService,social);
-		return "users/noStudentTasks";
+		return taskControllerSupport.viewStudentTasks(s,model, taskService,social);
 	}
 
 }

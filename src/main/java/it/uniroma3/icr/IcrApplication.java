@@ -36,7 +36,7 @@ public class IcrApplication extends SpringBootServletInitializer {
 			@Override
 			public void onStartup(ServletContext servletContext)
 					throws ServletException {
-				servletContext.setInitParameter("pathImage","/home/giianlorenzo/Scrivania/img/images/");
+				servletContext.setInitParameter("pathImage","/home/gianlorenzo/Scrivania/img/images/");
 				servletContext.setInitParameter("pathSample","/home/gianlorenzo/Scrivania/img/samples/");
 				servletContext.setInitParameter("pathNegativeSample","/home/gianlorenzo/Scrivania/img/negativeSamples/");
 

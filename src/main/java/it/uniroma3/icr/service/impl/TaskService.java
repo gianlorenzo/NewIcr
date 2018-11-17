@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import it.uniroma3.icr.dao.impl.TaskDaoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class TaskService {
 
 	@Autowired
 	private TaskDao taskDao;
+
 	@Autowired
 	private ResultService resultService;
 
@@ -49,16 +51,17 @@ public class TaskService {
 		return this.taskDao.findByStudentId(id);
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Task> findTaskByStudentSocial(Long id) {
+    @SuppressWarnings("unchecked")
+    public List<Task> findTaskByStudentSocial(Long id) {
 
-		String s = "SELECT t FROM Task t WHERE t.studentsocial.id='" + id + "'";
-		Query querys = this.entityManager.createQuery(s);
-		List<Task> tasks = querys.getResultList();
-		return tasks;
-	}
+        String s = "SELECT t FROM Task t WHERE t.studentsocial.id='" + id + "'";
+        Query querys = this.entityManager.createQuery(s);
+        List<Task> tasks = querys.getResultList();
+        return tasks;
+    }
 
-	@Transactional
+
+    @Transactional
 	@SuppressWarnings("unchecked")
 	public Task assignTask(Student student) {
 		Task task = null;
@@ -66,7 +69,7 @@ public class TaskService {
 
 		select = "SELECT t "
 				+ "FROM Task t "
-				+ "WHERE (t.student.id= ?1 AND t.endDate IS NULL AND t.startDate IS NOT NULL)"; // task assegnati allo studente ma lasciati in sospeso 
+				+ "WHERE (t.student.id= ?1 AND t.endDate IS NULL AND t.startDate IS NOT NULL)"; // task assegnati allo studente ma lasciati in sospeso
 		Query query1 = this.entityManager.createQuery(select).setParameter(1, student.getId());
 		List<Task> taskList = query1.getResultList(); // trova il task da eseguire
 
@@ -79,11 +82,11 @@ public class TaskService {
 		else {
 			select = "SELECT t FROM Task t "
 					+ "WHERE (t.batch, t.job.id) not in ( "                               // task già fatti dallo studente
-						+ " SELECT distinct t2.batch, t2.job.id "  
+						+ " SELECT distinct t2.batch, t2.job.id "
 						+ " FROM Task t2 "
 						+ " WHERE t2.student.id= ?1 and t2.endDate IS NOT NULL) "
 					+ "AND (t.student.id IS NULL)"; // task non assegnati
-			
+
 			query1 = this.entityManager.createQuery(select).setMaxResults(53).setParameter(1, student.getId());
 			taskList = query1.getResultList(); // trova il task da eseguire
 
@@ -99,12 +102,12 @@ public class TaskService {
 
 				String update = "update task set start_date = ?1, student_id = ?2 where id = ?3 and student_id is null";
 				query1 = this.entityManager.createNativeQuery(update).setParameter(1, date).setParameter(2, student.getId()).setParameter(3, taskList.get(position).getId());
-				int numRow = query1.executeUpdate();	
-				if (numRow==1) {		
+				int numRow = query1.executeUpdate();
+				if (numRow==1) {
 					task = taskList.get(position);
 					task.setStudent(student);
 					task.setStartDate(date);
-					student.addTask(task); 
+					student.addTask(task);
 				}
 				else {
 					LOGGER.info("0.1 - race on task " + taskList.get(position) + ". Try another task for student " + student.getId());
@@ -181,7 +184,7 @@ public class TaskService {
 		Query query1 = this.entityManager.createQuery(select).setParameter(1, task.getId());
 		@SuppressWarnings("unchecked")
 		List<Result> resultList = query1.getResultList(); // trova i result del task
-		return resultList;	
+		return resultList;
 	}
 
 	public Long findStudentIdOnTask(Task task) {
@@ -192,19 +195,19 @@ public class TaskService {
 
 		Long id = (Long)query1.getSingleResult(); // trova i result del task
 		LOGGER.debug("STUDENT FROM DB: = " + id + " for task " + task.getId());
-		return id;	
+		return id;
 	}
-	
+
 	public long getWorkTime(Student student) {
 		String select = "select sum(EXTRACT(EPOCH FROM (end_date-start_date))) from task where student_id = ?1 and EXTRACT(EPOCH FROM (end_date-start_date)) <=300";
 		Query query = this.entityManager.createNativeQuery(select).setParameter(1, student.getId());
 		long seconds = Double.valueOf((Double)query.getSingleResult()).longValue();
-		
+
 		select = "select count(*) from task where student_id = ?1 and EXTRACT(EPOCH FROM (end_date-start_date)) >300";
 		query = this.entityManager.createNativeQuery(select).setParameter(1, student.getId());
 		long secondsIdleTasks = ((BigInteger)query.getSingleResult()).longValue();
-		
+
 		return seconds + secondsIdleTasks;
 	}
-	
+
 }

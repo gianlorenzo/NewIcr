@@ -1,15 +1,12 @@
-package it.uniroma3.icr;
+package it.uniroma3.icr.serviceAndDaoTest;
 
 
 import it.uniroma3.icr.dao.StudentDao;
-import it.uniroma3.icr.dao.StudentDaoSocial;
 import it.uniroma3.icr.model.Student;
 import org.junit.Before;
 import org.junit.Test;
 import it.uniroma3.icr.service.impl.StudentService;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import static org.mockito.Mockito.mock;
 
 import org.mockito.Mockito;
@@ -25,11 +22,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class StudentTest {
 
-    @Autowired
-    StudentService studentService;
-
     private Student student;
 
+    @Autowired
+    private StudentService studentService;
 
     @MockBean
     private StudentDao studentDao;
@@ -48,11 +44,9 @@ public class StudentTest {
     public void whenValidId_thenUserShouldBeFound() {
         Long id = new Long(1);
         Student found = studentService.findById(id);
-
         assertThat(found.getId())
                 .isEqualTo(id);
     }
-
 
     @Test
     public void findUserByUsername() {
@@ -62,4 +56,12 @@ public class StudentTest {
         Student found = studentServiceMock.findUserBySurname(username);
         assertThat(found.getUsername()).isEqualTo(username);
     }
+
+    @Test
+    public void createStudent() {
+        StudentService studentServiceMock = mock(StudentService.class);
+        when(studentServiceMock.findById(student.getId())).thenReturn(student);
+        studentServiceMock.saveUser(student);
+    }
+
 }

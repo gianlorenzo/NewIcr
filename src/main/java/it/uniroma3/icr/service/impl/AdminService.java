@@ -11,6 +11,7 @@ public class AdminService {
 
 	@Autowired
 	private AdminDao adminDao;
+
 	public void addAdmin(Administrator admin) {
 		adminDao.save(admin);
 	}

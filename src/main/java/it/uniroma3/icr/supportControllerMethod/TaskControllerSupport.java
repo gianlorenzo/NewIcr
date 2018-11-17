@@ -112,10 +112,11 @@ public class TaskControllerSupport {
             long seconds = secs % 60;
             String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
             model.addAttribute("time", timeString);
-            model.addAttribute("src/test/s", s);
+            model.addAttribute("s", s);
             model.addAttribute("social", social);
+            return "users/studentTasks";
         }
-        return "users/studentTasks";
+        return "users/noStudentTasks";
     }
 
 }
