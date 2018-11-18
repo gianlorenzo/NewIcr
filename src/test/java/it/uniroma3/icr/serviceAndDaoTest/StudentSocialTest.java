@@ -39,7 +39,7 @@ public class StudentSocialTest {
     }
 
     @Test
-    public void whenValidId_thenUserShouldBeFound() {
+    public void whenValidId_thenUserSocialShouldBeFound() {
         Long id = new Long(1);
         Student found = studentServiceSocial.findById(id);
         assertThat(found.getId())
@@ -58,7 +58,6 @@ public class StudentSocialTest {
     @Test
     public void createStudent() {
         StudentServiceSocial studentServiceSocialMock = mock(StudentServiceSocial.class);
-        when(studentServiceSocialMock.findById(studentSocial.getId())).thenReturn(studentSocial);
         studentServiceSocialMock.saveUser(studentSocial);
     }
 

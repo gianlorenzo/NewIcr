@@ -23,7 +23,7 @@
 	<div class="form">
 		<div class="tab-content">
 			<div id="signup">
-				<h1>Registrati</h1>
+				<h1>Registrazione Studente</h1>
 				<form:form method="post" action="addUser" modelAttribute="student"
 					name="f1" onsubmit="return matchpass()">
 

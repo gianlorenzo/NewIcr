@@ -60,7 +60,6 @@ public class StudentTest {
     @Test
     public void createStudent() {
         StudentService studentServiceMock = mock(StudentService.class);
-        when(studentServiceMock.findById(student.getId())).thenReturn(student);
         studentServiceMock.saveUser(student);
     }
 

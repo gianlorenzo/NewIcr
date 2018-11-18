@@ -1,15 +1,11 @@
 package it.uniroma3.icr.service.impl;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 import it.uniroma3.icr.dao.impl.NegativeSampleDaoImpl;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +15,7 @@ import it.uniroma3.icr.dao.NegativeSampleDao;
 import it.uniroma3.icr.dao.SymbolDao;
 import it.uniroma3.icr.insertImageInDb.GetNegativeSamplePath;
 import it.uniroma3.icr.model.Manuscript;
-import it.uniroma3.icr.model.NegativeSample;
 import it.uniroma3.icr.model.Sample;
-import it.uniroma3.icr.model.Symbol;
 
 @Service
 public class NegativeSampleService {

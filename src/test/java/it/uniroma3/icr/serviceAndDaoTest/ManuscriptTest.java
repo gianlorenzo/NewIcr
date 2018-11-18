@@ -37,7 +37,7 @@ public class ManuscriptTest {
     }
 
     @Test
-    public void whenValidId_thenUserShouldBeFound() {
+    public void whenValidId_thenManuscriptShouldBeFound() {
         Long id = new Long(1);
         Manuscript found = manuscriptService.findOneManuscript(id);
         assertThat(found.getId())
@@ -56,7 +56,6 @@ public class ManuscriptTest {
     @Test
     public void createManuscript() {
         ManuscriptService manuscriptServiceMock = mock(ManuscriptService.class);
-        when(manuscriptServiceMock.findOneManuscript(manuscript.getId())).thenReturn(manuscript);
         manuscriptServiceMock.saveManuscript(manuscript);
     }
 

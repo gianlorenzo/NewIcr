@@ -61,7 +61,7 @@ public class JobTest {
     }
 
     @Test
-    public void whenValidId_thenUserShouldBeFound() {
+    public void whenValidId_thenJobShouldBeFound() {
         Long id = new Long(1);
         Job found = jobService.retrieveJob(id);
         assertThat(found.getId())
@@ -71,7 +71,6 @@ public class JobTest {
     @Test
     public void createJob() {
         JobService jobServiceMock = mock(JobService.class);
-        when(jobServiceMock.retrieveJob(job.getId())).thenReturn(job);
         jobServiceMock.createJob(job,manuscript,images,bool,task);
     }
 
