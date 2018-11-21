@@ -36,7 +36,7 @@ public class ResultService {
 	public void updateListResult(TaskWrapper taskResults) {
 		resultDao.updateListResult(taskResults);
 	}
-	
+
 	public void addImageAndTaskToResult(Task t,Result r, Job j) {
 		resultDao.addImageAdnTaskToResult(t, r, j);
 	}

@@ -58,6 +58,7 @@ public class JobTest {
         job.setNumberOfWords(images.size());
         job.setImages(images);
         Mockito.when(jobDao.findOne(new Long(1))).thenReturn(job);
+
     }
 
     @Test

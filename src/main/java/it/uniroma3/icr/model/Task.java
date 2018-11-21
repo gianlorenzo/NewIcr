@@ -3,13 +3,7 @@ package it.uniroma3.icr.model;
 import java.sql.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Task {
@@ -33,8 +27,8 @@ public class Task {
 	@ManyToOne
 	private Job job;
 
-	@OneToMany(mappedBy = "task")
-	private List<Result> results;
+	@OneToOne(mappedBy = "task")
+	private Result result;
 
 	public Long getId() {
 		return id;
@@ -60,23 +54,24 @@ public class Task {
 		this.job = job;
 	}
 
-	public List<Result> getResults() {
-		return results;
+
+	public Result getResult() {
+		return result;
 	}
 
-	public void setResults(List<Result> results) {
-		this.results = results;
+	public void setResult(Result result) {
+		this.result = result;
 	}
 
 	public Task(Long id, int batch, Timestamp startDate, Timestamp endDate, Student student, Job job,
-			List<Result> results) {
+				Result result) {
 		this.id = id;
 		this.batch = batch;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.student = student;
 		this.job = job;
-		this.results = results;
+		this.result = result;
 	}
 
 	public java.sql.Timestamp getStartDate() {

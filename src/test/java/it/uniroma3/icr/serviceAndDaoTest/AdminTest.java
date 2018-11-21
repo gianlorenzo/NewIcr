@@ -46,7 +46,7 @@ public class AdminTest {
     }
 
     @Test
-    public void createStudent() {
+    public void createAdmin() {
         AdminService adminServiceMock = mock(AdminService.class);
         when(adminServiceMock.findAdmin(admin.getUsername())).thenReturn(admin);
         adminServiceMock.addAdmin(admin);

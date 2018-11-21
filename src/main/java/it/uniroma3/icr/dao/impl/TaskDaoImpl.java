@@ -141,6 +141,7 @@ public class TaskDaoImpl implements TaskDaoCustom {
 		return hint;
 	}
 
+
 	@Transactional
 	public void updateStudent(Student student) {
 		String update = "update student set task_effettuati = ?1, tempo_effettuato = ?2 where id = ?3";
@@ -159,6 +160,18 @@ public class TaskDaoImpl implements TaskDaoCustom {
 		@SuppressWarnings("unchecked")
 		List<Result> resultList = query1.getResultList(); // trova i result del task
 		return resultList;
+	}
+
+	public Result findTaskOneResult(Task task, Student student) {
+		LOGGER.debug("SQL SELECT r RESULT FROM RESULT WHERE TASK_id = " + task.getId());
+		if (task.getStudent().getId()!=student.getId())
+			LOGGER.debug("PROBLEM TASK " + task.getId() + " STDUDENT PROBLEM "+ task.getStudent().getId() + " " + student.getId());
+
+		String select = "select r from Result r where r.task.id = ?1";
+		Query query1 = this.entityManager.createQuery(select).setParameter(1, task.getId());
+		@SuppressWarnings("unchecked")
+		Result result = (Result)query1.getSingleResult();
+		return result;
 	}
 
 	public Long findStudentIdOnTask(Task task) {

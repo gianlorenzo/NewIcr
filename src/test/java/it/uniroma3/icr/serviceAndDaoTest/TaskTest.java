@@ -6,12 +6,10 @@ import it.uniroma3.icr.model.Job;
 import it.uniroma3.icr.model.Result;
 import it.uniroma3.icr.model.Student;
 import it.uniroma3.icr.model.Task;
-import it.uniroma3.icr.service.impl.StudentService;
 import it.uniroma3.icr.service.impl.TaskService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -38,8 +35,7 @@ public class TaskTest {
 
     private Student student;
 
-    private Student student2;
-
+    private Result result;
 
     private List<Result> results;
 
@@ -56,16 +52,22 @@ public class TaskTest {
     public void setUp() {
         task = new Task();
         task.setId(new Long(1));
-        results = new ArrayList<>();
-        task.setResults(results);
+        result = new Result();
+        result.setId(new Long(4));
+        task.setResult(result);
         job = new Job();
         word = new Boolean(true);
         number = new Integer(1);
         student = new Student();
+        student.setId(new Long(3));
         student.setUsername("username1");
-        student2 = new Student();
-        student2.setUsername("username2");
+        task.setStudent(student);
+        results = new ArrayList<>();
+        results.add(result);
         Mockito.when(taskDao.findOne(new Long(1))).thenReturn(task);
+        Mockito.when(taskDaoImpl.findStudentIdOnTask(task)).thenReturn(student.getId());
+        Mockito.when(taskDaoImpl.findTaskOneResult(task,student)).thenReturn(result);
+        Mockito.when(taskDaoImpl.findTaskResult(task,student)).thenReturn(results);
     }
 
     @Test
@@ -74,6 +76,27 @@ public class TaskTest {
         Task found = taskService.retrieveTask(id);
         assertThat(found.getId())
                 .isEqualTo(id);
+    }
+
+    @Test
+    public void findStudentIdByTask() {
+        Long id = new Long(3);
+        Long found = taskService.findStudentIdOnTask(task);
+        assertThat(found)
+                .isEqualTo(id);
+    }
+
+    @Test
+    public void findTaskResult() {
+        Long id = new Long(4);
+        Result found = taskService.findTaskOneResult(task,student);
+        assertThat(found.getId()).isEqualTo(id);
+    }
+
+    @Test
+    public void findTaskResults() {
+        List<Result> found = taskService.findTaskResult(task,student);
+        assertThat(found.size()).isEqualTo(results.size());
     }
 
     @Test
@@ -87,12 +110,4 @@ public class TaskTest {
         TaskService taskServiceMock = mock(TaskService.class);
         taskServiceMock.assignTask(student);
     }
-
-    @Test
-    public void updateStudent() {
-        TaskService taskServiceMock = mock(TaskService.class);
-        taskServiceMock.assignTask(student);
-        taskServiceMock.updateStudent(student2);
-    }
-
 }

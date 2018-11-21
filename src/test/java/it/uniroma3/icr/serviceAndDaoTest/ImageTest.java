@@ -4,6 +4,7 @@ package it.uniroma3.icr.serviceAndDaoTest;
 import it.uniroma3.icr.dao.ImageDao;
 import it.uniroma3.icr.dao.impl.ImageDaoImpl;
 import it.uniroma3.icr.model.Image;
+import it.uniroma3.icr.model.Manuscript;
 import it.uniroma3.icr.model.Task;
 import it.uniroma3.icr.service.impl.ImageService;
 import it.uniroma3.icr.service.impl.TaskService;
@@ -29,17 +30,24 @@ public class ImageTest {
 
     private Image image;
 
+    private Manuscript manuscript;
+
     @Autowired
     private ImageService imageService;
 
     @MockBean
     private ImageDao imageDao;
 
+    @MockBean
+    private ImageDaoImpl imageDaoImpl;
+
     @Before
     public void setUp() {
         image = new Image();
         image.setId(new Long(1));
         image.setPath("path");
+        manuscript = new Manuscript();
+        image.setManuscript(manuscript);
         Mockito.when(imageDao.findOne(new Long(1))).thenReturn(image);
     }
 

@@ -103,6 +103,10 @@ public class TaskService {
 		return this.taskDaoImpl.findTaskResult(task,student);
 	}
 
+	public Result findTaskOneResult(Task task, Student student) {
+		return this.taskDaoImpl.findTaskOneResult(task,student);
+	}
+
 	public Long findStudentIdOnTask(Task task) {
 		return this.taskDaoImpl.findStudentIdOnTask(task);
 	}
