@@ -16,7 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -39,6 +44,10 @@ public class TaskTest {
 
     private List<Result> results;
 
+    private java.sql.Timestamp startDate;
+
+    private java.sql.Timestamp endDate;
+
     @Autowired
     private TaskService taskService;
 
@@ -50,6 +59,8 @@ public class TaskTest {
 
     @Before
     public void setUp() {
+        startDate = new java.sql.Timestamp(Long.valueOf("2018-08-02 15:22:38"));
+        endDate = new java.sql.Timestamp(Long.valueOf("2018-12-22 16:22:38"));
         task = new Task();
         task.setId(new Long(1));
         result = new Result();
@@ -62,6 +73,8 @@ public class TaskTest {
         student.setId(new Long(3));
         student.setUsername("username1");
         task.setStudent(student);
+        task.setStartDate(startDate);
+        task.setEndDate(endDate);
         results = new ArrayList<>();
         results.add(result);
         Mockito.when(taskDao.findOne(new Long(1))).thenReturn(task);
@@ -110,4 +123,6 @@ public class TaskTest {
         TaskService taskServiceMock = mock(TaskService.class);
         taskServiceMock.assignTask(student);
     }
+
+
 }

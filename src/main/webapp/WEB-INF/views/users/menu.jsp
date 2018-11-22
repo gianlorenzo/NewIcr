@@ -12,7 +12,8 @@
 						<div id="menu">
 							<ul>
 								<li><a href="${pageContext.request.contextPath}/user/newTask">Vai al prossimo task</a></li>
-								<li><a href="${pageContext.request.contextPath}/user/studentTasks">Task Effettuati</a></li>								
+								<li><a href="${pageContext.request.contextPath}/user/taskProvaSplit"> Split task</a></li>
+								<li><a href="${pageContext.request.contextPath}/user/studentTasks">Task Effettuati</a></li>
 								<li><a href="${pageContext.request.contextPath}/user/logout">Logout</a></li>
 							</ul>
 						</div></li>

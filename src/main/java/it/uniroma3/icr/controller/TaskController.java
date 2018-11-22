@@ -118,6 +118,28 @@ public class TaskController {
 		return targetUrl;
 	}
 
+	@RequestMapping(value = "user/taskProvaSplit", method = RequestMethod.GET)
+	public String taskProvaSplit(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
+								 @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
+								 @RequestParam(name = "social", required = false) String social) throws IOException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		model.addAttribute("social", social);
+		Student student;
+		if (social == null || social.isEmpty())
+			student = studentService.findUser(username);
+		else
+			student = studentFacadesocial.findUser(username);
+
+		model.addAttribute("student", student);
+		task = taskService.assignTask(student);
+
+		return taskControllerSupport.assingStudentTaskSplit(task,student,model,taskResults, taskService,sampleService,negativeSampleService);
+
+
+	}
+
+
 	@RequestMapping(value = "user/studentTasks")
 	public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

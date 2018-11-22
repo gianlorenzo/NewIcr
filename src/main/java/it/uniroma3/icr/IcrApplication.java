@@ -1,5 +1,6 @@
 package it.uniroma3.icr;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,6 +18,15 @@ import javax.servlet.ServletException;
 
 @SpringBootApplication
 public class IcrApplication extends SpringBootServletInitializer {
+
+    @Value("${server.context-parameters.pathImage}")
+    private String pathImage;
+
+    @Value("${server.context-parameters.pathSample}")
+    private String pathSample;
+
+    @Value("${server.context-parameters.pathNegativeSample}")
+    private String pathNegativeSample;
 
 
 	public static void main(String[] args) throws Exception {
@@ -36,13 +46,14 @@ public class IcrApplication extends SpringBootServletInitializer {
 			@Override
 			public void onStartup(ServletContext servletContext)
 					throws ServletException {
-				servletContext.setInitParameter("pathImage","/home/gianlorenzo/Scrivania/img/images/");
-				servletContext.setInitParameter("pathSample","/home/gianlorenzo/Scrivania/img/samples/");
-				servletContext.setInitParameter("pathNegativeSample","/home/gianlorenzo/Scrivania/img/negativeSamples/");
+				servletContext.setInitParameter("pathImage",pathImage);
+				servletContext.setInitParameter("pathSample",pathSample);
+				servletContext.setInitParameter("pathNegativeSample",pathNegativeSample);
 
 			}
 		};
 	}
+
 
 
 }
