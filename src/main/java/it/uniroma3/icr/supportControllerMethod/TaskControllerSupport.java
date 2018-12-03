@@ -20,9 +20,11 @@ public class TaskControllerSupport {
     public void setResult(Model model, String action, TaskWrapper taskResults,
                           Student student, TaskService taskService, ResultService resultService) {
         String conferma1 = "Conferma e vai al prossimo task";
+        String confermaSI = "SI";
+        String confermaNO = "NO";
         boolean differentId = false;
 
-        if (conferma1.equals(action)) {
+        if (conferma1.equals(action) || confermaSI.equals(action) || confermaNO.equals(action)) {
             for (Result result : taskResults.getResultList()) {
                 LOGGER.debug("5.0 - task: " + result.getTask().getId() + " result " + result.getId() + " student.getId() " + student.getId() + " - result.getTask().getStudent().getId(): " + result.getTask().getStudent().getId());
                 if (!student.getId().equals(result.getTask().getStudent().getId())) {
@@ -99,43 +101,6 @@ public class TaskControllerSupport {
                     ") by student " + student.getId() + " (" +
                     taskResults.getResultList().get(0).getTask().getStudent().getId() + " - " + task.getStudent().getId() + ")");
             return "users/newTaskImage";
-        }
-        return "users/goodBye";
-    }
-
-    public String assingStudentTaskSplit(Task task, Student student, Model model,
-                                    TaskWrapper taskResults, TaskService taskService,
-                                    SampleService sampleService, NegativeSampleService negativeSampleService) {
-        if ((task != null) && (task.getStudent() != null)) {
-            task.setStudent(student);
-            LOGGER.info("1 - assigned Task " + task.getId() + " to student " + student.getId() + " (" + task.getStudent().getId() + ")");
-            List<Sample> positiveSamples = sampleService.findAllSamplesBySymbolId(task.getJob().getSymbol().getId());
-            List<Sample> negativeSamples = negativeSampleService.findAllNegativeSamplesBySymbolId(task.getJob().getSymbol().getId());
-            List<Result> listResults = taskService.findTaskResult(task, student);
-            taskResults.setResultList(listResults);
-            for (Result r : taskResults.getResultList()) {
-                LOGGER.info("2 - retrieved task " + r.getTask().getId() + " student " + r.getTask().getStudent().getId() + " (for " + student.getId() + ")");
-                r.getImage().setPath(r.getImage().getPath().replace(File.separatorChar, '/'));
-            }
-            String hint = taskService.findHintByTask(taskResults.getResultList().get(0).getTask());
-            LOGGER.info("3 - hint on task " + task.getId() + " to student " + student.getId());
-            for (Result r : taskResults.getResultList()) {
-                LOGGER.info("3.1 - hint on task " + task.getId() + "(" + r.getTask().getId() + ") to student " + student.getId() + "(" + r.getTask().getStudent().getId() + ")" + " result " + r.getId());
-            }
-            task.setStudent(student);
-            model.addAttribute("student", student);
-            model.addAttribute("positiveSamples", positiveSamples);
-            model.addAttribute("negativeSamples", negativeSamples);
-            model.addAttribute("task", task);
-            model.addAttribute("taskResults", taskResults);
-            model.addAttribute("hint", hint);
-            LOGGER.info("4 - end taskChoose task " +
-                    task.getId() + "(task results " +
-                    taskResults.getResultList().get(0).getTask().getId() +
-                    " size " + taskResults.getResultList().size() +
-                    ") by student " + student.getId() + " (" +
-                    taskResults.getResultList().get(0).getTask().getStudent().getId() + " - " + task.getStudent().getId() + ")");
-            return "users/newTaskSplitImage";
         }
         return "users/goodBye";
     }

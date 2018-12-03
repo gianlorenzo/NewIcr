@@ -1,20 +1,25 @@
 <%--
   Created by IntelliJ IDEA.
   User: gianlorenzo
-  Date: 22/11/18
-  Time: 23.17
+  Date: 28/11/18
+  Time: 9.01
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form"
            prefix="springForm"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
 <html>
 <head>
+
+    <title>ICR</title>
+
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>ICR</title>
 
@@ -33,28 +38,40 @@
         }
     </style>
 
+
 </head>
 <body class="landing">
+
 <ul>
     <li>
         <h2> ${student.name} ${student.surname} </h2>
-
         <h2>Stai svolgendo il task ${student.taskEffettuati}</h2>
     </li>
 </ul>
+
 <div align="center">
-    <h3>
-        Ti viene presentata la seguente riga di un manoscritto.
-        <br/> Effetuando una serie di click con il mouse nella parte alta della riga, traccia una serie di righe divisorie tra le parole.
-    </h3>
+
+        <h3>
+            Nella seguente parola ci sono delle parti mancanti.
+        </h3>
+
 </div>
-<form:form method="post" action="secondConsoleSplitWord"
+<form:form method="post" action="secondConsoleComponiWord"
            modelAttribute="taskResults" name="form">
     <div align="center">
         <table>
             <c:forEach varStatus="vs" var="result"
                        items="${taskResults.resultList}">
-                <div id="canvasWrapper" style="height: 200px"></div>
+                <div id="canvasWrapper" style="height: 200px" >
+                </div> <!-- immagine da etichettare -->
+                </div>
+                <div>
+                    <h3 class="compose">
+                        Scrivi nell'area di testo sottostante
+                        <br/> quella che secondo te è la parola completa
+                    </h3>
+                    <input type="text" id="text" name="name" class=""   />
+                </div>
                 <button type=button id="undotoStart" class="selectword">RICOMINCIA</button>
                 <button type=button id="undo" class="selectword">ANNULLA</button>
                 <div  class="selectchar"><br><br><br></div>
@@ -63,6 +80,7 @@
                 <form:input type="hidden" id="output"
                             path="resultList[${vs.index}].answer" />
                 <br>
+
                 <form:hidden path="resultList[${vs.index}].id" />
                 <form:hidden path="resultList[${vs.index}].image.id" />
                 <form:hidden path="resultList[${vs.index}].task.id" />
@@ -72,11 +90,18 @@
                 <form:hidden path="resultList[${vs.index}].task.startDate" />
             </c:forEach>
         </table>
-    </div>
+
     <div align="center" class="selectword">
-        <input type="submit" name="action" id="confermaForm"
-               value="Conferma e vai al prossimo task">
+        <input type="submit" name="action" id="confermaForm" value="Conferma e vai al prossimo task">
+        <!--<input name="action" id="confermaForm" value="Conferma e vai al prossimo task">-->
     </div>
+    <div align="center" class="wrongAnswer">
+        <br>
+        <h3><font color="red">Risposta sbagliata, vuoi vedere la soluzione?</font></h3>
+        <button type=button id="showHint"><font color="red">Tieni premuto qui per vedere la soluzione</font></button>
+        <br> <br>
+    </div>
+    <br/>
 </form:form>
 <div align="center">
     <form:form method="post" action="homeStudent">
@@ -87,11 +112,12 @@
 <script>
 
     var ExtendedCanvas = (function() {
-        var context, data, dataOrigArr, dataOrig, canvas, output, hint, tutorial, tempOutput;
+        var context, data, dataOrigArr, dataOrig, canvas, output, hint, tutorial, tempOutput,t;
         function ExtendedCanvas(selector, imageSrc, hint2, tutorial2) {
             var wrapper = document.querySelector(selector);
             this.element = canvas = document.createElement('canvas');
             context = this.element.getContext('2d');
+            t = document.getElementById("chatinput");
             if (hint2 == "") {
                 tutorial2 = false;
                 hint2 = "[]";
@@ -210,43 +236,8 @@
             return this.output;
         }
 
-        ExtendedCanvas.prototype.drawLines = function() {
-            var started = false;
-            mouseClick = this.output;
-            prvX=0;
-            prvY=0;
-            $("#canvasWrapper").bind("mousedown", function (e) {
-                prvX = e.offsetX;
-                prvY = e.offsetY;
-                started = true ;
-            });
-
-            $("#canvasWrapper").bind("mouseup", function (e) {
-                if (!started) return;
-                context.beginPath();
-                context.moveTo(e.offsetX, e.offsetY);
-                context.lineTo(e.offsetX, e.offsetX+canvas.height);
-                context.stroke();
-                context.closePath();
-                if(!mouseClick.includes(e.offsetX)) {
-                    mouseClick.push(e.offsetX);
-                }
-            });
-
-        }
-
-        ExtendedCanvas.prototype.undo = function(e) {
-           if(this.output.length>0) {
-               for (var i = 0; i < this.output.length; i++) {
-                   console.log(this.output.length);
-                   console.log(this.output[i]);
-                   context.clearRect(this.output[i],this.output[i]+canvas.height,20,2);
-               }
-           }
-        }
-
-
         ExtendedCanvas.prototype.checkAnswer = function() {
+
             if (!this.tutorial) return true;
             temp = this.output.sort();
             if (temp.length != this.hint.length) return false;
@@ -284,6 +275,7 @@
             };
         }
 
+
         ExtendedCanvas.prototype.fillImg = function(fillColor) {
             var stack = [];
             context.fillStyle = fillColor;
@@ -304,6 +296,11 @@
             context.putImageData(data, 0, 0);
         }
 
+        ExtendedCanvas.prototype.undo = function() {
+
+            document.getElementById('text').value = '';
+        }
+
         ExtendedCanvas.prototype.undoToStart = function() {
 
             var canvasPic = new Image();
@@ -320,10 +317,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         var c = new ExtendedCanvas('#canvasWrapper', '${pageContext.request.contextPath}/${taskResults.resultList[0].image.path}', '${hint}', ${taskResults.resultList[0].task.job.tutorial});
 
-        c.element.addEventListener('click',function(e){
-           c.drawLines(e)
-        });
-
         $("#undo").click(function() {
             c.undo();
         });
@@ -334,7 +327,8 @@
             $(".selectchar,.selectword").toggle();
         });
         $("#confermaForm").click(function() {
-            $("#output")[0].value = JSON.stringify(c.getOutput().sort());
+            c.setOutput($("#text").val());
+            $("#output")[0].value = JSON.stringify(c.getOutput());
             return c.checkAnswer();
         });
         $("#buttonSI").click(function() {
@@ -367,5 +361,6 @@
 <!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
 <script src="${pageContext.request.contextPath}/js/backButton.js"></script>
+
 </body>
 </html>

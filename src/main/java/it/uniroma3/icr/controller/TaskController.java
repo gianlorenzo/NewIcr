@@ -118,51 +118,6 @@ public class TaskController {
 		return targetUrl;
 	}
 
-    @RequestMapping(value = "user/taskProvaSplit", method = RequestMethod.GET)
-    public String taskProvaSplit(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
-                                 @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
-                                 @RequestParam(name = "social", required = false) String social) throws IOException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        model.addAttribute("social", social);
-        Student student;
-        if (social == null || social.isEmpty())
-            student = studentService.findUser(username);
-        else
-            student = studentFacadesocial.findUser(username);
-
-        model.addAttribute("student", student);
-        task = taskService.assignTask(student);
-
-        return taskControllerSupport.assingStudentTaskSplit(task,student,model,taskResults, taskService,sampleService,negativeSampleService);
-
-    }
-	@RequestMapping(value = "user/secondConsoleSplitWord", method = RequestMethod.POST)
-	public String taskRecapSplitWord(@ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
-								HttpServletRequest request, HttpServletResponse response,
-								@RequestParam(name = "social", required = false) String social) throws IOException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String username = auth.getName();
-		model.addAttribute("social", social);
-		Student student;
-		if (social == null || social.isEmpty())
-			student = studentService.findUser(username);
-		else
-			student = studentFacadesocial.findUser(username);
-		LOGGER.info("5 - Auth name " + username + ", student: " + student.getId());
-		String action = request.getParameter("action");
-		String targetUrl = "";
-		taskControllerSupport.setResult(model,action,taskResults,student, taskService, resultService);
-        response.sendRedirect("taskProvaSplit");
-
-        targetUrl = "users/newTaskSplitImage";
-		model.addAttribute("student", student);
-		return targetUrl;
-	}
-
-
-
-
 	@RequestMapping(value = "user/studentTasks")
 	public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

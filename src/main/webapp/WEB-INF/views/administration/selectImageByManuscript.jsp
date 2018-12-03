@@ -42,6 +42,7 @@
 								<form:options items="${manuscripts}" />
 							</form:select>
 						</div>
+
 						<div id="formsubmitbutton">
 						<button type="submit" class="button button-block" onclick="ButtonClicked()">Conferma</button>
 					</div>

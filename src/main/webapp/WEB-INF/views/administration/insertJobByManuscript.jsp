@@ -48,11 +48,17 @@
 								placeholder="Numero di Studenti" onBlur="isnum(this)" />
 							${errStudenti}
 						</div>
+						<div class="field-wrap">
+							<label> Descrizione </label>
+							<form:select id="desc" type="text" path="description">
+								<font color="7a0000"><form:options items="${descriptions}"/> </font>
+							</form:select>
+						</div>
 						<form:input type="hidden" value="1" path='taskSize'
 							placeholder="Dimensione Task" onBlur="isnum(this)" />
 						<div class="field-wrap">
 							<label> Simbolo </label>
-							<form:select path="symbol">
+							<form:select id="sy" path="symbol">
 								<font color="7a0000"><form:options items="${symbols}"
 										itemLabel="transcription" itemValue="id" /> </font>
 							</form:select>
@@ -84,9 +90,14 @@
 	<!-- /form -->
 
 	<!-- Scripts -->
+
+	<script type="text/javascript">
+
+	</script>
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/jquery.scrollex.min.js"></script>
+	<script src="js/selectAll.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/js/jquery.scrolly.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/skel.min.js"></script>

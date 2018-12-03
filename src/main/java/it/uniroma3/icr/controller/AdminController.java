@@ -2,16 +2,12 @@ package it.uniroma3.icr.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -27,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.uniroma3.icr.supportControllerMethod.SetDescriptions;
 import it.uniroma3.icr.model.Administrator;
 import it.uniroma3.icr.model.ComparatoreSimboloPerNome;
 import it.uniroma3.icr.model.Image;
@@ -74,6 +71,8 @@ public class AdminController {
 	private ImageService imageService;
 	@Autowired
 	private ManuscriptService manuscriptService;
+
+	private SetDescriptions setDescriptions = new SetDescriptions();
 
 	@Qualifier("adminValidator")
 	private Validator validator;
@@ -129,7 +128,6 @@ public class AdminController {
 		for (Manuscript m : listManuscripts) {
 			listManuscriptsName.add(m.getName());
 		}
-
 		model.addAttribute("manuscripts", listManuscriptsName);
 		model.addAttribute("job", job);
 		model.addAttribute("task", task);
@@ -139,10 +137,12 @@ public class AdminController {
 	@RequestMapping(value = "admin/selectImageByManuscript")
 	private String newJobByManuscript(HttpSession session, @ModelAttribute("manuscript") Manuscript manuscript,
 			@ModelAttribute Job job, @ModelAttribute Task task, Model model) {
+
 		String manuscriptName = manuscript.getName();
 		List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
 		Collections.sort(symbols, new ComparatoreSimboloPerNome());
 		job.setManuscript(manuscript);
+		model.addAttribute("descriptions",setDescriptions.setDescriptions());
 		session.setAttribute("manuscript", manuscript);
 		model.addAttribute("symbols", symbols);
 		model.addAttribute("job", job);
@@ -172,9 +172,9 @@ public class AdminController {
 			List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
 			Collections.sort(symbols, new ComparatoreSimboloPerNome());
 			job.setManuscript(manuscript);
+			model.addAttribute("descriptions",setDescriptions.setDescriptions());
 			session.setAttribute("manuscript", manuscript);
 			model.addAttribute("symbols", symbols);
-
 			return "administration/insertJobByManuscript";
 		}
 	}

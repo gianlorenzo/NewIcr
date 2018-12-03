@@ -17,18 +17,13 @@
 
 <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/newTask.css" />
+	href="${pageContext.request.contextPath}/css/newTaskWord.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
 
-<style>
-.selectchar, .wrongAnswer {
-	display: none;
-}
-</style>
 </head>
 
 <body class="landing">
@@ -40,23 +35,41 @@
 		</li>
 	</ul>
 	<div align="center">
-		<h3 class="selectword">
-			Guarda la parola al centro della pagina.<br/>
-			Se al suo interno individui uno o piu' simboli simili a quelli marcati in 
-			nero negli esempi in alto (riquadro verde)<br/>
-			marcane le regioni (cliccandoci sopra) e premi <em>Conferma e vai al prossimo task</em>. <br/>
-			Se non individui il simbolo cercato, premi <em>Conferma e vai al prossimo task</em> 
-			(senza marcare niente).<br/>
-			Attenzione: gli esempi in basso (riquadro rosso), rappresentano 
-			falsi amici: simboli simili a questi non vanno marcati.
-		</h3>
-		<h3 class="selectchar">
-			Guarda il frammento di parola al centro della pagina. 
-			<br/>Contiene (interamente) un simbolo simile a quelli marcati in nero negli esempi
-			in alto (riquadro verde)?<br/>
-			Attenzione: gli esempi in basso (riquadro rosso) rappresentano falsi amici: simboli 
-			simili a questi non sono corretti.
-		</h3>
+
+		<c:if test="${task.job.description=='trovaPartiColorate'}">
+			<h3>
+				Guarda la parola al centro della pagina.<br/>
+				Se al suo interno individui uno o piu' simboli simili a quelli marcati in
+				nero negli esempi in alto (riquadro verde)<br/>
+				marcane le regioni (cliccandoci sopra) e premi <em>Conferma e vai al prossimo task</em>. <br/>
+				Se non individui il simbolo cercato, premi <em>Conferma e vai al prossimo task</em>
+				(senza marcare niente).<br/>
+				Attenzione: gli esempi in basso (riquadro rosso), rappresentano
+				falsi amici: simboli simili a questi non vanno marcati.
+			</h3>
+		</c:if>
+		<c:if test="${task.job.description=='trovaInteroSimbolo'}">
+			<h3>
+				Guarda il frammento di parola al centro della pagina.
+				<br/>Contiene (interamente) un simbolo simile a quelli marcati in nero negli esempi
+				in alto (riquadro verde)?<br/>
+				Attenzione: gli esempi in basso (riquadro rosso) rappresentano falsi amici: simboli
+				simili a questi non sono corretti.
+			</h3>
+		</c:if>
+		<c:if test="${task.job.description=='dividiRiga'}">
+			<h3>
+				Ti viene presentata la seguente riga di un manoscritto.
+				<br/> Effetuando una serie di click con il mouse nella parte alta della riga, traccia una serie di righe divisorie tra le parole.
+			</h3>
+		</c:if>
+		<c:if test="${task.job.description=='completaParola'}">
+			<h3>
+				Nella seguente parola ci sono delle parti mancanti.
+			</h3>
+		</c:if>
+
+		<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='trovaInteroSimbolo'}">
 		<table class="pos">
 			<tr>
 				<c:forEach varStatus="vs" var="sample" items="${positiveSamples}">
@@ -66,6 +79,7 @@
 				</c:forEach>
 			</tr>
 		</table>
+		</c:if>
 	</div>
 	<form:form method="post" action="secondConsoleWord"
 		modelAttribute="taskResults" name="form">
@@ -74,11 +88,28 @@
 				<c:forEach varStatus="vs" var="result"
 					items="${taskResults.resultList}">
 					<div id="canvasWrapper" style="height: 200px"></div> <!-- immagine da etichettare -->
-					<button type=button id="undotoStart" class="selectword">RICOMINCIA</button>
-					<button type=button id="undo" class="selectword">ANNULLA</button>
-					<div  class="selectchar"><br><br><br></div>
-					<button type=button id="buttonSI" class="selectchar">SI</button>
-					<button type=button id="buttonNO" class="selectchar">NO</button>
+					<c:if test="${task.job.description=='completaParola'}">
+						<div>
+							<h3 class="compose">
+								Scrivi nell'area di testo sottostante
+								<br/> quella che secondo te è la parola completa
+							</h3>
+							<input type="text" id="text" name="name"/>
+						</div>
+					</c:if>
+					<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='dividiRiga'}">
+						<button type=button id="undotoStart">RICOMINCIA</button>
+						<button type=button id="undoColor">ANNULLA</button>
+					</c:if>
+					<c:if test="${task.job.description=='completaParola'}">
+						<button type=button id="undoComponi">ANNULLA</button>
+					</c:if>
+					<c:if test="${task.job.description=='trovaInteroSimbolo'}">
+						<input type="submit" name="action" id="buttonSI"
+							   value="SI">
+						<input type="submit" name="action" id="buttonNO"
+							   value="NO">
+					</c:if>
 					<form:input type="hidden" id="output"
 						path="resultList[${vs.index}].answer" />
 					<br>
@@ -92,18 +123,22 @@
 				</c:forEach>
 			</table>
 		</div>
-		<div align="center" class="selectword">
-			<input type="submit" name="action" id="confermaForm"
-				value="Conferma e vai al prossimo task">
-		</div>
-		<div align="center" class="wrongAnswer">
-			<br>
-			<h3><font color="red">Risposta sbagliata, vuoi vedere la soluzione?</font></h3>
-			<button type=button id="showHint"><font color="red">Tieni premuto qui per vedere la soluzione</font></button>
-			<br> <br>
-		</div>
-		<br/>
+		<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='dividiRiga'}">
+			<div align="center" class="selectword">
+				<input type="submit" name="action" id="confermaForm"
+					value="Conferma e vai al prossimo task">
+			</div>
+		</c:if>
+
+		<c:if test="${task.job.description=='completaParola'}">
+			<div align="center" class="selectword">
+				<input type="submit" name="action" id="confermaFormCompleta"
+					   value="Conferma e vai al prossimo task">
+			</div>
+		</c:if>
 		<div align="center">
+			<p></p>
+			<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='trovaInteroSimbolo'}">
 			<h3>Attenzione: non vanno bene immagini come queste</h3>
 			<table class="neg">
 				<tr>
@@ -114,6 +149,7 @@
 					</c:forEach>
 				</tr>
 			</table>
+			</c:if>
 		</div>
 	</form:form>
 	<div align="center">
@@ -166,7 +202,6 @@ var ExtendedCanvas = (function() {
             			else if (firstcolor != testcolor)
             				checkcolor = false;
             	}
-            if (checkcolor) {  $(".selectchar,.selectword").toggle(); }
             if (!canvas2.tutorial) {
             	canvas2.setOutput(canvas2.hint);
 	            canvas2.fillImg("0,0,0,255".split(","));
@@ -178,18 +213,6 @@ var ExtendedCanvas = (function() {
 
     ExtendedCanvas.prototype.getPixelIndex = function(x, y) {
         return (Math.floor(y) * canvas.width + Math.floor(x)) * 4;
-    }
-
-    ExtendedCanvas.prototype.selectSingleColor = function(x, y) {
-    	firstcolor = null;
-        checkcolor = true;
-        for (i=0;(i<data.width && checkcolor);i++)
-        	for (j=0;(j<data.height && checkcolor);j++) {
-        		testcolor = this.getPixelColor(i, j).join();
-        		if (testcolor != [255,255,255,255].join())
-        			checkcolor = false;
-        			this.fill(i,j);
-        	}
     }
 
     ExtendedCanvas.prototype.getPixelColor = function(x, y) {
@@ -271,6 +294,36 @@ var ExtendedCanvas = (function() {
         return this.output;
     }
 
+    ExtendedCanvas.prototype.drawLines = function() {
+        var started = false;
+        mouseClick = this.output;
+        prvX=0;
+        prvY=0;
+        $("#canvasWrapper").bind("mousedown", function (e) {
+            prvX = e.offsetX;
+            prvY = e.offsetY;
+            started = true ;
+        });
+
+        $("#canvasWrapper").bind("mouseup", function (e) {
+            if (!started) return;
+            context.beginPath();
+            context.moveTo(e.offsetX, e.offsetY);
+            context.lineTo(e.offsetX, e.offsetX+canvas.height);
+            context.stroke();
+            context.closePath();
+            if(!mouseClick.includes(e.offsetX)) {
+                mouseClick.push(e.offsetX);
+            }
+        });
+
+    }
+
+    ExtendedCanvas.prototype.undoComponi = function() {
+
+        document.getElementById('text').value = '';
+    }
+
     ExtendedCanvas.prototype.checkAnswer = function() {
     	if (!this.tutorial) return true;
     	temp = this.output.sort();
@@ -309,7 +362,7 @@ var ExtendedCanvas = (function() {
         };
     }
 
-    ExtendedCanvas.prototype.undo = function() {
+    ExtendedCanvas.prototype.undoColor = function() {
         console.log("output"+this.output)
         if (this.output.length>0){
             fillColor = this.output.pop();
@@ -347,32 +400,51 @@ var ExtendedCanvas = (function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     var c = new ExtendedCanvas('#canvasWrapper', '${pageContext.request.contextPath}/${taskResults.resultList[0].image.path}', '${hint}', ${taskResults.resultList[0].task.job.tutorial});
+    <c:if test="${task.job.description=='trovaPartiColorate'}">
     c.element.addEventListener('click', function(e) {
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
         c.fill(x, y);
     });
+    </c:if>
+	<c:if test="${task.job.description=='dividiRiga'}">
+		c.element.addEventListener('click',function(e){
+		  c.drawLines(e)
+		});
+    </c:if>
 
-    $("#undo").click(function() {
-        c.undo();
+    $("#undoColor").click(function() {
+        c.undoColor();
     });
+
     $("#undotoStart").click(function() {
         c.undoToStart();
     });
-    $("#testbutton").click(function() {
-    	$(".selectchar,.selectword").toggle();
+
+    $("#undoComponi").click(function() {
+        c.undoComponi();
     });
+
     $("#confermaForm").click(function() {
     	$("#output")[0].value = JSON.stringify(c.getOutput().sort());
     	if (!c.checkAnswer()) $(".wrongAnswer").show();
     	return c.checkAnswer();
     });
+
+    $("#confermaFormCompleta").click(function() {
+        c.setOutput($("#text").val());
+        $("#output")[0].value = JSON.stringify(c.getOutput());
+        return c.checkAnswer();
+    });
     $("#buttonSI").click(function() {
-    	c.selectSingleColor();
-    	$("#confermaForm").click();
+    	c.setOutput("SI");
+        $("#output")[0].value = JSON.stringify(c.getOutput());
+    	$("#buttonSI").click();
     });
     $("#buttonNO").click(function() {
-    	$("#confermaForm").click();
+        c.setOutput("NO");
+        $("#output")[0].value = JSON.stringify(c.getOutput());
+    	$("#buttonNO").click();
     });
     $("#showHint").mousedown(function() {
     	c.showAnswer();
