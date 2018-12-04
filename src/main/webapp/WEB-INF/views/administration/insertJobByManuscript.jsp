@@ -67,7 +67,7 @@
 						<div class="symbolSelect">
 							<label> Simbolo </label>
 								<form:select id="sy" path="symbol">
-									<form:option value="nessun simbolo"></form:option>
+									<form:option value="nessun_simbolo"></form:option>
 									<font color="7a0000"><form:options items="${symbols}"
 											itemLabel="transcription" itemValue="id" /> </font>
 								</form:select>

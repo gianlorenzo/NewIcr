@@ -32,6 +32,7 @@
 			<h2>${student.name} ${student.surname}</h2>
 
 			<h2>Stai svolgendo il task ${student.taskEffettuati}</h2>
+			<h2>${task.job.symbol.transcription}</h2>
 		</li>
 	</ul>
 	<div align="center">
@@ -69,7 +70,7 @@
 			</h3>
 		</c:if>
 
-		<c:if test="${task.job.symbol.transcription!='nessunSimbolo'}">
+		<c:if test="${task.job.symbol.transcription!=null}">
 		<table class="pos">
 			<tr>
 				<c:forEach varStatus="vs" var="sample" items="${positiveSamples}">
@@ -136,9 +137,9 @@
 					   value="Conferma e vai al prossimo task">
 			</div>
 		</c:if>
+		<c:if test="${task.job.symbol.transcription!=null}">
 		<div align="center">
 			<p></p>
-			<c:if test="${task.job.symbol.transcription!='nessunSimbolo'}">
 			<h3>Attenzione: non vanno bene immagini come queste</h3>
 			<table class="neg">
 				<tr>
@@ -149,8 +150,8 @@
 					</c:forEach>
 				</tr>
 			</table>
-			</c:if>
 		</div>
+		</c:if>
 	</form:form>
 	<div align="center">
 		<form:form method="post" action="homeStudent">
