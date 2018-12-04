@@ -32,7 +32,6 @@
 			<h2>${student.name} ${student.surname}</h2>
 
 			<h2>Stai svolgendo il task ${student.taskEffettuati}</h2>
-			<h2>${task.job.symbol.transcription}</h2>
 		</li>
 	</ul>
 	<div align="center">
