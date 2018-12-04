@@ -69,7 +69,7 @@
 			</h3>
 		</c:if>
 
-		<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='trovaInteroSimbolo'}">
+		<c:if test="${task.job.symbol.transcription!='nessunSimbolo'}">
 		<table class="pos">
 			<tr>
 				<c:forEach varStatus="vs" var="sample" items="${positiveSamples}">
@@ -138,7 +138,7 @@
 		</c:if>
 		<div align="center">
 			<p></p>
-			<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='trovaInteroSimbolo'}">
+			<c:if test="${task.job.symbol.transcription!='nessunSimbolo'}">
 			<h3>Attenzione: non vanno bene immagini come queste</h3>
 			<table class="neg">
 				<tr>

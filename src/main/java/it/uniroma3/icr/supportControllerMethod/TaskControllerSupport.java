@@ -74,8 +74,12 @@ public class TaskControllerSupport {
         if ((task != null) && (task.getStudent() != null)) {
             task.setStudent(student);
             LOGGER.info("1 - assigned Task " + task.getId() + " to student " + student.getId() + " (" + task.getStudent().getId() + ")");
-            List<Sample> positiveSamples = sampleService.findAllSamplesBySymbolId(task.getJob().getSymbol().getId());
-            List<Sample> negativeSamples = negativeSampleService.findAllNegativeSamplesBySymbolId(task.getJob().getSymbol().getId());
+            if((task.getJob().getSymbol()!=null)) {
+                List<Sample> positiveSamples = sampleService.findAllSamplesBySymbolId(task.getJob().getSymbol().getId());
+                List<Sample> negativeSamples = negativeSampleService.findAllNegativeSamplesBySymbolId(task.getJob().getSymbol().getId());
+                model.addAttribute("positiveSamples", positiveSamples);
+                model.addAttribute("negativeSamples", negativeSamples);
+            }
             List<Result> listResults = taskService.findTaskResult(task, student);
             taskResults.setResultList(listResults);
             for (Result r : taskResults.getResultList()) {
@@ -89,8 +93,6 @@ public class TaskControllerSupport {
             }
             task.setStudent(student);
             model.addAttribute("student", student);
-            model.addAttribute("positiveSamples", positiveSamples);
-            model.addAttribute("negativeSamples", negativeSamples);
             model.addAttribute("task", task);
             model.addAttribute("taskResults", taskResults);
             model.addAttribute("hint", hint);

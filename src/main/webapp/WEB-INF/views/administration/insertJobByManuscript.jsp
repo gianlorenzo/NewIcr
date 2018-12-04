@@ -6,7 +6,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"
 	prefix="springForm"%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <%@ page import="it.uniroma3.icr.model.Symbol"%>
@@ -24,6 +23,15 @@
 
 <!-- Favicon -->
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
+
+	<style type="text/css">
+		.symbolSelect {
+			position:relative;
+			margin-bottom:40px;
+			display: none;
+		}
+	</style>
+
 </head>
 <body class="landing">
 	<jsp:include page="menu.jsp" />
@@ -56,12 +64,13 @@
 						</div>
 						<form:input type="hidden" value="1" path='taskSize'
 							placeholder="Dimensione Task" onBlur="isnum(this)" />
-						<div class="field-wrap">
+						<div class="symbolSelect">
 							<label> Simbolo </label>
-							<form:select id="sy" path="symbol">
-								<font color="7a0000"><form:options items="${symbols}"
-										itemLabel="transcription" itemValue="id" /> </font>
-							</form:select>
+								<form:select id="sy" path="symbol">
+									<form:option value="nessun simbolo"></form:option>
+									<font color="7a0000"><form:options items="${symbols}"
+											itemLabel="transcription" itemValue="id" /> </font>
+								</form:select>
 						</div>
 						<div class="field-wrap">
 							<label> E' un tutorial? </label>
@@ -69,7 +78,6 @@
 								<option value="false">NO</option>
 								<option value="true">SI</option>
 							</form:select>
-						<form:checkbox path='tutorial' />
 						</div>
 						<div id="formsubmitbutton">
 							<button type="submit" class="button button-block" name="action"
@@ -89,12 +97,24 @@
 	</div>
 	<!-- /form -->
 
-	<!-- Scripts -->
 
-	<script type="text/javascript">
 
-	</script>
+	<script src="js/selectAll.js"></script>
+
+
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+
+	<script>
+        $(document).ready(function() {
+            $('#desc').change(function() {
+                var val = $('#desc').val();
+                $('.symbolSelect').hide();
+                if(val=='trovaPartiColorate' || val=='trovaInteroSimbolo') {
+                    $('.symbolSelect').show();
+                }
+            });
+        });
+	</script>
 	<script
 		src="${pageContext.request.contextPath}/js/jquery.scrollex.min.js"></script>
 	<script src="js/selectAll.js"></script>
