@@ -1,5 +1,6 @@
 package it.uniroma3.icr.controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -208,14 +209,23 @@ public class AdminController {
 		this.manuscriptService.saveManuscript(manuscript);
 		Manuscript m = this.manuscriptService.findManuscriptByName(manuscriptName);
 		String path = symbolService.getPath();
-		path = path.concat(manuscriptName).concat("/");
-		symbolService.insertSymbolInDb(path, m);
-		path = sampleService.getPath();
-		path = path.concat(manuscriptName).concat("/");
-		sampleService.getSampleImage(path, m);
-		path = negativeSampleService.getNegativePath();
-		path = path.concat(manuscriptName).concat("/");
-		negativeSampleService.getNegativeSampleImage(path, m); //
+		File[] files = new File(path).listFiles();
+		for(int i=0; i<files.length;i++) {
+			if(files[i].getName().equals(manuscriptName)) {
+				path = path.concat(manuscriptName).concat("/");
+				symbolService.insertSymbolInDb(path, m);
+			}
+		}
+		for(int y=0;y<files.length;y++) {
+			if(files[y].getName().equals(manuscriptName)) {
+				path = sampleService.getPath();
+				path = path.concat(manuscriptName).concat("/");
+				sampleService.getSampleImage(path, m);
+				path = negativeSampleService.getNegativePath();
+				path = path.concat(manuscriptName).concat("/");
+				negativeSampleService.getNegativeSampleImage(path, m); //
+			}
+		}
 		path = imageService.getPath();
 		path = path.concat(manuscriptName).concat("/");
 		imageService.updateAllImages(path, m);

@@ -11,6 +11,8 @@ import javax.persistence.Query;
 
 import it.uniroma3.icr.model.Manuscript;
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,8 @@ import it.uniroma3.icr.model.Image;
 @Repository
 @Transactional(readOnly=false)
 public class ImageDaoImpl implements ImageDaoCustom {
+
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -105,7 +109,8 @@ public class ImageDaoImpl implements ImageDaoCustom {
 										if (!images[z].getName().equals(".DS_Store")) {
 											String image = FilenameUtils.getBaseName(images[z].getName());
 											String path = images[z].getPath();
-											path = path.substring(path.indexOf("/static") + 8, path.length());
+											path = path.substring(path.indexOf("img"), path.length());
+											LOGGER.info("pathInsertImage"+path);
 											Image img = new Image();
 											this.updateImage(img, image, manuscript, page, row, path);
 										}

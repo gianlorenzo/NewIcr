@@ -6,6 +6,8 @@ import it.uniroma3.icr.model.Symbol;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,8 @@ import java.io.IOException;
 
 @Repository
 public class SymbolDaoImpl {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -29,6 +33,7 @@ public class SymbolDaoImpl {
         session.getTransaction().commit();
         session.close();
     }
+
 
 
     public void insertSymbols(String p, Manuscript manuscript)  throws FileNotFoundException, IOException {

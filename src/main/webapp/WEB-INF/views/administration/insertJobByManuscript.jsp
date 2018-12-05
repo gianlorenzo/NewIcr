@@ -41,6 +41,7 @@
 		<div class="tab-content">
 			<div id="signup">
 				<h1>Inserisci Dati del Job</h1>
+                <h4>Stai usando il manoscritto: ${job.manuscript.name}</h4>
 				<form:form method="post" action="addJobByManuscript"
 					modelAttribute="job" name="form">
 					<div class="field-wrap">
