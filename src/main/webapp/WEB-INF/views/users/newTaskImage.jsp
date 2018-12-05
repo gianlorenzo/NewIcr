@@ -99,8 +99,15 @@
 					</c:if>
 					<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='dividiRiga'}">
 						<button type=button id="undotoStart">RICOMINCIA</button>
+					</c:if>
+					<c:if test="${task.job.description=='trovaPartiColorate'}">
 						<button type=button id="undoColor">ANNULLA</button>
 					</c:if>
+
+					<c:if test="${task.job.description=='dividiRiga'}">
+						<button type=button id="undoRiga">ANNULLA</button>
+					</c:if>
+
 					<c:if test="${task.job.description=='completaParola'}">
 						<button type=button id="undoComponi">ANNULLA</button>
 					</c:if>
@@ -315,9 +322,32 @@ var ExtendedCanvas = (function() {
             if(!mouseClick.includes(e.offsetX)) {
                 mouseClick.push(e.offsetX);
             }
+            console.log("len:"+mouseClick.length);
         });
 
     }
+
+	ExtendedCanvas.prototype.undoRiga = function() {
+    	o = this.output;
+    	console.log("prima di splice:" +  this.output);
+    	console.log(canvas.height);
+		if(o.length>0) {
+			o.splice(-1,1)
+			var canvasPic = new Image();
+			canvasPic.src = dataOrig;
+			canvasPic.onload = function() {
+				context.drawImage(canvasPic, 0, 0);
+				for(var i=0;i<o.length;i++) {
+					context.beginPath();
+					context.moveTo(o[i],0);
+					context.lineTo(o[i],o[i]+canvas.height);
+					context.stroke();
+					context.closePath();
+				}
+			};
+		}
+
+	}
 
     ExtendedCanvas.prototype.undoComponi = function() {
 
@@ -416,6 +446,10 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#undoColor").click(function() {
         c.undoColor();
     });
+
+    $("#undoRiga").click(function() {
+    	c.undoRiga();
+	});
 
     $("#undotoStart").click(function() {
         c.undoToStart();
