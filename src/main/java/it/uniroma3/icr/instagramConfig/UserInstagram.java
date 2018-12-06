@@ -10,7 +10,9 @@ public class UserInstagram implements Serializable {
     private String bio;
     private String name;
     private String username;
-
+    private String surname;
+    private String fullName;
+    private Long id;
     /**
      *
      */
@@ -22,7 +24,35 @@ public class UserInstagram implements Serializable {
         bio = data.getBio();
         name = data.getFirstName();
         username = data.getUsername();
+        surname = data.getLastName();
+        fullName = data.getFullName();
+        id = Long.valueOf(data.getId());
     }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getBio() {
         return bio;
     }

@@ -35,6 +35,12 @@ div.social-wrap.c > .googleplus {
     background-image: url(google-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #DD4B39));
 }
 
+div.social-wrap.c > .instagram {
+    background-size: 30px 30px, cover;
+    background-image: url(instagram-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #125688));
+    color: white;
+}
+
 .form-inline1{
 	float:left;
 	display:inline;

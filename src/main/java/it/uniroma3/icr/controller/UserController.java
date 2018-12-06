@@ -165,6 +165,37 @@ public class UserController {
 
 	}
 
+	@RequestMapping(value = "/addUserFromInstagram", method = RequestMethod.POST)
+	public String confirmUserInstagram(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
+									BindingResult bindingResult) {
+		model.addAttribute("schools", setSchools.setSchools());
+
+		Map<String, String> schoolGroups = new HashMap<String, String>();
+		schoolGroups.put("3", "3");
+		schoolGroups.put("4", "4");
+		schoolGroups.put("5", "5");
+		model.addAttribute("schoolGroups", schoolGroups);
+
+		StudentSocial u = userFacadesocial.findUser(student.getUsername());
+		LOGGER.info("Goo authorized (student) for "+ student.toString());
+
+		Administrator a = adminService.findAdmin(student.getUsername());
+		if (u!=null) {
+			LOGGER.info("Goo authorized (u) for "+ u.toString());
+			LOGGER.info("Goo validation (u) for "+ u.toString() + " is " +StudentValidator2.validate(student, model, u, a));
+		}
+
+		if (StudentValidator2.validate(student, model, u, a)) {
+			model.addAttribute("student", student);
+			userFacadesocial.saveUser(student);
+			return "registrationRecap";
+
+		} else {
+			return "registrationInstagram";
+		}
+
+	}
+
 	@RequestMapping(value = "user/toChangeStudentPassword")
 	public String toChangePassword(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

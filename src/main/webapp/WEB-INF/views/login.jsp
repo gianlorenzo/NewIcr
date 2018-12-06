@@ -51,14 +51,20 @@
 		</div>
 		<div>
 			<form class="form-inline1"
-				  action="${pageContext.request.contextPath}/connect/facebook"
-				  method="POST">
-				<input type="hidden" name="scope" value="email" />
-				<div class="social-wrap c">
-					<button class="facebook" type="submit" style='cursor: pointer'>Accedi con Facebook</button>
-				</div>
-				<input type="hidden" name="daFB" />
-			</form>
+				   action="${pageContext.request.contextPath}/connect/facebook"
+				   method="POST">
+			<input type="hidden" name="scope" value="email" />
+			<div class="social-wrap c">
+				<button class="facebook" type="submit" style='cursor: pointer'>Accedi con Facebook</button>
+			</div>
+			<input type="hidden" name="daFB" />
+		</form>
+
+			<div class="social-wrap c">
+				<a href="https://www.instagram.com/oauth/authorize/?client_id=e21f60a83d1e42bf9323f5033a160971&redirect_uri=https://localhost:8443/instagram&response_type=code">
+				<button class="instagram" style='cursor: pointer'>Accedi con Instagram</button>
+				</a>
+			</div>
 
 			<form class="form-inline2"
 				  action="${pageContext.request.contextPath}/connect/google"
