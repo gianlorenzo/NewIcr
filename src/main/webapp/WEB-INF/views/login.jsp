@@ -13,10 +13,12 @@
 	<title>ICR - login</title>
 
 	<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
-	<link rel="stylesheet"
-		  href="${pageContext.request.contextPath}/css/registration.css?v=3" />
+
 	<link rel="stylesheet"
 		  href="${pageContext.request.contextPath}/css/facebookGoogleButtons.css" />
+
+	<link rel="stylesheet"
+		  href="${pageContext.request.contextPath}/css/registration.css" />
 
 	<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 	<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
@@ -59,13 +61,6 @@
 			</div>
 			<input type="hidden" name="daFB" />
 		</form>
-
-			<div class="social-wrap c">
-				<a href="https://www.instagram.com/oauth/authorize/?client_id=e21f60a83d1e42bf9323f5033a160971&redirect_uri=https://localhost:8443/instagram&response_type=code">
-				<button class="instagram" style='cursor: pointer'>Accedi con Instagram</button>
-				</a>
-			</div>
-
 			<form class="form-inline2"
 				  action="${pageContext.request.contextPath}/connect/google"
 				  method="POST">
@@ -76,6 +71,11 @@
 				</div>
 				<input type="hidden" name="daGoogle" />
 			</form>
+			<div class="social-wrap b">
+				<a href="https://www.instagram.com/oauth/authorize/?client_id=e21f60a83d1e42bf9323f5033a160971&redirect_uri=https://localhost:8443/instagram&response_type=code">
+					<button class="facebook" style='cursor: pointer'>Accedi con Instagram</button>
+				</a>
+			</div>
 		</div>
 
 		<div id="login"></div>

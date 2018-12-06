@@ -21,6 +21,28 @@ div.social-wrap.c button {
     
 }
 
+div.social-wrap.b button {
+
+    padding-left: 35px;
+    padding-right: 0px;
+    height: 35px;
+    border: none;
+    background: url(instagram-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #cd486b));
+    background-size: 25px 25px, cover;
+    background-position: 10px center, center center;
+    background-repeat: no-repeat, repeat;
+    border-radius: 4px;
+    color: white;
+
+    font-size: 16px;
+    margin-bottom: 15px;
+    width: 256px;
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+
+}
+
 
 div.social-wrap.c > .facebook {
     background: url(facebook-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #3b5998));
@@ -37,7 +59,7 @@ div.social-wrap.c > .googleplus {
 
 div.social-wrap.c > .instagram {
     background-size: 30px 30px, cover;
-    background-image: url(instagram-logo.png), -webkit-gradient(linear, left top, left bottom, color-stop(100%, #125688));
+    background-image: url(instagram-logo.png);
     color: white;
 }
 
@@ -48,11 +70,9 @@ div.social-wrap.c > .instagram {
 	
 }
 
-
 .form-inline2{
 	float:right;
 	display:inline;
-	
 }
 
 
