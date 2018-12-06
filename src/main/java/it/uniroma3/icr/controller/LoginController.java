@@ -3,30 +3,38 @@ package it.uniroma3.icr.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.uniroma3.icr.instagramConfig.InstagramJPService;
+import it.uniroma3.icr.instagramConfig.UserInstagram;
 import it.uniroma3.icr.service.impl.StudentServiceSocial;
 import it.uniroma3.icr.supportControllerMethod.FacebookControllerSupport;
 import it.uniroma3.icr.supportControllerMethod.GoogleControllerSupport;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.jinstagram.Instagram;
+import org.jinstagram.entity.users.basicinfo.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import java.io.StringWriter;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.google.api.Google;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import it.uniroma3.icr.model.Administrator;
 import it.uniroma3.icr.model.Student;
 import it.uniroma3.icr.service.impl.StudentService;
 import it.uniroma3.icr.service.impl.TaskService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.StringWriter;
 
 @Controller
 public class LoginController  {
@@ -67,6 +75,23 @@ public class LoginController  {
 		return facebookControllerSupport.facebookLogin(facebook,userFacadesocial,model,social,redirectAttributes);
 
 	}
+
+
+	@RequestMapping("/instagram")
+	@ResponseBody
+	public String invoca(@RequestParam String code) throws Exception {
+		InstagramJPService instagramObj = new InstagramJPService();
+		instagramObj.build();
+		Instagram instagram = instagramObj.getInstagram(code);
+		UserInfo userInfo = instagram.getCurrentUserInfo();
+		UserInstagram userInstagram = new UserInstagram(userInfo);
+		ObjectMapper mapper = new ObjectMapper();
+		StringWriter stringWriter = new StringWriter();
+		mapper.writeValue(stringWriter, userInstagram);
+
+		return stringWriter.toString();
+	}
+
 
 	@RequestMapping(value="/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String helloGoogle(@RequestParam(value = "daGoogle", required = false)String daGoogle, Model model,

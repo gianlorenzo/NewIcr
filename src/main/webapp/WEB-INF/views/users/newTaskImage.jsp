@@ -36,38 +36,9 @@
 	</ul>
 	<div align="center">
 
-		<c:if test="${task.job.description=='trovaPartiColorate'}">
 			<h3>
-				Guarda la parola al centro della pagina.<br/>
-				Se al suo interno individui uno o piu' simboli simili a quelli marcati in
-				nero negli esempi in alto (riquadro verde)<br/>
-				marcane le regioni (cliccandoci sopra) e premi <em>Conferma e vai al prossimo task</em>. <br/>
-				Se non individui il simbolo cercato, premi <em>Conferma e vai al prossimo task</em>
-				(senza marcare niente).<br/>
-				Attenzione: gli esempi in basso (riquadro rosso), rappresentano
-				falsi amici: simboli simili a questi non vanno marcati.
+				${task.job.description}
 			</h3>
-		</c:if>
-		<c:if test="${task.job.description=='trovaInteroSimbolo'}">
-			<h3>
-				Guarda il frammento di parola al centro della pagina.
-				<br/>Contiene (interamente) un simbolo simile a quelli marcati in nero negli esempi
-				in alto (riquadro verde)?<br/>
-				Attenzione: gli esempi in basso (riquadro rosso) rappresentano falsi amici: simboli
-				simili a questi non sono corretti.
-			</h3>
-		</c:if>
-		<c:if test="${task.job.description=='dividiRiga'}">
-			<h3>
-				Ti viene presentata la seguente riga di un manoscritto.
-				<br/> Effetuando una serie di click con il mouse nella parte alta della riga, traccia una serie di righe divisorie tra le parole.
-			</h3>
-		</c:if>
-		<c:if test="${task.job.description=='completaParola'}">
-			<h3>
-				Nella seguente parola ci sono delle parti mancanti.
-			</h3>
-		</c:if>
 
 		<c:if test="${task.job.symbol.transcription!=null}">
 		<table class="pos">
@@ -88,7 +59,7 @@
 				<c:forEach varStatus="vs" var="result"
 					items="${taskResults.resultList}">
 					<div id="canvasWrapper" style="height: 200px"></div> <!-- immagine da etichettare -->
-					<c:if test="${task.job.description=='completaParola'}">
+					<c:if test="${task.job.typology=='completaParola'}">
 						<div>
 							<h3 class="compose">
 								Scrivi nell'area di testo sottostante
@@ -97,21 +68,21 @@
 							<input type="text" id="text" name="name"/>
 						</div>
 					</c:if>
-					<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='dividiRiga'}">
+					<c:if test="${task.job.typology=='trovaPartiColorate' || task.job.typology=='dividiRiga'}">
 						<button type=button id="undotoStart">RICOMINCIA</button>
 					</c:if>
-					<c:if test="${task.job.description=='trovaPartiColorate'}">
+					<c:if test="${task.job.typology=='trovaPartiColorate'}">
 						<button type=button id="undoColor">ANNULLA</button>
 					</c:if>
 
-					<c:if test="${task.job.description=='dividiRiga'}">
+					<c:if test="${task.job.typology=='dividiRiga'}">
 						<button type=button id="undoRiga">ANNULLA</button>
 					</c:if>
 
-					<c:if test="${task.job.description=='completaParola'}">
+					<c:if test="${task.job.typology=='completaParola'}">
 						<button type=button id="undoComponi">ANNULLA</button>
 					</c:if>
-					<c:if test="${task.job.description=='trovaInteroSimbolo'}">
+					<c:if test="${task.job.typology=='trovaInteroSimbolo'}">
 						<input type="submit" name="action" id="buttonSI"
 							   value="SI">
 						<input type="submit" name="action" id="buttonNO"
@@ -130,14 +101,14 @@
 				</c:forEach>
 			</table>
 		</div>
-		<c:if test="${task.job.description=='trovaPartiColorate' || task.job.description=='dividiRiga'}">
+		<c:if test="${task.job.typology=='trovaPartiColorate' || task.job.typology=='dividiRiga'}">
 			<div align="center" class="selectword">
 				<input type="submit" name="action" id="confermaForm"
 					value="Conferma e vai al prossimo task">
 			</div>
 		</c:if>
 
-		<c:if test="${task.job.description=='completaParola'}">
+		<c:if test="${task.job.typology=='completaParola'}">
 			<div align="center" class="selectword">
 				<input type="submit" name="action" id="confermaFormCompleta"
 					   value="Conferma e vai al prossimo task">
@@ -430,14 +401,14 @@ var ExtendedCanvas = (function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     var c = new ExtendedCanvas('#canvasWrapper', '${pageContext.request.contextPath}/${taskResults.resultList[0].image.path}', '${hint}', ${taskResults.resultList[0].task.job.tutorial});
-    <c:if test="${task.job.description=='trovaPartiColorate'}">
+    <c:if test="${task.job.typology=='trovaPartiColorate'}">
     c.element.addEventListener('click', function(e) {
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
         c.fill(x, y);
     });
     </c:if>
-	<c:if test="${task.job.description=='dividiRiga'}">
+	<c:if test="${task.job.typology=='dividiRiga'}">
 		c.element.addEventListener('click',function(e){
 		  c.drawLines(e)
 		});

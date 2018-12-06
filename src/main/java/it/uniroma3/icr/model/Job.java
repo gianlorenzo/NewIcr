@@ -20,12 +20,15 @@ public class Job {
 	private Long id;
 	@Column(nullable = false)
 	private String title;
+	@Column
 	private String description;
 	@Column(nullable = false)
 	private Integer taskSize;
 	private Integer numberOfWords;
 	@Column(nullable = false)
 	private Integer numberOfStudents;
+	@Column
+	private String typology;
 	@Column(columnDefinition="boolean default 'false'")
 	private boolean tutorial;
 	private String difficulty;
@@ -161,4 +164,11 @@ public class Job {
 		this.tasks.add(task);
 	}
 
+	public String getTypology() {
+		return typology;
+	}
+
+	public void setTypology(String typology) {
+		this.typology = typology;
+	}
 }

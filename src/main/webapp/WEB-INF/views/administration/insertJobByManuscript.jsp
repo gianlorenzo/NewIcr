@@ -59,7 +59,11 @@
 						</div>
 						<div class="field-wrap">
 							<label> Descrizione </label>
-							<form:select id="desc" type="text" path="description">
+							<form:textarea path="description" placeholder="Descrizione"/>
+						</div>
+						<div class="field-wrap">
+							<label> Tipologia </label>
+							<form:select id="tip" type="text" path="typology">
 								<font color="7a0000"><form:options items="${descriptions}"/> </font>
 							</form:select>
 						</div>
@@ -107,8 +111,8 @@
 
 	<script>
         $(document).ready(function() {
-            $('#desc').change(function() {
-                var val = $('#desc').val();
+            $('#tip').change(function() {
+                var val = $('#tip').val();
                 $('.symbolSelect').hide();
                 if(val=='trovaPartiColorate' || val=='trovaInteroSimbolo') {
                     $('.symbolSelect').show();

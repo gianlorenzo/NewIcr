@@ -29,6 +29,7 @@
 			<th>Numero di Parole</th>
 			<th>Dimensione del Task</th>
 			<th>Manoscritto</th>
+			<th>Tipologia</th>
 			<th>Descrizione</th>
 			<th>Simbolo</th>
 		</tr>
@@ -38,6 +39,7 @@
 			<th>${job.numberOfWords}</th>
 			<th>${job.taskSize}</th>
 			<th>${manuscript.name}</th>
+			<th>${job.typology}</th>
 			<th>${job.description}</th>
 			<th>${job.symbol.transcription}</th>
 		</tr>

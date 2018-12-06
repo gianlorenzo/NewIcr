@@ -27,6 +27,7 @@
 			<p>dell'Archivio Segreto Vaticano</p>
 		</div>
 	</section>
+
 	<!-- Scripts -->
 	<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery.scrollex.min.js"></script>
