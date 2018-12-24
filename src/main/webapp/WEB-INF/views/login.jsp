@@ -10,12 +10,12 @@
 <head>
 	<meta charset="utf-8">
 	<base href="/" />
-	<title>ICR - login</title>
+	<title>ICR</title>
 
 	<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 
 	<link rel="stylesheet"
-		  href="${pageContext.request.contextPath}/css/facebookGoogleButtons.css" />
+		  href="${pageContext.request.contextPath}/css/socialButtons.css" />
 
 	<link rel="stylesheet"
 		  href="${pageContext.request.contextPath}/css/registration.css" />

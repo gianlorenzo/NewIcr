@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.uniroma3.icr.supportControllerMethod.TaskControllerSupport;
+import it.uniroma3.icr.tools.TaskStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,8 @@ public class TaskController {
 	@Autowired
 	public ResultService resultService;
 
+	private TaskStack taskStack = new TaskStack();
+
 	private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
 
 
@@ -82,6 +85,8 @@ public class TaskController {
 	public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
 			@ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
 			@RequestParam(name = "social", required = false) String social) {
+
+		LOGGER.info("lunghezza stack"+ taskStack.popTask(taskService.retrieveAllTask()));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String s = auth.getName();
 		model.addAttribute("social", social);
