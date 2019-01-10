@@ -54,7 +54,6 @@ public class Task {
         this.job = job;
     }
 
-
     public Result getResult() {
         return result;
     }
