@@ -23,6 +23,7 @@ public class InstagramJPService {
         service = new InstagramAuthService().apiKey(clientID).apiSecret(clientSecret).callback(callback).build();
         return service;
     }
+
     public Instagram getInstagram(String code) {
 
         Verifier verifier = new Verifier(code);

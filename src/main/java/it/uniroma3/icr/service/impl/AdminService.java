@@ -9,14 +9,14 @@ import it.uniroma3.icr.model.Administrator;
 @Service
 public class AdminService {
 
-	@Autowired
-	private AdminDao adminDao;
+    @Autowired
+    private AdminDao adminDao;
 
-	public void addAdmin(Administrator admin) {
-		adminDao.save(admin);
-	}
-	
-	public Administrator findAdmin(String username){
-		return this.adminDao.findByUsername(username);
-	}
+    public void addAdmin(Administrator admin) {
+        adminDao.save(admin);
+    }
+
+    public Administrator findAdmin(String username) {
+        return this.adminDao.findByUsername(username);
+    }
 }

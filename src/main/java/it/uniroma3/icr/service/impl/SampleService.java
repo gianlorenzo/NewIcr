@@ -17,23 +17,26 @@ import it.uniroma3.icr.model.Sample;
 
 @Service
 public class SampleService {
-	@Autowired
-	private SampleDao sampleDao;
-	@Autowired
+    @Autowired
+    private SampleDao sampleDao;
+    @Autowired
     private SampleDaoImpl sampleDaoImpl;
-	@Autowired
-	private GetSamplePath getSamplePath ;
-	
-	public void getSampleImage(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
-		this.sampleDaoImpl.insertSamples(p,manuscript);
-	}
-	public List<Sample> findAllSamplesBySymbolId(long id){
-		return sampleDao.findAllSamplesBySymbolId(id);
-	}
-	public String getPath() {
-		return this.getSamplePath.getPath();
-	}
+    @Autowired
+    private GetSamplePath getSamplePath;
+
+    public void getSampleImage(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
+        this.sampleDaoImpl.insertSamples(p, manuscript);
+    }
+
+    public List<Sample> findAllSamplesBySymbolId(long id) {
+        return sampleDao.findAllSamplesBySymbolId(id);
+    }
+
+    public String getPath() {
+        return this.getSamplePath.getPath();
+    }
+
     public List<Manuscript> getManuscript() throws FileNotFoundException, IOException {
-    	return this.getSamplePath.getManuscript();
+        return this.getSamplePath.getManuscript();
     }
 }

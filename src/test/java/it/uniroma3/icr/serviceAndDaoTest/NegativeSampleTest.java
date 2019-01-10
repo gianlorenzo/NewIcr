@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -36,7 +37,6 @@ public class NegativeSampleTest {
     private NegativeSampleDao negativeSampleDao;
 
 
-
     @Before
     public void setUp() {
         negativeSample = new NegativeSample();
@@ -48,14 +48,14 @@ public class NegativeSampleTest {
 
     @Test
     public void addNegativeSample() throws FileNotFoundException, IOException {
-        NegativeSampleService negativeSampleServiceMock= mock(NegativeSampleService.class);
-        negativeSampleServiceMock.getNegativeSampleImage(p,manuscript);
+        NegativeSampleService negativeSampleServiceMock = mock(NegativeSampleService.class);
+        negativeSampleServiceMock.getNegativeSampleImage(p, manuscript);
     }
 
     @Test
     public void getNegativeSamplePath() {
-        NegativeSampleService negativeSampleServiceMock= mock(NegativeSampleService.class);
-        assertEquals(negativeSample.getPath(),negativeSampleServiceMock.getNegativePath());
+        NegativeSampleService negativeSampleServiceMock = mock(NegativeSampleService.class);
+        assertEquals(negativeSample.getPath(), negativeSampleServiceMock.getNegativePath());
     }
 
 }

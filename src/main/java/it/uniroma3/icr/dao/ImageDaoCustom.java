@@ -8,16 +8,16 @@ import it.uniroma3.icr.model.Image;
 
 @Repository
 public interface ImageDaoCustom {
-	public List<Image> findImageForTypeAndManuscriptName(String type, String manuscript, int limit);
+    public List<Image> findImageForTypeAndManuscriptName(String type, String manuscript, int limit);
 
-	public List<Image> findImageForTypeAndWidthAndManuscript(String type, String manuscript, int width, int limit);
+    public List<Image> findImageForTypeAndWidthAndManuscript(String type, String manuscript, int width, int limit);
 
-	public List<String> findAllManuscript();
+    public List<String> findAllManuscript();
 
-	public List<String> findAllPages();
+    public List<String> findAllPages();
 
-	public Object[] countImage();
+    public Object[] countImage();
 
-	public List<Image> findImageFromManuscriptName(long manuscript);
+    public List<Image> findImageFromManuscriptName(long manuscript);
 
 }

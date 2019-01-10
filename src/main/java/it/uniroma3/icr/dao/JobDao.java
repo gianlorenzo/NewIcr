@@ -11,6 +11,6 @@ import it.uniroma3.icr.model.Job;
 import java.util.List;
 
 @Repository
-public interface JobDao extends JpaRepository<Job,Long>{
+public interface JobDao extends JpaRepository<Job, Long> {
 
 }

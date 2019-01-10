@@ -25,7 +25,7 @@ public class FacebookControllerSupport {
 
     public String facebookLogin(Facebook facebook, StudentServiceSocial userFacadesocial,
                                 Model model, String social, RedirectAttributes redirectAttributes) {
-        String[] fields = { "first_name", "last_name", "email" };
+        String[] fields = {"first_name", "last_name", "email"};
         User user = facebook.fetchObject("me", User.class, fields);
         String email = user.getEmail();
         String id = user.getId();

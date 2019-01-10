@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -79,8 +80,8 @@ public class TaskTest {
         results.add(result);
         Mockito.when(taskDao.findOne(new Long(1))).thenReturn(task);
         Mockito.when(taskDaoImpl.findStudentIdOnTask(task)).thenReturn(student.getId());
-        Mockito.when(taskDaoImpl.findTaskOneResult(task,student)).thenReturn(result);
-        Mockito.when(taskDaoImpl.findTaskResult(task,student)).thenReturn(results);
+        Mockito.when(taskDaoImpl.findTaskOneResult(task, student)).thenReturn(result);
+        Mockito.when(taskDaoImpl.findTaskResult(task, student)).thenReturn(results);
     }
 
     @Test
@@ -102,20 +103,20 @@ public class TaskTest {
     @Test
     public void findTaskResult() {
         Long id = new Long(4);
-        Result found = taskService.findTaskOneResult(task,student);
+        Result found = taskService.findTaskOneResult(task, student);
         assertThat(found.getId()).isEqualTo(id);
     }
 
     @Test
     public void findTaskResults() {
-        List<Result> found = taskService.findTaskResult(task,student);
+        List<Result> found = taskService.findTaskResult(task, student);
         assertThat(found.size()).isEqualTo(results.size());
     }
 
     @Test
     public void createTask() {
         TaskService taskServiceMock = mock(TaskService.class);
-        taskServiceMock.createTask(job,number,word,task);
+        taskServiceMock.createTask(job, number, word, task);
     }
 
     @Test

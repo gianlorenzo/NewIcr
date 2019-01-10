@@ -28,23 +28,22 @@ public class GoogleControllerSupport {
                               StudentServiceSocial userFacadesocial, Model model,
                               String social, RedirectAttributes redirectAttributes) {
         String id = google.userOperations().getUserInfo().getId();
-        StudentSocial student= userFacadesocial.findUser(id);
+        StudentSocial student = userFacadesocial.findUser(id);
 
-        if(student!=null){
+        if (student != null) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
             List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
             updatedAuthorities.add(authority);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                    student.getUsername(),"",updatedAuthorities);
+                    student.getUsername(), "", updatedAuthorities);
             auth.setDetails(student);
             SecurityContextHolder.getContext().setAuthentication(auth);
             model.addAttribute("student", student);
             LOGGER.info("Login: " + student.toString());
-            social="goo";
+            social = "goo";
             redirectAttributes.addFlashAttribute("social", social);
             return "redirect:/user/homeStudent";
-        }
-        else{
+        } else {
             String name = google.userOperations().getUserInfo().getFirstName();
             String surname = google.userOperations().getUserInfo().getLastName();
             String email = google.userOperations().getUserInfo().getEmail();
@@ -58,7 +57,7 @@ public class GoogleControllerSupport {
             Map<String, String> schools = setSchools.setSchools();
             model.addAttribute("schools", schools);
 
-            Map<String,String> schoolGroups = new HashMap<String,String>();
+            Map<String, String> schoolGroups = new HashMap<String, String>();
             schoolGroups.put("3", "3");
             schoolGroups.put("4", "4");
             schoolGroups.put("5", "5");

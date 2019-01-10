@@ -13,132 +13,133 @@ import javax.persistence.OneToMany;
 @Entity
 public class Image {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private int width;
-	private int height;
-	private String page;
-	private String type;
-	private String path;
-	private String row;
-	@ManyToOne
-	private Manuscript manuscript;
-	@ManyToMany(mappedBy="images")
-	private List<Job> jobs;
-	@OneToMany(mappedBy="image")
-	private List<Result> results;
-	
-	// costruttori
-	public Image() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private int width;
+    private int height;
+    private String page;
+    private String type;
+    private String path;
+    private String row;
+    @ManyToOne
+    private Manuscript manuscript;
+    @ManyToMany(mappedBy = "images")
+    private List<Job> jobs;
+    @OneToMany(mappedBy = "image")
+    private List<Result> results;
 
-	public Image(Long id, int width, int height,String page, Manuscript manuscript, String type,
-			List<Job> jobs, List<Result> results) {
-		super();
-		this.id = id;
-		this.width = width;
-		this.height = height;
-		this.page = page;
-		this.manuscript = manuscript;
-		this.type = type;
-		this.jobs = jobs;
-		this.results = results;
-	}
+    // costruttori
+    public Image() {
+    }
 
-	public Image (int width, int height, String type, Manuscript manuscript, String page,String path) {
-		this.width = width;
-		this.height = height;
-		this.type = type;
-		this.manuscript = manuscript;
-		this.page = page;
-		this.path = path.replace("\\", "/");
-	}
+    public Image(Long id, int width, int height, String page, Manuscript manuscript, String type,
+                 List<Job> jobs, List<Result> results) {
+        super();
+        this.id = id;
+        this.width = width;
+        this.height = height;
+        this.page = page;
+        this.manuscript = manuscript;
+        this.type = type;
+        this.jobs = jobs;
+        this.results = results;
+    }
 
-	//	getter e setter	
-	public Long getId() {
-		return id;
-	}
+    public Image(int width, int height, String type, Manuscript manuscript, String page, String path) {
+        this.width = width;
+        this.height = height;
+        this.type = type;
+        this.manuscript = manuscript;
+        this.page = page;
+        this.path = path.replace("\\", "/");
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    //	getter e setter
+    public Long getId() {
+        return id;
+    }
 
-	public int getWidth() {
-		return width;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
+    public int getWidth() {
+        return width;
+    }
 
-	public int getHeight() {
-		return height;
-	}
+    public void setWidth(int width) {
+        this.width = width;
+    }
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
+    public int getHeight() {
+        return height;
+    }
 
-	public String getPage() {
-		return page;
-	}
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
-	public void setPage(String page) {
-		this.page = page;
-	}
+    public String getPage() {
+        return page;
+    }
 
-	public Manuscript getManuscript() {
-		return manuscript;
-	}
+    public void setPage(String page) {
+        this.page = page;
+    }
 
-	public void setManuscript(Manuscript manuscript) {
-		this.manuscript = manuscript;
-	}
+    public Manuscript getManuscript() {
+        return manuscript;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setManuscript(Manuscript manuscript) {
+        this.manuscript = manuscript;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public List<Job> getJobs() {
-		return jobs;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setJobs(List<Job> jobs) {
-		this.jobs = jobs;
-	}
+    public List<Job> getJobs() {
+        return jobs;
+    }
 
-	public List<Result> getResults() {
-		return results;
-	}
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
 
-	public void setResults(List<Result> results) {
-		this.results = results;
-	}
+    public List<Result> getResults() {
+        return results;
+    }
 
-	public String getRow() {
-		return row;
-	}
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
 
-	public void setRow(String row) {
-		this.row = row;
-	}
+    public String getRow() {
+        return row;
+    }
+
+    public void setRow(String row) {
+        this.row = row;
+    }
 
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path.replace("\\", "/");
-	}
+    public void setPath(String path) {
+        this.path = path.replace("\\", "/");
+    }
 
-	@Override
-	public String toString() {
-		return "Image [id=" + id ;
-	}
+    @Override
+    public String toString() {
+        return "Image [id=" + id;
+    }
 
 }

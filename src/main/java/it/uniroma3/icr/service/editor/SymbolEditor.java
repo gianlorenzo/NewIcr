@@ -10,14 +10,14 @@ import it.uniroma3.icr.service.impl.SymbolService;
 
 @Component
 public class SymbolEditor extends PropertyEditorSupport {
-	
-	private @Autowired
+
+    private @Autowired
     SymbolService symbolService;
-	
-	@Override
-	public void setAsText(String text) {
-		Symbol s = this.symbolService.retrieveSymbol(Long.valueOf(text));
-		this.setValue(s);
-	}
+
+    @Override
+    public void setAsText(String text) {
+        Symbol s = this.symbolService.retrieveSymbol(Long.valueOf(text));
+        this.setValue(s);
+    }
 
 }

@@ -17,32 +17,36 @@ import it.uniroma3.icr.model.Symbol;
 @Service
 public class SymbolService {
 
-	@Autowired
-	private SymbolDao symbolDao;
+    @Autowired
+    private SymbolDao symbolDao;
 
-	@Autowired
+    @Autowired
     private SymbolDaoImpl symbolDaoImpl;
 
-	@Autowired
-	private GetSamplePath getSamplePath;
-	
-	public void insertSymbolInDb(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
-       this.symbolDaoImpl.insertSymbols(p,manuscript);
-	}
+    @Autowired
+    private GetSamplePath getSamplePath;
 
-	public Symbol retrieveSymbol(long id) {
-		return this.symbolDao.findOne(id);
-	}
-	public List<Symbol> retrieveAllSymbols() {
-		return this.symbolDao.findAll();
-	}
-	public List<Symbol> findSymbolByManuscriptName(String manuscript) {
-		return this.symbolDao.findByManuscriptName(manuscript);
-	}
-	public String getPath() {
-		return this.getSamplePath.getPath();
-	}
+    public void insertSymbolInDb(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
+        this.symbolDaoImpl.insertSymbols(p, manuscript);
+    }
+
+    public Symbol retrieveSymbol(long id) {
+        return this.symbolDao.findOne(id);
+    }
+
+    public List<Symbol> retrieveAllSymbols() {
+        return this.symbolDao.findAll();
+    }
+
+    public List<Symbol> findSymbolByManuscriptName(String manuscript) {
+        return this.symbolDao.findByManuscriptName(manuscript);
+    }
+
+    public String getPath() {
+        return this.getSamplePath.getPath();
+    }
+
     public List<Manuscript> getManuscript() throws FileNotFoundException, IOException {
-    	return this.getSamplePath.getManuscript();
+        return this.getSamplePath.getManuscript();
     }
 }

@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>ICR</title>
     <!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico"/>
 </head>
 <body class="landing">
-<jsp:include page="menu.jsp" />
+<jsp:include page="menu.jsp"/>
 <!-- Banner -->
 <section id="banner">
     <div class="inner">

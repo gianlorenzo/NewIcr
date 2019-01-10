@@ -14,109 +14,110 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Manuscript {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column(nullable = false, unique = true)
-	private String name;
-	@OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
-	private List<Image> images;
-	@OneToMany(mappedBy = "manuscript")
-	private List<Job> jobs;
-	@OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
-	private List<Sample> samples;
-	@OneToMany(mappedBy = "manuscript")
-	private List<Symbol> symbols;
-	@OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
-	private List<NegativeSample> negativeSamples;
-	
-	//costruttori
-	public Manuscript(){
-		this.images = new ArrayList<>();
-		this.jobs = new ArrayList<>();
-		this.samples = new ArrayList<>();
-		this.symbols = new ArrayList<>();
-		this.negativeSamples = new ArrayList<>();
-	}
-	
-	public Manuscript(String name){
-		this.name = name;
-	}
-	//getter e setter
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String name;
+    @OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
+    private List<Image> images;
+    @OneToMany(mappedBy = "manuscript")
+    private List<Job> jobs;
+    @OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
+    private List<Sample> samples;
+    @OneToMany(mappedBy = "manuscript")
+    private List<Symbol> symbols;
+    @OneToMany(mappedBy = "manuscript", cascade = CascadeType.ALL)
+    private List<NegativeSample> negativeSamples;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    //costruttori
+    public Manuscript() {
+        this.images = new ArrayList<>();
+        this.jobs = new ArrayList<>();
+        this.samples = new ArrayList<>();
+        this.symbols = new ArrayList<>();
+        this.negativeSamples = new ArrayList<>();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Manuscript(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    //getter e setter
+    public Long getId() {
+        return id;
+    }
 
-	public List<Image> getImages() {
-		return images;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Job> getJobs() {
-		return jobs;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setJobs(List<Job> jobs) {
-		this.jobs = jobs;
-	}
+    public List<Image> getImages() {
+        return images;
+    }
 
-	public List<Sample> getSamples() {
-		return samples;
-	}
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
-	public void setSamples(List<Sample> samples) {
-		this.samples = samples;
-	}
+    public List<Job> getJobs() {
+        return jobs;
+    }
 
-	public List<Symbol> getSymbols() {
-		return symbols;
-	}
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
 
-	public void setSymbols(List<Symbol> symbols) {
-		this.symbols = symbols;
-	}
+    public List<Sample> getSamples() {
+        return samples;
+    }
 
-	public List<NegativeSample> getNegativeSamples() {
-		return negativeSamples;
-	}
+    public void setSamples(List<Sample> samples) {
+        this.samples = samples;
+    }
 
-	public void setNegativeSamples(List<NegativeSample> negativeSamples) {
-		this.negativeSamples = negativeSamples;
-	}
+    public List<Symbol> getSymbols() {
+        return symbols;
+    }
 
-	// add to list
-	
-	public void addSymbol(Symbol symbol) {
-		this.symbols.add(symbol);
-	}
+    public void setSymbols(List<Symbol> symbols) {
+        this.symbols = symbols;
+    }
 
-	public void addSample(Sample sample) {
-		this.samples.add(sample);
-	}
+    public List<NegativeSample> getNegativeSamples() {
+        return negativeSamples;
+    }
 
-	public void addNegativeSample(NegativeSample negativeSample) {
-		this.negativeSamples.add(negativeSample);
-	}
+    public void setNegativeSamples(List<NegativeSample> negativeSamples) {
+        this.negativeSamples = negativeSamples;
+    }
+
+    // add to list
+
+    public void addSymbol(Symbol symbol) {
+        this.symbols.add(symbol);
+    }
+
+    public void addSample(Sample sample) {
+        this.samples.add(sample);
+    }
+
+    public void addNegativeSample(NegativeSample negativeSample) {
+        this.negativeSamples.add(negativeSample);
+    }
 
 
-	public void addImage(Image img) {
-		this.images.add(img);
-	}
-	
-	
+    public void addImage(Image img) {
+        this.images.add(img);
+    }
+
+
 }

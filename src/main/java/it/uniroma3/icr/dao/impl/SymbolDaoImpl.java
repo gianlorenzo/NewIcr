@@ -35,10 +35,9 @@ public class SymbolDaoImpl {
     }
 
 
-
-    public void insertSymbols(String p, Manuscript manuscript)  throws FileNotFoundException, IOException {
+    public void insertSymbols(String p, Manuscript manuscript) throws FileNotFoundException, IOException {
         File[] files = new File(p).listFiles();
-        for(int i=0;i<files.length;i++) {
+        for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
                 String typeSymbol = files[i].getName();
                 File[] transcriptionsSymbol = files[i].listFiles();
@@ -75,7 +74,6 @@ public class SymbolDaoImpl {
             }
         }
     }
-
 
 
 }

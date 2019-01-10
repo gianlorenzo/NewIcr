@@ -5,18 +5,18 @@ import java.util.List;
 
 public class TaskWrapper {
 
-	private List<Result> resultList;
-	
-	public TaskWrapper() {
-		resultList = new ArrayList<>();
-	}
+    private List<Result> resultList;
 
-	public List<Result> getResultList() {
-		return resultList;
-	}
+    public TaskWrapper() {
+        resultList = new ArrayList<>();
+    }
 
-	public void setResultList(List<Result> resultList) {
-		this.resultList = resultList;
-	}
-	
+    public List<Result> getResultList() {
+        return resultList;
+    }
+
+    public void setResultList(List<Result> resultList) {
+        this.resultList = resultList;
+    }
+
 }

@@ -14,32 +14,32 @@ import it.uniroma3.icr.model.TaskWrapper;
 @Service
 public class ResultService {
 
-	@Autowired
-	private ResultDao resultDao;
-	
-	public void addResult(Result r) {
-		resultDao.save(r);
-	}
-	
-	public Result retrieveResult(long id) {
-		return this.resultDao.findOne(id);
-	}
-	
-	public List<Result> retrieveAllResult() {
-		return this.resultDao.findAll();
-	}
-	
-	public List<Result> findTaskResult(Task task) {
-		return this.resultDao.findByTask(task);
-	}
-	
-	public void updateListResult(TaskWrapper taskResults) {
-		resultDao.updateListResult(taskResults);
-	}
+    @Autowired
+    private ResultDao resultDao;
 
-	public void addImageAndTaskToResult(Task t,Result r, Job j) {
-		resultDao.addImageAdnTaskToResult(t, r, j);
-	}
-	
-	
+    public void addResult(Result r) {
+        resultDao.save(r);
+    }
+
+    public Result retrieveResult(long id) {
+        return this.resultDao.findOne(id);
+    }
+
+    public List<Result> retrieveAllResult() {
+        return this.resultDao.findAll();
+    }
+
+    public List<Result> findTaskResult(Task task) {
+        return this.resultDao.findByTask(task);
+    }
+
+    public void updateListResult(TaskWrapper taskResults) {
+        resultDao.updateListResult(taskResults);
+    }
+
+    public void addImageAndTaskToResult(Task t, Result r, Job j) {
+        resultDao.addImageAdnTaskToResult(t, r, j);
+    }
+
+
 }

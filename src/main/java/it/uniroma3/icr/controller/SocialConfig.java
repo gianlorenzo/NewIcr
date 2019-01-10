@@ -1,6 +1,7 @@
 package it.uniroma3.icr.controller;
 
 import java.util.UUID;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
@@ -8,8 +9,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 @Configuration
-public class SocialConfig extends SocialConfigurerAdapter
-{
+public class SocialConfig extends SocialConfigurerAdapter {
 
     @Override
     public UserIdSource getUserIdSource() {
@@ -17,7 +17,7 @@ public class SocialConfig extends SocialConfigurerAdapter
     }
 
     private static final class SessionIdUserIdSource implements UserIdSource {
-    	@Override
+        @Override
         public String getUserId() {
             RequestAttributes request = RequestContextHolder.currentRequestAttributes();
             String uuid = (String) request.getAttribute("_socialUserUUID", RequestAttributes.SCOPE_SESSION);

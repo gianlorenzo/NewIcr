@@ -10,119 +10,120 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Sample {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Column(nullable=false)
-	private int x;
+    @Column(nullable = false)
+    private int x;
 
-	@Column(nullable=false)
-	private int y;
+    @Column(nullable = false)
+    private int y;
 
-	@Column(nullable=false)
-	private int width;
+    @Column(nullable = false)
+    private int width;
 
-	@Column(nullable=false)
-	private int height;
-	
-	@Column(nullable=false)
-	private String type;
+    @Column(nullable = false)
+    private int height;
 
-	@Column(nullable=false)
-	private String path;
-	
-	@ManyToOne
-	private Manuscript manuscript;
-	
-	@ManyToOne
-	private Symbol symbol;
+    @Column(nullable = false)
+    private String type;
 
-	// costruttori
-	public Sample() {}
+    @Column(nullable = false)
+    private String path;
 
-	public Sample(int width,int height,int xImg, int yImg,
-			Manuscript manuscript,String type,String path) {
-		this.width = width;
-		this.height = height;
-		this.x = xImg;
-		this.y = yImg;
-		this.manuscript = manuscript;
-		this.type = type;
-		this.path = path.replace("\\", "/");
-	}
+    @ManyToOne
+    private Manuscript manuscript;
 
-	// getter e setter
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    private Symbol symbol;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // costruttori
+    public Sample() {
+    }
 
-	public int getX() {
-		return x;
-	}
+    public Sample(int width, int height, int xImg, int yImg,
+                  Manuscript manuscript, String type, String path) {
+        this.width = width;
+        this.height = height;
+        this.x = xImg;
+        this.y = yImg;
+        this.manuscript = manuscript;
+        this.type = type;
+        this.path = path.replace("\\", "/");
+    }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    // getter e setter
+    public Long getId() {
+        return id;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public int getWidth() {
-		return width;
-	}
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public int getHeight() {
-		return height;
-	}
+    public void setY(int y) {
+        this.y = y;
+    }
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
 
-	public Manuscript getManuscript() {
-		return manuscript;
-	}
+    public Manuscript getManuscript() {
+        return manuscript;
+    }
 
-	public void setManuscript(Manuscript manuscript) {
-		this.manuscript = manuscript;
-	}
+    public void setManuscript(Manuscript manuscript) {
+        this.manuscript = manuscript;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path.replace("\\", "/");
-	}
+    public void setPath(String path) {
+        this.path = path.replace("\\", "/");
+    }
 
-	public Symbol getSymbol() {
-		return symbol;
-	}
+    public Symbol getSymbol() {
+        return symbol;
+    }
 
-	public void setSymbol(Symbol symbol) {
-		this.symbol = symbol;
-	}
+    public void setSymbol(Symbol symbol) {
+        this.symbol = symbol;
+    }
 }

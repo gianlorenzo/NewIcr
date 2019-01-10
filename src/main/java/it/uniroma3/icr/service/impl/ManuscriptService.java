@@ -10,22 +10,22 @@ import it.uniroma3.icr.model.Manuscript;
 
 @Service
 public class ManuscriptService {
-	@Autowired
-	private ManuscriptDao manuscriptDao;
-	
-	public void saveManuscript(Manuscript manuscript){
-		this.manuscriptDao.save(manuscript);
-	}
-	
-	public Manuscript findOneManuscript(Long id){
-		return this.manuscriptDao.findOne(id);
-	}
-	
-	public List<Manuscript> findAllManuscript(){
-		return this.manuscriptDao.findAll();
-	}
-	
-	public Manuscript findManuscriptByName(String name){
-		return this.manuscriptDao.findByName(name);
-	}
+    @Autowired
+    private ManuscriptDao manuscriptDao;
+
+    public void saveManuscript(Manuscript manuscript) {
+        this.manuscriptDao.save(manuscript);
+    }
+
+    public Manuscript findOneManuscript(Long id) {
+        return this.manuscriptDao.findOne(id);
+    }
+
+    public List<Manuscript> findAllManuscript() {
+        return this.manuscriptDao.findAll();
+    }
+
+    public Manuscript findManuscriptByName(String name) {
+        return this.manuscriptDao.findByName(name);
+    }
 }

@@ -14,29 +14,29 @@ import it.uniroma3.icr.model.Task;
 @Service
 public class JobService {
 
-	@Autowired
-	private JobDao jobDao;
-	
-	@Autowired 
-	private TaskService taskService;
+    @Autowired
+    private JobDao jobDao;
 
-	public void addJob(Job j) {
-		jobDao.save(j);
-	}
+    @Autowired
+    private TaskService taskService;
 
-	public Job retrieveJob(long id) {
-		return this.jobDao.findOne(id);
-	}
+    public void addJob(Job j) {
+        jobDao.save(j);
+    }
 
-	public List<Job> retriveAlljobs() {
-		return this.jobDao.findAll();
-	}
+    public Job retrieveJob(long id) {
+        return this.jobDao.findOne(id);
+    }
 
-	public void createJob(Job job, Manuscript manuscript, List<Image> imagesTask, Boolean bool,Task task){
-		job.setNumberOfWords(imagesTask.size());	
-		job.setManuscript(manuscript);
-		job.setImages(imagesTask);
-		this.addJob(job);
-		this.taskService.createTask(job, imagesTask.size(), bool,task);
-	}
+    public List<Job> retriveAlljobs() {
+        return this.jobDao.findAll();
+    }
+
+    public void createJob(Job job, Manuscript manuscript, List<Image> imagesTask, Boolean bool, Task task) {
+        job.setNumberOfWords(imagesTask.size());
+        job.setManuscript(manuscript);
+        job.setImages(imagesTask);
+        this.addJob(job);
+        this.taskService.createTask(job, imagesTask.size(), bool, task);
+    }
 }

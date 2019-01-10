@@ -50,12 +50,12 @@ public class SampleTest {
     @Test
     public void addSample() throws FileNotFoundException, IOException {
         SampleService sampleServiceMock = mock(SampleService.class);
-        sampleServiceMock.getSampleImage(p,manuscript);
+        sampleServiceMock.getSampleImage(p, manuscript);
     }
 
     @Test
     public void getSamplePath() {
         SampleService sampleServiceMock = mock(SampleService.class);
-        assertEquals(sample.getPath(),sampleServiceMock.getPath());
+        assertEquals(sample.getPath(), sampleServiceMock.getPath());
     }
 }

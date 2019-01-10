@@ -20,7 +20,7 @@ public class InstagramControllerSupport {
     public String instagramLogin(Model model, Long id, StudentServiceSocial userFacadeSocial,
                                  UserInstagram userInstagram) {
         StudentSocial student = userFacadeSocial.findUser(String.valueOf(id));
-        if(student!=null) {
+        if (student != null) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
             List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
             updatedAuthorities.add(authority);
@@ -30,13 +30,12 @@ public class InstagramControllerSupport {
             SecurityContextHolder.getContext().setAuthentication(auth);
             model.addAttribute("student", student);
             return "redirect:/user/homeStudent";
-        }
-        else{
+        } else {
             String name;
             String surname;
-            String [] fullName;
+            String[] fullName;
 
-            if(userInstagram.getName()==null && userInstagram.getSurname()==null) {
+            if (userInstagram.getName() == null && userInstagram.getSurname() == null) {
                 fullName = userInstagram.getFullName().split(" ");
                 name = fullName[0];
                 surname = fullName[1];
@@ -51,7 +50,7 @@ public class InstagramControllerSupport {
             Map<String, String> schools = setSchools.setSchools();
             model.addAttribute("schools", schools);
 
-            Map<String,String> schoolGroups = new HashMap<String,String>();
+            Map<String, String> schoolGroups = new HashMap<String, String>();
             schoolGroups.put("3", "3");
             schoolGroups.put("4", "4");
             schoolGroups.put("5", "5");

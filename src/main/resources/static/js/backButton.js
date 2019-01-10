@@ -1,10 +1,10 @@
 /**
- * 
+ *
  */
 
-(function (global) { 
+(function (global) {
 
-    if(typeof (global) === "undefined") {
+    if (typeof (global) === "undefined") {
         throw new Error("window is undefined");
     }
 
@@ -24,18 +24,18 @@
         }
     };
 
-    global.onload = function () {            
+    global.onload = function () {
         noBackPlease();
 
         // disables backspace on page except on input fields and textarea..
         document.body.onkeydown = function (e) {
             var elm = e.target.nodeName.toLowerCase();
-            if (e.which === 8 && (elm !== 'input' && elm  !== 'textarea')) {
+            if (e.which === 8 && (elm !== 'input' && elm !== 'textarea')) {
                 e.preventDefault();
             }
             // stopping event bubbling up the DOM tree..
             e.stopPropagation();
-        };          
+        };
     }
 
 })(window);

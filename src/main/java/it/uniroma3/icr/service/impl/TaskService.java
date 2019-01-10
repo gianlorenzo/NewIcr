@@ -24,95 +24,95 @@ import it.uniroma3.icr.model.Task;
 
 @Service
 public class TaskService {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	private TaskDao taskDao;
+    @Autowired
+    private TaskDao taskDao;
 
-	@Autowired
-	private TaskDaoImpl taskDaoImpl;
+    @Autowired
+    private TaskDaoImpl taskDaoImpl;
 
-	@Autowired
-	private ResultService resultService;
+    @Autowired
+    private ResultService resultService;
 
-	@PersistenceContext
-	private EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-	public void saveTask(Task t) {
-		taskDao.save(t);
-	}
-
-	public Task retrieveTask(Long id) {
-		return this.taskDao.findOne(id);
-	}
-
-	public List<Task> retrieveAllTask() {
-		return this.taskDao.findAll();
-	}
-
-	public List<Task> findTaskByStudent(Long id) {
-		return this.taskDao.findByStudentId(id);
-	}
-
-    public List<Task> findTaskByStudentSocial(Long id) {
-		return this.taskDaoImpl.findTaskByStudentSocial(id);
+    public void saveTask(Task t) {
+        taskDao.save(t);
     }
 
-	public Task assignTask(Student student) {
-		return this.taskDaoImpl.assignTask(student);
-	}
+    public Task retrieveTask(Long id) {
+        return this.taskDao.findOne(id);
+    }
 
-	public String findHintByTask(Task t) {
-		return this.taskDaoImpl.findHintByTask(t);
-	}
+    public List<Task> retrieveAllTask() {
+        return this.taskDao.findAll();
+    }
 
-	public void updateEndDate(Task t) {
-		taskDao.updateEndDate(t);
-	}
+    public List<Task> findTaskByStudent(Long id) {
+        return this.taskDao.findByStudentId(id);
+    }
 
-	@Transactional
-	public void createTask(Job job, Integer number, Boolean word, Task task) {
-		for (int i = 0; i < job.getNumberOfStudents(); i++) {
-			int batchNumber = 0;
-			for (int r = 0; r < number; r++) {
+    public List<Task> findTaskByStudentSocial(Long id) {
+        return this.taskDaoImpl.findTaskByStudentSocial(id);
+    }
 
-				if ((r % job.getTaskSize()) == 0) {
-					task = new Task();
-					task.setBatch(batchNumber);
-					task.setJob(job);
-					job.addTask(task);
-					this.saveTask(task);
-					batchNumber++;
-				}
-				Image j = job.getImages().get(r);
-				Result result = new Result();
-				result.setImage(j);
-				result.setTask(task);
-				this.resultService.addResult(result);
-			}
-		}
+    public Task assignTask(Student student) {
+        return this.taskDaoImpl.assignTask(student);
+    }
 
-	}
+    public String findHintByTask(Task t) {
+        return this.taskDaoImpl.findHintByTask(t);
+    }
 
-	@Transactional
-	public void updateStudent(Student student) {
-		this.taskDaoImpl.updateStudent(student);
-	}
+    public void updateEndDate(Task t) {
+        taskDao.updateEndDate(t);
+    }
 
-	public List<Result> findTaskResult(Task task, Student student) {
-		return this.taskDaoImpl.findTaskResult(task,student);
-	}
+    @Transactional
+    public void createTask(Job job, Integer number, Boolean word, Task task) {
+        for (int i = 0; i < job.getNumberOfStudents(); i++) {
+            int batchNumber = 0;
+            for (int r = 0; r < number; r++) {
 
-	public Result findTaskOneResult(Task task, Student student) {
-		return this.taskDaoImpl.findTaskOneResult(task,student);
-	}
+                if ((r % job.getTaskSize()) == 0) {
+                    task = new Task();
+                    task.setBatch(batchNumber);
+                    task.setJob(job);
+                    job.addTask(task);
+                    this.saveTask(task);
+                    batchNumber++;
+                }
+                Image j = job.getImages().get(r);
+                Result result = new Result();
+                result.setImage(j);
+                result.setTask(task);
+                this.resultService.addResult(result);
+            }
+        }
 
-	public Long findStudentIdOnTask(Task task) {
-		return this.taskDaoImpl.findStudentIdOnTask(task);
-	}
+    }
 
-	public long getWorkTime(Student student) {
-		return this.taskDaoImpl.getWorkTime(student);
-	}
+    @Transactional
+    public void updateStudent(Student student) {
+        this.taskDaoImpl.updateStudent(student);
+    }
+
+    public List<Result> findTaskResult(Task task, Student student) {
+        return this.taskDaoImpl.findTaskResult(task, student);
+    }
+
+    public Result findTaskOneResult(Task task, Student student) {
+        return this.taskDaoImpl.findTaskOneResult(task, student);
+    }
+
+    public Long findStudentIdOnTask(Task task) {
+        return this.taskDaoImpl.findStudentIdOnTask(task);
+    }
+
+    public long getWorkTime(Student student) {
+        return this.taskDaoImpl.getWorkTime(student);
+    }
 
 }

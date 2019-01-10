@@ -1,7 +1,6 @@
 package it.uniroma3.icr.googleConfig;
 
 
-
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -25,45 +24,44 @@ import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 
 @Configuration
-@ConditionalOnClass({ SocialConfigurerAdapter.class, GoogleConnectionFactory.class })
+@ConditionalOnClass({SocialConfigurerAdapter.class, GoogleConnectionFactory.class})
 @ConditionalOnProperty(prefix = "spring.social.google", name = "app-id")
 @AutoConfigureBefore(SocialWebAutoConfiguration.class)
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 public class GoogleAutoConfiguration {
 
-	@Configuration
-	@EnableSocial
-	@EnableConfigurationProperties(GoogleProperties.class)
-	@ConditionalOnWebApplication
-	protected static class GoogleConfigurerAdapter extends SocialAutoConfigurerAdapter {
+    @Configuration
+    @EnableSocial
+    @EnableConfigurationProperties(GoogleProperties.class)
+    @ConditionalOnWebApplication
+    protected static class GoogleConfigurerAdapter extends SocialAutoConfigurerAdapter {
 
-		private final GoogleProperties properties;
+        private final GoogleProperties properties;
 
-		protected GoogleConfigurerAdapter(GoogleProperties properties) {
-			this.properties = properties;
-		}
+        protected GoogleConfigurerAdapter(GoogleProperties properties) {
+            this.properties = properties;
+        }
 
-		@Bean
-		@ConditionalOnMissingBean(Google.class)
-		@Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
-		public Google google(ConnectionRepository repository) {
-			Connection<Google> connection = repository.findPrimaryConnection(Google.class);
-			return connection != null ? connection.getApi() : null;
-		}
+        @Bean
+        @ConditionalOnMissingBean(Google.class)
+        @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+        public Google google(ConnectionRepository repository) {
+            Connection<Google> connection = repository.findPrimaryConnection(Google.class);
+            return connection != null ? connection.getApi() : null;
+        }
 
-		@Bean(name = { "connect/googleConnect", "connect/googleConnected" })
-		@ConditionalOnProperty(prefix = "spring.social", name = "auto-connection-views")
-		public GenericConnectionStatusView googleConnectView() {
-			return new GenericConnectionStatusView("google", "Google");
-		}
+        @Bean(name = {"connect/googleConnect", "connect/googleConnected"})
+        @ConditionalOnProperty(prefix = "spring.social", name = "auto-connection-views")
+        public GenericConnectionStatusView googleConnectView() {
+            return new GenericConnectionStatusView("google", "Google");
+        }
 
-	
 
-		@Override
-		protected org.springframework.social.connect.ConnectionFactory<?> createConnectionFactory() {
-			return new GoogleConnectionFactory(this.properties.getAppId(), this.properties.getAppSecret());
-		}
+        @Override
+        protected org.springframework.social.connect.ConnectionFactory<?> createConnectionFactory() {
+            return new GoogleConnectionFactory(this.properties.getAppId(), this.properties.getAppSecret());
+        }
 
-	}
+    }
 
 }

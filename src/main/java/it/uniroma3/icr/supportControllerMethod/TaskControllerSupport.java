@@ -74,7 +74,7 @@ public class TaskControllerSupport {
         if ((task != null) && (task.getStudent() != null)) {
             task.setStudent(student);
             LOGGER.info("1 - assigned Task " + task.getId() + " to student " + student.getId() + " (" + task.getStudent().getId() + ")");
-            if((task.getJob().getSymbol()!=null)) {
+            if ((task.getJob().getSymbol() != null)) {
                 List<Sample> positiveSamples = sampleService.findAllSamplesBySymbolId(task.getJob().getSymbol().getId());
                 List<Sample> negativeSamples = negativeSampleService.findAllNegativeSamplesBySymbolId(task.getJob().getSymbol().getId());
                 model.addAttribute("positiveSamples", positiveSamples);

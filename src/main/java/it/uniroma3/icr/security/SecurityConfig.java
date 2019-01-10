@@ -15,46 +15,47 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-	private DataSource dataSource;
-	
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    private DataSource dataSource;
 
-		auth.jdbcAuthentication().dataSource(dataSource)
 
-		.passwordEncoder(new BCryptPasswordEncoder())
-		.usersByUsernameQuery("select username,password,TRUE from Student where username = ?")
-		.authoritiesByUsernameQuery("select username,role from Student where username = ?")
-		;
- 
-		auth.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery("select username,password,TRUE from Administrator where username = ?")
-		.authoritiesByUsernameQuery("select username,role from Administrator where username = ?");
-  
-	}
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-	    http.csrf().disable();
-		 http.authorizeRequests()
-		 	.antMatchers("/").permitAll()
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-			.antMatchers("/user/**").access("hasRole('ROLE_USER')")
-			.and()
-			.formLogin().loginPage("/login").loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/role")
-            .failureUrl("/login?error")
-			.and()
-            .logout()
-            .permitAll();
-	}
-	
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web
-		.ignoring()
-		.antMatchers("/resources/**", "/static/**", "/css/**","/fonts/**","/img/**","/sass/**", "/js/**", "/images/**");
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.jdbcAuthentication().dataSource(dataSource)
+
+                .passwordEncoder(new BCryptPasswordEncoder())
+                .usersByUsernameQuery("select username,password,TRUE from Student where username = ?")
+                .authoritiesByUsernameQuery("select username,role from Student where username = ?")
+        ;
+
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select username,password,TRUE from Administrator where username = ?")
+                .authoritiesByUsernameQuery("select username,role from Administrator where username = ?");
+
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
+                .and()
+                .formLogin().loginPage("/login").loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/role")
+                .failureUrl("/login?error")
+                .and()
+                .logout()
+                .permitAll();
+    }
+
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/fonts/**", "/img/**", "/sass/**", "/js/**", "/images/**");
+    }
 }

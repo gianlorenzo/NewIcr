@@ -10,13 +10,13 @@ import it.uniroma3.icr.service.impl.ImageService;
 
 @Component
 public class ImageEditor extends PropertyEditorSupport {
-	private @Autowired
+    private @Autowired
     ImageService imageService;
-	
-	@Override
-	public void setAsText(String text) {
-		Image i = this.imageService.retrieveImage(Long.valueOf(text));
-		this.setValue(i);
-	}
-	
+
+    @Override
+    public void setAsText(String text) {
+        Image i = this.imageService.retrieveImage(Long.valueOf(text));
+        this.setValue(i);
+    }
+
 }

@@ -1,18 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 
 <html>
 <head>
     <title>ICR</title>
     <style>
-        table td{
-            vertical-align:top;
-            border:solid 1px #888;
-            padding:10px;
+        table td {
+            vertical-align: top;
+            border: solid 1px #888;
+            padding: 10px;
         }
     </style>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico" />
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico"/>
 </head>
 <body>
 <h1>Ops...Qualcosa è andato storto!</h1>

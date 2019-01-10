@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.uniroma3.icr.supportControllerMethod.TaskControllerSupport;
-import it.uniroma3.icr.tools.TaskStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,98 +40,99 @@ import it.uniroma3.icr.service.impl.TaskService;
 
 @Controller
 public class TaskController {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	private @Autowired ImageEditor imageEditor;
-	private @Autowired TaskEditor taskEditor;
-	@Autowired
-	public SymbolService symbolService;
-	@Autowired
-	public SampleService sampleService;
-	@Autowired
-	public NegativeSampleService negativeSampleService;
-	@Autowired
-	public JobService facadeJob;
-	@Autowired
-	public ImageService imageService;
-	@Autowired
-	public TaskService taskService;
-	@Autowired
-	public StudentService studentService;
+    private @Autowired
+    ImageEditor imageEditor;
+    private @Autowired
+    TaskEditor taskEditor;
+    @Autowired
+    public SymbolService symbolService;
+    @Autowired
+    public SampleService sampleService;
+    @Autowired
+    public NegativeSampleService negativeSampleService;
+    @Autowired
+    public JobService facadeJob;
+    @Autowired
+    public ImageService imageService;
+    @Autowired
+    public TaskService taskService;
+    @Autowired
+    public StudentService studentService;
 
-	@Autowired
-	public StudentServiceSocial studentFacadesocial;
+    @Autowired
+    public StudentServiceSocial studentFacadesocial;
 
-	@Autowired
-	public ResultService resultService;
-
-	private TaskStack taskStack = new TaskStack();
-
-	private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
+    @Autowired
+    public ResultService resultService;
 
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Image.class, this.imageEditor);
-		binder.registerCustomEditor(Task.class, this.taskEditor);
-	}
+    private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
 
-	public @ModelAttribute("taskResults") TaskWrapper setupWrapper() {
-		return new TaskWrapper();
-	}
 
-	@RequestMapping(value = "user/newTask", method = RequestMethod.GET)
-	public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
-			@ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
-			@RequestParam(name = "social", required = false) String social) {
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Image.class, this.imageEditor);
+        binder.registerCustomEditor(Task.class, this.taskEditor);
+    }
 
-		LOGGER.info("lunghezza stack"+ taskStack.popTask(taskService.retrieveAllTask()));
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String s = auth.getName();
-		model.addAttribute("social", social);
-		Student student;
-		if (social == null || social.isEmpty())
-			student = studentService.findUser(s);
-		else
-			student = studentFacadesocial.findUser(s);
-		model.addAttribute("student", student);
-		task = taskService.assignTask(student);
-		return taskControllerSupport.assingStudentTask(task,student,model,taskResults, taskService,sampleService,negativeSampleService);
+    public @ModelAttribute("taskResults")
+    TaskWrapper setupWrapper() {
+        return new TaskWrapper();
+    }
 
-	}
+    @RequestMapping(value = "user/newTask", method = RequestMethod.GET)
+    public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
+                             @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
+                             @RequestParam(name = "social", required = false) String social) {
 
-	@RequestMapping(value = "user/secondConsoleWord", method = RequestMethod.POST)
-	public String taskRecapWord(@ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
-			HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(name = "social", required = false) String social) throws IOException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String username = auth.getName();
-		model.addAttribute("social", social);
-		Student student;
-		if (social == null || social.isEmpty())
-			student = studentService.findUser(username);
-		else
-			student = studentFacadesocial.findUser(username);
-		LOGGER.info("5 - Auth name " + username + ", student: " + student.getId());
-		String action = request.getParameter("action");
-		String targetUrl = "";
-		taskControllerSupport.setResult(model,action,taskResults,student, taskService, resultService);
-		response.sendRedirect("newTask");
-		targetUrl = "users/newTaskImage";
-		model.addAttribute("student", student);
-		return targetUrl;
-	}
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String s = auth.getName();
+        model.addAttribute("social", social);
+        Student student;
+        if (social == null || social.isEmpty())
+            student = studentService.findUser(s);
+        else
+            student = studentFacadesocial.findUser(s);
+        model.addAttribute("student", student);
+        task = taskService.assignTask(student);
+        return taskControllerSupport.assingStudentTask(task, student, model, taskResults, taskService, sampleService, negativeSampleService);
 
-	@RequestMapping(value = "user/studentTasks")
-	public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Student s;
-		if (social == null || social.isEmpty()) {
-			s = studentService.findUser(auth.getName());
-		} else {
-			s = studentFacadesocial.findUser(auth.getName());
-		}
-		return taskControllerSupport.viewStudentTasks(s,model, taskService,social);
-	}
+    }
+
+    @RequestMapping(value = "user/secondConsoleWord", method = RequestMethod.POST)
+    public String taskRecapWord(@ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
+                                HttpServletRequest request, HttpServletResponse response,
+                                @RequestParam(name = "social", required = false) String social) throws IOException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        model.addAttribute("social", social);
+        Student student;
+        if (social == null || social.isEmpty())
+            student = studentService.findUser(username);
+        else
+            student = studentFacadesocial.findUser(username);
+        LOGGER.info("5 - Auth name " + username + ", student: " + student.getId());
+        String action = request.getParameter("action");
+        String targetUrl = "";
+        taskControllerSupport.setResult(model, action, taskResults, student, taskService, resultService);
+        response.sendRedirect("newTask");
+        targetUrl = "users/newTaskImage";
+        model.addAttribute("student", student);
+        return targetUrl;
+    }
+
+    @RequestMapping(value = "user/studentTasks")
+    public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Student s;
+        if (social == null || social.isEmpty()) {
+            s = studentService.findUser(auth.getName());
+        } else {
+            s = studentFacadesocial.findUser(auth.getName());
+        }
+        return taskControllerSupport.viewStudentTasks(s, model, taskService, social);
+    }
 
 }

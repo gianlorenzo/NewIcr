@@ -22,12 +22,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.io.StringWriter;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.*;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.google.api.Google;
 import org.springframework.ui.Model;
@@ -42,108 +44,107 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-public class LoginController  {
+public class LoginController {
 
-	@Autowired
-	public TaskService taskService;
+    @Autowired
+    public TaskService taskService;
 
-	@Autowired
-	public StudentService studentService;
+    @Autowired
+    public StudentService studentService;
 
-	@Autowired
-	private StudentServiceSocial userFacadesocial;
+    @Autowired
+    private StudentServiceSocial userFacadesocial;
 
-	private ConnectionRepository connectionRepository;
+    private ConnectionRepository connectionRepository;
 
-	private SetSchools setSchools = new SetSchools();
+    private SetSchools setSchools = new SetSchools();
 
-	private Google google;
+    private Google google;
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     private FacebookControllerSupport facebookControllerSupport = new FacebookControllerSupport();
 
-	private GoogleControllerSupport googleControllerSupport = new GoogleControllerSupport();
+    private GoogleControllerSupport googleControllerSupport = new GoogleControllerSupport();
 
-	private InstagramControllerSupport instagramControllerSupport = new InstagramControllerSupport();
+    private InstagramControllerSupport instagramControllerSupport = new InstagramControllerSupport();
 
-	public LoginController(Facebook facebook, Google google, ConnectionRepository connectionRepository) {
-		this.connectionRepository = connectionRepository;
-		this.google = google;
-		this.connectionRepository = connectionRepository;
-	}
+    public LoginController(Google google, ConnectionRepository connectionRepository) {
+        this.connectionRepository = connectionRepository;
+        this.google = google;
+    }
 
-	@RequestMapping(value = "/facebookLogin", method = { RequestMethod.GET, RequestMethod.POST })
-	public String helloFacebook(@RequestParam(value = "daFB", required = false) String daFB, Model model,
-								@ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/facebookLogin", method = {RequestMethod.GET, RequestMethod.POST})
+    public String helloFacebook(@RequestParam(value = "daFB", required = false) String daFB, Model model,
+                                @ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
 
-		Facebook facebook = connectionRepository.findPrimaryConnection(Facebook.class).getApi();
-		if (daFB == null)
-			return "redirect:/login";
-		if (connectionRepository.findPrimaryConnection(Facebook.class) == null)
-			return "redirect:/connect/facebook";
+        Facebook facebook = connectionRepository.findPrimaryConnection(Facebook.class).getApi();
+        if (daFB == null)
+            return "redirect:/login";
+        if (connectionRepository.findPrimaryConnection(Facebook.class) == null)
+            return "redirect:/connect/facebook";
 
-		return facebookControllerSupport.facebookLogin(facebook,userFacadesocial,model,social,redirectAttributes);
+        return facebookControllerSupport.facebookLogin(facebook, userFacadesocial, model, social, redirectAttributes);
 
-	}
+    }
 
 
-	@RequestMapping(value = "/instagram", method = RequestMethod.GET)
-	public String helloInstagram(@RequestParam String code, Model model) throws Exception {
-		InstagramJPService instagramObj = new InstagramJPService();
-		instagramObj.build();
-		Instagram instagram = instagramObj.getInstagram(code);
-		UserInfo userInfo = instagram.getCurrentUserInfo();
-		UserInstagram userInstagram = new UserInstagram(userInfo);
+    @RequestMapping(value = "/instagram", method = RequestMethod.GET)
+    public String helloInstagram(@RequestParam String code, Model model) throws Exception {
+        InstagramJPService instagramObj = new InstagramJPService();
+        instagramObj.build();
+        Instagram instagram = instagramObj.getInstagram(code);
+        UserInfo userInfo = instagram.getCurrentUserInfo();
+        UserInstagram userInstagram = new UserInstagram(userInfo);
         Long id = userInstagram.getId();
 
-		return instagramControllerSupport.instagramLogin(model,id,userFacadesocial,userInstagram);
-	}
+        return instagramControllerSupport.instagramLogin(model, id, userFacadesocial, userInstagram);
+    }
 
-	@RequestMapping(value="/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
-	public String helloGoogle(@RequestParam(value = "daGoogle", required = false)String daGoogle, Model model,
-							  @ModelAttribute("social") String social,RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
+    public String helloGoogle(@RequestParam(value = "daGoogle", required = false) String daGoogle, Model model,
+                              @ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
 
-		if(daGoogle==null)
-			return "redirect:/login";
-		if (this.connectionRepository.findPrimaryConnection(Google.class) == null)
-			return "redirect:/connect/google";
+        if (daGoogle == null)
+            return "redirect:/login";
+        if (this.connectionRepository.findPrimaryConnection(Google.class) == null)
+            return "redirect:/connect/google";
 
-		return googleControllerSupport.googleLogin(google,connectionRepository,userFacadesocial, model, social, redirectAttributes);
+        return googleControllerSupport.googleLogin(google, connectionRepository, userFacadesocial, model, social, redirectAttributes);
 
-	}
+    }
 
-	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String login (ModelMap model,@RequestParam(value = "error", required = false) String error) {
-		if (error != null) {
-			model.addAttribute("error", "Username o password non validi");
-		}
-		model.addAttribute("user", new Student());
-		model.addAttribute("admin", new Administrator());
-		return "login";
-	}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(ModelMap model, @RequestParam(value = "error", required = false) String error) {
+        if (error != null) {
+            model.addAttribute("error", "Username o password non validi");
+        }
+        model.addAttribute("user", new Student());
+        model.addAttribute("admin", new Administrator());
+        return "login";
+    }
 
-	@RequestMapping(value="*/logout", method = RequestMethod.GET)
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    if (auth != null){    
-	        new SecurityContextLogoutHandler().logout(request, response, auth);
-	    }
-	    return "redirect:/login?logout";
-	}
+    @RequestMapping(value = "*/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout";
+    }
 
-	@RequestMapping(value="/role", method = RequestMethod.GET)
-	public String loginRole(Model model,HttpServletRequest request) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String role = auth.getAuthorities().toString();
-		Student student = studentService.findUser(auth.getName());
-		String targetUrl = "";
-		if(role.contains("ROLE_USER")) {
-			model.addAttribute("student", student);
-			targetUrl = "redirect:/user/homeStudent";
-		} else if(role.contains("ROLE_ADMIN")) {
-			targetUrl = "redirect:/admin/homeAdmin";
-		}
-		return targetUrl;
-	}
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
+    public String loginRole(Model model, HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+        Student student = studentService.findUser(auth.getName());
+        String targetUrl = "";
+        if (role.contains("ROLE_USER")) {
+            model.addAttribute("student", student);
+            targetUrl = "redirect:/user/homeStudent";
+        } else if (role.contains("ROLE_ADMIN")) {
+            targetUrl = "redirect:/admin/homeAdmin";
+        }
+        return targetUrl;
+    }
 }

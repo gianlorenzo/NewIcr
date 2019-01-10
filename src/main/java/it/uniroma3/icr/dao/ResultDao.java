@@ -9,8 +9,8 @@ import it.uniroma3.icr.model.Result;
 import it.uniroma3.icr.model.Task;
 
 @Repository
-public interface ResultDao extends JpaRepository<Result, Long>, ResultDaoCustom{
+public interface ResultDao extends JpaRepository<Result, Long>, ResultDaoCustom {
 
-	public List<Result> findByTask(Task task);
-	
+    public List<Result> findByTask(Task task);
+
 }

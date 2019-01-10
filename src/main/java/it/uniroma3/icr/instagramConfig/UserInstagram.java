@@ -18,7 +18,7 @@ public class UserInstagram implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    public UserInstagram(UserInfo userInfo){
+    public UserInstagram(UserInfo userInfo) {
         super();
         UserInfoData data = userInfo.getData();
         bio = data.getBio();
@@ -56,23 +56,26 @@ public class UserInstagram implements Serializable {
     public String getBio() {
         return bio;
     }
+
     public void setBio(String bio) {
         this.bio = bio;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
-
-
 
 
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import it.uniroma3.icr.model.Image;
 
 @Repository
-public interface ImageDao extends JpaRepository<Image,Long>, ImageDaoCustom{
+public interface ImageDao extends JpaRepository<Image, Long>, ImageDaoCustom {
 }

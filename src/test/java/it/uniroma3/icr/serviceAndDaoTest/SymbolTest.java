@@ -65,7 +65,7 @@ public class SymbolTest {
     @Test
     public void insertSymbol() throws FileNotFoundException, IOException {
         SymbolService symbolServiceMock = mock(SymbolService.class);
-        symbolServiceMock.insertSymbolInDb(p,manuscript);
+        symbolServiceMock.insertSymbolInDb(p, manuscript);
     }
 
 }

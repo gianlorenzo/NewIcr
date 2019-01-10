@@ -72,7 +72,7 @@ public class JobTest {
     @Test
     public void createJob() {
         JobService jobServiceMock = mock(JobService.class);
-        jobServiceMock.createJob(job,manuscript,images,bool,task);
+        jobServiceMock.createJob(job, manuscript, images, bool, task);
     }
 
 }

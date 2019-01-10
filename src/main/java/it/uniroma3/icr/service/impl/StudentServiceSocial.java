@@ -11,26 +11,28 @@ import it.uniroma3.icr.model.StudentSocial;
 @Service
 public class StudentServiceSocial {
 
-	@Autowired
-	private StudentDaoSocial studentDaoSocial;
+    @Autowired
+    private StudentDaoSocial studentDaoSocial;
 
-	public void saveUser(StudentSocial user) {
-		studentDaoSocial.save(user);
-	}
+    public void saveUser(StudentSocial user) {
+        studentDaoSocial.save(user);
+    }
 
-	public StudentSocial findById(Long id) { return this.studentDaoSocial.findById(id);}
+    public StudentSocial findById(Long id) {
+        return this.studentDaoSocial.findById(id);
+    }
 
-	public StudentSocial findUser(String username) {
-		return this.studentDaoSocial.findByUsername(username);
-	}
+    public StudentSocial findUser(String username) {
+        return this.studentDaoSocial.findByUsername(username);
+    }
 
-	public List<StudentSocial> retrieveAllStudents() {
-		return this.studentDaoSocial.findAll();
-	}
+    public List<StudentSocial> retrieveAllStudents() {
+        return this.studentDaoSocial.findAll();
+    }
 
-	public StudentSocial findUserBySurname(String surname) {
-		return this.studentDaoSocial.findBySurname(surname);
-	}
+    public StudentSocial findUserBySurname(String surname) {
+        return this.studentDaoSocial.findBySurname(surname);
+    }
 
 
 }
