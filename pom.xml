@@ -7,8 +7,8 @@
     <groupId>icr</groupId>
     <artifactId>icr</artifactId>
     <packaging>war</packaging>
-    <name>Spring Boot Web JSP Example</name>
-    <description>Spring Boot Web JSP Example</description>
+    <name>In Codice Ratio</name>
+    <description>Crowdsourcing Platform</description>
     <version>1.0-SNAPSHOT</version>
 
 

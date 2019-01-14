@@ -25,6 +25,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <p>Sistema di addestramento della rete neurale</p>
         <p>per la trascrizione di manoscritti medievali</p>
         <p>dell'Archivio Segreto Vaticano</p>
+        <p>${prova}</p>
     </div>
 </section>
 

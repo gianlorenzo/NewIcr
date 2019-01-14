@@ -1,12 +1,11 @@
-package it.uniroma3.icr.controller;
+package it.uniroma3.icr.cloud.controller;
 
 
-import it.uniroma3.icr.cloud.RestClient;
+import it.uniroma3.icr.cloud.restInterface.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CloudController {
@@ -21,9 +20,14 @@ public class CloudController {
         this.restClient = restClient;
     }
 
-    @GetMapping("/provaFeign")
+    @RequestMapping(value = "/provaFeign")
     public String getProva() {
 
         return restClient.getProva().getStringaProva();
+    }
+
+    @RequestMapping(value = "/setPolicy")
+    public String getId() {
+        return restClient.setPolicy();
     }
 }

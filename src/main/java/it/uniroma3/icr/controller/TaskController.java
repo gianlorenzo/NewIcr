@@ -68,7 +68,7 @@ public class TaskController {
     public ResultService resultService;
 
     private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
-    
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Image.class, this.imageEditor);

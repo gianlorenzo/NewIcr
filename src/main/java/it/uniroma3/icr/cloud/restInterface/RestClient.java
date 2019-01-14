@@ -1,7 +1,8 @@
-package it.uniroma3.icr.cloud;
+package it.uniroma3.icr.cloud.restInterface;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -10,6 +11,9 @@ public interface RestClient {
 
     @RequestMapping(value = "/prova", consumes = "application/json")
     Prova getProva();
+
+    @RequestMapping(value = "/setPolicy")
+    String setPolicy();
 
     public class Prova {
 

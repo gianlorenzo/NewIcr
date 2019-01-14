@@ -1,17 +1,13 @@
 package it.uniroma3.icr.controller;
 
-import com.netflix.discovery.converters.Auto;
-import it.uniroma3.icr.cloud.RestClient;
+import it.uniroma3.icr.cloud.controller.CloudController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class IndexController {
@@ -23,9 +19,11 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String goToIndex(Model model) {
+        String id = this.cloudController.getId();
 
         String prova = this.cloudController.getProva();
         model.addAttribute("prova",prova);
+        model.addAttribute("id",id);
         return "index";
     }
 
