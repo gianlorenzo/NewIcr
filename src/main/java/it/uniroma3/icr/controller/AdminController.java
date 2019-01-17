@@ -22,7 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import it.uniroma3.icr.supportControllerMethod.SetDescriptions;
+import it.uniroma3.icr.supportControllerMethod.SetTypology;
 import it.uniroma3.icr.model.Administrator;
 import it.uniroma3.icr.model.ComparatoreSimboloPerNome;
 import it.uniroma3.icr.model.Image;
@@ -72,7 +72,7 @@ public class AdminController {
     @Autowired
     private ManuscriptService manuscriptService;
 
-    private SetDescriptions setDescriptions = new SetDescriptions();
+    private SetTypology setTypology = new SetTypology();
 
 
     @Qualifier("adminValidator")
@@ -141,7 +141,7 @@ public class AdminController {
         List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
         Collections.sort(symbols, new ComparatoreSimboloPerNome());
         job.setManuscript(manuscript);
-        model.addAttribute("descriptions", setDescriptions.setDescriptions());
+        model.addAttribute("typology", setTypology.setTypology());
         session.setAttribute("manuscript", manuscript);
         model.addAttribute("symbols", symbols);
         model.addAttribute("job", job);
@@ -171,7 +171,7 @@ public class AdminController {
             List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
             Collections.sort(symbols, new ComparatoreSimboloPerNome());
             job.setManuscript(manuscript);
-            model.addAttribute("descriptions", setDescriptions.setDescriptions());
+            model.addAttribute("typology", setTypology.setTypology());
             session.setAttribute("manuscript", manuscript);
             model.addAttribute("symbols", symbols);
             return "administration/insertJobByManuscript";

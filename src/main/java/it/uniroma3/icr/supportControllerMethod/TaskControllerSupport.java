@@ -1,10 +1,7 @@
 package it.uniroma3.icr.supportControllerMethod;
 
 import it.uniroma3.icr.model.*;
-import it.uniroma3.icr.service.impl.NegativeSampleService;
-import it.uniroma3.icr.service.impl.ResultService;
-import it.uniroma3.icr.service.impl.SampleService;
-import it.uniroma3.icr.service.impl.TaskService;
+import it.uniroma3.icr.service.impl.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
@@ -70,7 +67,7 @@ public class TaskControllerSupport {
 
     public String assingStudentTask(Task task, Student student, Model model,
                                     TaskWrapper taskResults, TaskService taskService,
-                                    SampleService sampleService, NegativeSampleService negativeSampleService) {
+                                    SampleService sampleService, NegativeSampleService negativeSampleService, JsScriptService jsScriptService) {
         if ((task != null) && (task.getStudent() != null)) {
             task.setStudent(student);
             LOGGER.info("1 - assigned Task " + task.getId() + " to student " + student.getId() + " (" + task.getStudent().getId() + ")");
@@ -94,6 +91,7 @@ public class TaskControllerSupport {
             task.setStudent(student);
             model.addAttribute("student", student);
             model.addAttribute("task", task);
+            model.addAttribute("jsPath",jsScriptService.getJsFile(jsScriptService.getScriptPath(),task.getJob().getTypology()));
             model.addAttribute("taskResults", taskResults);
             model.addAttribute("hint", hint);
             LOGGER.info("4 - end taskChoose task " +
@@ -109,6 +107,7 @@ public class TaskControllerSupport {
 
     public String viewStudentTasks(Student s, Model model, TaskService taskService,
                                    String social) {
+        LOGGER.info("tasks:",s.getTaskEffettuati());
         if (s.getTaskEffettuati() > 0) {
             long secs = taskService.getWorkTime(s);
             long hours = secs / 3600;

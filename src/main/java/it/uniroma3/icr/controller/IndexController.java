@@ -19,11 +19,10 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String goToIndex(Model model) {
-        String id = this.cloudController.getId();
 
-        String prova = this.cloudController.getProva();
-        model.addAttribute("prova",prova);
-        model.addAttribute("id",id);
+
+       // String prova = this.cloudController.getProva();
+        //model.addAttribute("prova",prova);
         return "index";
     }
 

@@ -3,9 +3,9 @@ package it.uniroma3.icr.supportControllerMethod;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SetDescriptions {
+public class SetTypology {
 
-    public Map<String, String> setDescriptions() {
+    public Map<String, String> setTypology() {
         Map<String, String> descriptions = new HashMap<>();
 
         descriptions.put("trovaPartiColorate", "trovaPartiColorate");

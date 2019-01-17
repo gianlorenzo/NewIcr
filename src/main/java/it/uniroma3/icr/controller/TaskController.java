@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.uniroma3.icr.service.impl.*;
 import it.uniroma3.icr.supportControllerMethod.TaskControllerSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,15 +29,6 @@ import it.uniroma3.icr.model.Task;
 import it.uniroma3.icr.model.TaskWrapper;
 import it.uniroma3.icr.service.editor.ImageEditor;
 import it.uniroma3.icr.service.editor.TaskEditor;
-import it.uniroma3.icr.service.impl.ImageService;
-import it.uniroma3.icr.service.impl.JobService;
-import it.uniroma3.icr.service.impl.NegativeSampleService;
-import it.uniroma3.icr.service.impl.ResultService;
-import it.uniroma3.icr.service.impl.SampleService;
-import it.uniroma3.icr.service.impl.StudentService;
-import it.uniroma3.icr.service.impl.StudentServiceSocial;
-import it.uniroma3.icr.service.impl.SymbolService;
-import it.uniroma3.icr.service.impl.TaskService;
 
 @Controller
 public class TaskController {
@@ -67,6 +59,9 @@ public class TaskController {
     @Autowired
     public ResultService resultService;
 
+    @Autowired
+    public JsScriptService jsScriptService;
+
     private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
 
     @InitBinder
@@ -84,7 +79,6 @@ public class TaskController {
     public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
                              @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
                              @RequestParam(name = "social", required = false) String social) {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String s = auth.getName();
         model.addAttribute("social", social);
@@ -95,7 +89,7 @@ public class TaskController {
             student = studentFacadesocial.findUser(s);
         model.addAttribute("student", student);
         task = taskService.assignTask(student);
-        return taskControllerSupport.assingStudentTask(task, student, model, taskResults, taskService, sampleService, negativeSampleService);
+        return taskControllerSupport.assingStudentTask(task, student, model, taskResults, taskService, sampleService, negativeSampleService, jsScriptService);
 
     }
 

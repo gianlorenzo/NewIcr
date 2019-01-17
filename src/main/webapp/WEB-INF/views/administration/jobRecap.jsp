@@ -15,7 +15,7 @@
     <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/siteImages/favicon.ico"/>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico"/>
 </head>
 <body class="landing" onload="">
 <jsp:include page="menu.jsp"/>

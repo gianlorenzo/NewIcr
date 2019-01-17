@@ -37,6 +37,9 @@ public class IcrApplication extends SpringBootServletInitializer {
     @Value("${server.context-parameters.pathNegativeSample}")
     private String pathNegativeSample;
 
+    @Value("${server.context-parameters.jsPath}")
+    private String jsPath;
+
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(IcrApplication.class, args);
@@ -60,6 +63,7 @@ public class IcrApplication extends SpringBootServletInitializer {
                 servletContext.setInitParameter("pathImage", pathImage);
                 servletContext.setInitParameter("pathSample", pathSample);
                 servletContext.setInitParameter("pathNegativeSample", pathNegativeSample);
+                servletContext.setInitParameter("jsPath",jsPath);
 
             }
         };

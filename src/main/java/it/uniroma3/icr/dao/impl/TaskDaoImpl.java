@@ -185,10 +185,12 @@ public class TaskDaoImpl implements TaskDaoCustom {
     public long getWorkTime(Student student) {
         String select = "select sum(EXTRACT(EPOCH FROM (end_date-start_date))) from task where student_id = ?1 and EXTRACT(EPOCH FROM (end_date-start_date)) <=300";
         Query query = this.entityManager.createNativeQuery(select).setParameter(1, student.getId());
-        long seconds = Double.valueOf((Double) query.getSingleResult()).longValue();
+        long seconds = Double.valueOf((Double)query.getSingleResult()).longValue();
+
         select = "select count(*) from task where student_id = ?1 and EXTRACT(EPOCH FROM (end_date-start_date)) >300";
         query = this.entityManager.createNativeQuery(select).setParameter(1, student.getId());
-        long secondsIdleTasks = ((BigInteger) query.getSingleResult()).longValue();
+        long secondsIdleTasks = ((BigInteger)query.getSingleResult()).longValue();
+
         return seconds + secondsIdleTasks;
     }
 

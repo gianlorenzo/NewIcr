@@ -19,15 +19,12 @@ public class CloudController {
     public CloudController(RestClient restClient) {
         this.restClient = restClient;
     }
-
+/*
     @RequestMapping(value = "/provaFeign")
     public String getProva() {
 
         return restClient.getProva().getStringaProva();
     }
 
-    @RequestMapping(value = "/setPolicy")
-    public String getId() {
-        return restClient.setPolicy();
-    }
+*/
 }

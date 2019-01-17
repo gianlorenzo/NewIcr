@@ -63,7 +63,7 @@
                     <div class="field-wrap">
                         <label> Tipologia </label>
                         <form:select id="tip" type="text" path="typology">
-                            <font color="7a0000"><form:options items="${descriptions}"/> </font>
+                            <font color="7a0000"><form:options items="${typology}"/> </font>
                         </form:select>
                     </div>
                     <form:input type="hidden" value="1" path='taskSize'
