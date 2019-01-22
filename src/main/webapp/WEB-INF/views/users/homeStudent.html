@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+</head>
+<body class="landing">
+<div th:include="users/menu"></div>
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <h2>Pagina dello studente:
+            <span class="container"></span>
+            <span th:text="${student.name}+' '+${student.surname}" />
+        </h2>
+    </div>
+</section>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+</head>
+<body>
+<div th:include="users/menu"></div>
+<section id="banner">
+    <div class="inner">
+        <div class="inner">
+            <h2>Attenzione: non hai completato nessun task!</h2>
+        </div>
+    </div>
+</section>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

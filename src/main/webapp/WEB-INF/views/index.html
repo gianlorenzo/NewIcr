@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{img/siteImages/favicon.ico}"/>
+</head>
+<body class="landing">
+<div th:include="menu"></div>
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <h2>In Codice Ratio</h2>
+        <p>Sistema di addestramento della rete neurale</p>
+        <p>per la trascrizione di manoscritti medievali</p>
+        <p>dell'Archivio Segreto Vaticano</p>
+    </div>
+</section>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.scrollex.min.js"></script>
+<script src="js/jquery.scrolly.min.js"></script>
+<script src="js/skel.min.js"></script>
+<script src="js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="js/ie/respond.min.js"></script>
+<script src="js/main.js"></script>
+
+
+</body>
+</html>

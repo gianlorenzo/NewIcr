@@ -147,12 +147,5 @@ public class StudentSocial extends Student {
         return this.getId() + " " + this.getName() + " " + this.getSurname() + " username: " + this.getUsername();
     }
 
-    public boolean equals(Object object) {
-        StudentSocial student = (StudentSocial) object;
-        return this.id.equals(student.getId());
-    }
 
-    public int hashCode() {
-        return this.id.hashCode();
-    }
 }

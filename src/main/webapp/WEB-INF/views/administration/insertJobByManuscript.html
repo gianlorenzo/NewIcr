@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICR</title>
+    <link rel="stylesheet" th:href="@{/css/registration.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+
+</head>
+<body class="landing">
+<div th:include="administration/menu"></div>
+
+<br />
+<h1>Creazione del Job</h1>
+<div class="form">
+    <div class="tab-content">
+        <div id="signup">
+            <h1>Inserisci Dati del Job</h1>
+            <h4>Stai usando il manoscritto: <div th:text="${job.manuscript.name}"/></h4>
+            <form th:action="@{/admin/addJobByManuscript}" method="post" th:object="${job}"
+                       name="form">
+                <div class="field-wrap">
+                    <label> Titolo </label>
+                    <input type="text" th:field="*{title}"
+                                placeholder="Titolo"/>
+                </div>
+                <div class="field-wrap">
+                    <div class="field-wrap">
+                        <label> #Studenti </label>
+                        <input type="text" th:field="*{students}"
+                                    placeholder="Numero di Studenti" onBlur="isnum(this)"/>
+
+                    </div>
+                    <input type="hidden" th:value="${job.taskSize}" th:field="*{taskSize}"
+                                placeholder="Dimensione Task" onBlur="isnum(this)"/>
+                    <div class="field-wrap">
+                        <label> Descrizione </label>
+                        <textarea th:field="*{description}" placeholder="Descrizione"/>
+                    </div>
+                    <div class="field-wrap">
+                        <label> Tipologia </label>
+                        <select th:id="tip" th:field="*{typology}">
+                            <option th:each="key : ${typology.keySet()}"
+                                    th:value="${key}"
+                                    th:utext="${typology.get(key)}"/>
+                        </select>
+                    </div>
+                    <div class="symbolSelect">
+                        <label> Simbolo </label>
+                        <select th:field="*{symbol}">
+                            <option value="">nessun_simbolo</option>
+                            <option th:each="key : ${symbols}"
+                                    th:value="${key.id}"
+                                    th:utext="${key.transcription}"/>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="field-wrap">
+                        <label> E' un tutorial? </label>
+                        <select th:field="*{tutorial}">
+                            <option th:value="false">NO</option>
+                            <option th:value="true">SI</option>
+                        </select>
+                    </div>
+                    <div id="formsubmitbutton">
+                        <button type="submit" class="button button-block" name="action"
+                                value="WORD" onclick="ButtonClicked()">Conferma
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="buttonreplacement" style="margin-left: 100px; display: none;">
+            <img
+                    th:src="@{/img/siteImages/loadIcon.gif}"
+                    alt="" />
+        </div>
+        <div id="login"></div>
+    </div>
+    <!-- tab-content -->
+</div>
+<!-- /form -->
+
+
+<script src="/js/selectAll.js"></script>
+<script src="/js/jquery.min.js"></script>
+
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tip').change(function () {
+            var val = $('#tip').val();
+            console.log(val);
+            $('.symbolSelect').hide();
+            if (val == 'trovaPartiColorate' || val == 'trovaInteroSimbolo') {
+                $('.symbolSelect').show();
+            }
+        });
+    });
+</script>
+
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/load.js"></script>
+<script src="/js/file.js"></script>
+
+</body>
+</html>

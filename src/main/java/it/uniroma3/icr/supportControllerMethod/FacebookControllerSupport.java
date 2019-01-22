@@ -12,6 +12,7 @@ import org.springframework.social.facebook.api.User;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,7 @@ public class FacebookControllerSupport {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     public String facebookLogin(Facebook facebook, StudentServiceSocial userFacadesocial,
-                                Model model, String social, RedirectAttributes redirectAttributes) {
+                                Model model, String social, RedirectAttributes redirectAttributes, HttpSession session) {
         String[] fields = {"first_name", "last_name", "email"};
         User user = facebook.fetchObject("me", User.class, fields);
         String email = user.getEmail();
@@ -46,11 +47,20 @@ public class FacebookControllerSupport {
         }
         String name = user.getFirstName();
         String surname = user.getLastName();
-        model.addAttribute("nome", name);
-        model.addAttribute("cognome", surname);
+        StudentSocial s = new StudentSocial();
+        s.setName(name);
+        s.setSurname(surname);
+        s.setEmail(email);
+        s.setUsername(id);
+        session.setAttribute("name",name);
+        session.setAttribute("surname",surname);
+        session.setAttribute("email",email);
+        session.setAttribute("id",id);
+        model.addAttribute("name", name);
+        model.addAttribute("surname", surname);
         model.addAttribute("email", email);
         model.addAttribute("id", id);
-        model.addAttribute("student", new StudentSocial());
+        model.addAttribute("student", s);
         Map<String, String> schools = setSchools.setSchools();
         model.addAttribute("schools", schools);
         Map<String, String> schoolGroups = new HashMap<String, String>();

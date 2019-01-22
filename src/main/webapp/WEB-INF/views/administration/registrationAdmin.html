@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{/css/registration.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+</head>
+<body class="landing">
+<div th:include="administration/menu"></div>
+<div class="form">
+    <div class="tab-content">
+        <div id="signup">
+            <h1>Registrazione Admin</h1>
+            <form th:action="@{/admin/addAdmin}" method="post"
+                       th:object="${administrator}" name="form">
+                <div class="field-wrap">
+                    <label> Username </label>
+                    <input type="text" th:field="*{username}" placeholder="Username"/>
+                    <font size="3" color="red"><span th:text="${session.errUsername}"/></font>
+                </div>
+                <div class="field-wrap">
+                    <label> Password </label>
+                    <input type="password" th:field="*{password}" placeholder="Password"/>
+                    <font size="3" color="red"><span th:text="${session.errPassword}"/></font>
+                </div>
+                <button type="submit" class="button button-block">Conferma</button>
+            </form>
+        </div>
+        <div id="login"></div>
+    </div>
+    <!-- tab-content -->
+</div>
+<!-- /form -->
+
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

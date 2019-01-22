@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ICR</title>
+
+    <link rel="stylesheet" href="/css/main.css"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/siteImages/favicon.ico"/>
+</head>
+<body class="landing">
+<!-- Page Wrapper -->
+<div id="page-wrapper">
+    <!-- Header -->
+    <header id="header" class="alt">
+        <h1>
+            <a href="/">In Codice Ratio</a>
+        </h1>
+    </header>
+</div>
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <h2>Hai eseguito il login dal tuo account Google con successo </h2>
+        <form th:action="@{/googleLogin}" method="post">
+            <button type="submit" style='cursor:pointer'>Prosegui</button>
+            <input type="hidden" name="daGoogle"/>
+            <input type="hidden" name="social" value="goo"/>
+        </form>
+        <span class="container"></span>
+    </div>
+</section>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{/css/newTask.css}"/>
+
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+
+</head>
+<body class="landing">
+<ul>
+    <li>
+        <h2 th:text="${session.student.name}+' '+${session.student.surname}"/>
+        <h2 th:text="'Stai svolgendo il task '+${session.student.taskEffettuati}"/>
+
+    </li>
+</ul>
+
+<div align="center">
+    <h3 th:text="${session.task.job.description}"/>
+    <table class="pos">
+        <tr>
+            <th:block th:each="sample : ${session.positiveSamples}">
+                <td>
+                        <img th:src="|/${sample.path}|" th:alt="${sample.id}"/>
+                </td>
+            </th:block>
+        </tr>
+    </table>
+</div>
+
+<form th:action="@{/user/secondConsoleWord}" method="post" th:object="${taskResults}" name="form">
+    <div align="center">
+        <table>
+            <th:block th:each="id, result : ${taskResults.resultList}">
+                <div id="canvasWrapper" style="height: 200px"></div>
+                <div class="componi">
+                    <h3 class="compose">
+                        Scrivi nell'area di testo sottostante
+                        <br/> quella che secondo te è la parola completa
+                    </h3>
+                    <input type="text" id="text" name="name"/>
+                </div>
+                <button class="toStart" type="button" id="undotoStart">RICOMINCIA</button>
+                <button class="undoColor" type="button" id="undoColor">ANNULLA</button>
+
+                <button class="undoRiga" type="button" id="undoRiga">ANNULLA</button>
+
+                <button class="componi" type="button" id="undoComponi">ANNULLA</button>
+                <input class="buttonSi" type="submit" name="action" id="buttonSI"
+                       value="SI"/>
+                <input class="buttonNo" type="submit" name="action" id="buttonNO"
+                       value="NO"/>
+
+                <input type="hidden" id="output"
+                           th:field="*{resultList[__${result.index}__].answer}" placeholder="Answer"/>
+                <br/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].id}" placeholder="Id"/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].image.id}" placeholder="ImageId"/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].task.id}" placeholder="TaskId"/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].task.student.id}" placeholder="StudentId"/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].task.batch}" placeholder="Batch"/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].task.job.id}" placeholder="JobId"/>
+                <input type="hidden"
+                       th:field="*{resultList[__${result.index}__].task.startDate}" placeholder="StartDate"/>
+
+
+            </th:block>
+        </table>
+    </div>
+    <div align="center" class="selectword">
+        <input type="submit" name="action" id="confermaForm"
+               value="Conferma e vai al prossimo task"/>
+    </div>
+
+    <div align="center" class="componi">
+        <input type="submit" name="action" id="confermaFormCompleta"
+               value="Conferma e vai al prossimo task"/>
+    </div>
+    <div class="negSamp" align="center">
+        <p></p>
+        <h3>Attenzione: non vanno bene immagini come queste</h3>
+        <table class="neg">
+            <tr>
+                <th:block th:each="noSample : ${session.negativeSamples}">
+                    <td>
+                        <img th:src="|/${noSample.path}|" th:alt="${noSample.id}"/>
+                    </td>
+                </th:block>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<div align="center">
+    <form method="post" th:action="@{/user/homeStudent}">
+        <input type="submit" value="Torna alla pagina dello studente"/>
+    </form>
+</div>
+
+
+<script  th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var c = new ExtendedCanvas('#canvasWrapper','/'.concat([[${taskResults.resultList[0].image.path}]]),[[${hint}]],[[${taskResults.resultList[0].task.job.tutorial}]]);
+        c.element.addEventListener('click', function (e) {
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+            c.fill(x, y);
+        });
+        c.element.addEventListener('click', function (e) {
+            c.drawLines(e)
+        });
+        $("#undoColor").click(function () {
+            c.undoColor();
+        });
+        $("#undoRiga").click(function () {
+            c.undoRiga();
+        });
+        $("#undotoStart").click(function () {
+            c.undoToStart();
+        });
+        $("#undoComponi").click(function () {
+            c.undoComponi();
+        });
+        $("#confermaForm").click(function () {
+            $("#output")[0].value = JSON.stringify(c.getOutput().sort());
+            if (!c.checkAnswer()) $(".wrongAnswer").show();
+            return c.checkAnswer();
+        });
+        $("#confermaFormCompleta").click(function () {
+            c.setOutput($("#text").val());
+            $("#output")[0].value = JSON.stringify(c.getOutput());
+            return c.checkAnswer();
+        });
+        $("#buttonSI").click(function () {
+            c.setOutput("SI");
+            $("#output")[0].value = JSON.stringify(c.getOutput());
+            $("#buttonSI").click();
+        });
+        $("#buttonNO").click(function () {
+            c.setOutput("NO");
+            $("#output")[0].value = JSON.stringify(c.getOutput());
+            $("#buttonNO").click();
+        });
+        $("#showHint").mousedown(function () {
+            c.showAnswer();
+        });
+        $("#showHint").mouseup(function () {
+            c.hideAnswer();
+        });
+    });
+
+</script>
+<script src="/js/selectAll.js"></script>
+<script th:src="|/jobScripts/${session.task.job.typology}/${session.jsPath}|"></script>
+<script src="/js/jquery.min.js"></script>
+<script
+        src="/js/jquery.scrollex.min.js"></script>
+<script
+        src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
+<script src="/js/main.js"></script>
+<script src="/js/backButton.js"></script>
+</body>
+</html>

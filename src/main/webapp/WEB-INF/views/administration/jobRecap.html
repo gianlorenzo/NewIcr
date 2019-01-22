@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+
+</head>
+<body class="landing">
+<div th:include="administration/menu"></div>
+<div class="relative">
+    <h2>Riepilogo del Job creato</h2>
+</div>
+<table>
+    <tr>
+        <th>Titolo</th>
+        <th>Numero di Studenti</th>
+        <th>Numero di Parole</th>
+        <th>Dimensione del Task</th>
+        <th>Manoscritto</th>
+        <th>Tipologia</th>
+        <th>Descrizione</th>
+        <th>Simbolo</th>
+    </tr>
+    <tr>
+        <th th:text="${job.title}"/>
+        <th th:text="${job.students}"/>
+        <th th:text="${job.numberOfWords}"/>
+        <th th:text="${job.taskSize}"/>
+        <th th:text="${job.manuscript.name}"/>
+        <th th:text="${job.typology}"/>
+        <th th:text="${job.description}"/>
+        <th  th:text="${job?.symbol?.transcription}"/>
+    </tr>
+</table>
+
+
+<script src="/js/selectAll.js"></script>
+<script src="/js/jquery.min.js"></script>
+
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

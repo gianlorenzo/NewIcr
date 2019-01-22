@@ -165,14 +165,6 @@ public class Student {
         this.tasks.add(t);
     }
 
-    public boolean equals(Object object) {
-        Student student = (Student) object;
-        return this.id.equals(student.getId());
-    }
-
-    public int hashCode() {
-        return this.id.hashCode();
-    }
 
 
 }

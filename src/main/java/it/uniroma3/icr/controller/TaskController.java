@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import it.uniroma3.icr.service.impl.*;
 import it.uniroma3.icr.supportControllerMethod.TaskControllerSupport;
@@ -78,7 +79,7 @@ public class TaskController {
     @RequestMapping(value = "user/newTask", method = RequestMethod.GET)
     public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
                              @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
-                             @RequestParam(name = "social", required = false) String social) {
+                             @RequestParam(name = "social", required = false) String social, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String s = auth.getName();
         model.addAttribute("social", social);
@@ -88,8 +89,9 @@ public class TaskController {
         else
             student = studentFacadesocial.findUser(s);
         model.addAttribute("student", student);
+        model.addAttribute("taskResults",taskResults);
         task = taskService.assignTask(student);
-        return taskControllerSupport.assingStudentTask(task, student, model, taskResults, taskService, sampleService, negativeSampleService, jsScriptService);
+        return taskControllerSupport.assingStudentTask(task, student, model, taskResults, taskService, sampleService, negativeSampleService, jsScriptService,session);
 
     }
 
@@ -108,23 +110,28 @@ public class TaskController {
         LOGGER.info("5 - Auth name " + username + ", student: " + student.getId());
         String action = request.getParameter("action");
         String targetUrl = "";
+        model.addAttribute("taskResults",taskResults);
         taskControllerSupport.setResult(model, action, taskResults, student, taskService, resultService);
         response.sendRedirect("newTask");
-        targetUrl = "users/newTaskImage";
+        targetUrl = "users/newTask";
         model.addAttribute("student", student);
         return targetUrl;
     }
 
     @RequestMapping(value = "user/studentTasks")
-    public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social) {
+    public String studentTasks(Model model, @RequestParam(name = "social", required = false) String social, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Student s;
         if (social == null || social.isEmpty()) {
             s = studentService.findUser(auth.getName());
+            session.setAttribute("s",s);
+            model.addAttribute("s",s);
         } else {
             s = studentFacadesocial.findUser(auth.getName());
+            model.addAttribute("s",s);
+            session.setAttribute("s",s);
         }
-        return taskControllerSupport.viewStudentTasks(s, model, taskService, social);
+        return taskControllerSupport.viewStudentTasks(s, model, taskService, social,session);
     }
 
 }

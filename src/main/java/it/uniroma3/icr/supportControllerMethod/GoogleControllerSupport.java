@@ -12,6 +12,7 @@ import org.springframework.social.google.api.Google;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class GoogleControllerSupport {
 
     public String googleLogin(Google google, ConnectionRepository connectionRepository,
                               StudentServiceSocial userFacadesocial, Model model,
-                              String social, RedirectAttributes redirectAttributes) {
+                              String social, RedirectAttributes redirectAttributes, HttpSession session) {
         String id = google.userOperations().getUserInfo().getId();
         StudentSocial student = userFacadesocial.findUser(id);
 
@@ -47,21 +48,36 @@ public class GoogleControllerSupport {
             String name = google.userOperations().getUserInfo().getFirstName();
             String surname = google.userOperations().getUserInfo().getLastName();
             String email = google.userOperations().getUserInfo().getEmail();
-
-            model.addAttribute("nome", name);
-            model.addAttribute("cognome", surname);
+            StudentSocial s = new StudentSocial();
+            if(name != null) {
+                s.setName(name);
+            }
+            if(surname!=null) {
+                s.setSurname(surname);
+            }
+            s.setEmail(email);
+            s.setUsername(id);
+            session.setAttribute("name",name);
+            session.setAttribute("surname",surname);
+            session.setAttribute("email",email);
+            session.setAttribute("id",id);
+            session.setAttribute("student", s);
+            model.addAttribute("name", name);
+            model.addAttribute("surname", surname);
             model.addAttribute("email", email);
             model.addAttribute("id", id);
-            model.addAttribute("student", new StudentSocial());
+            model.addAttribute("student", s);
 
             Map<String, String> schools = setSchools.setSchools();
             model.addAttribute("schools", schools);
+            session.setAttribute("schools", schools);
 
             Map<String, String> schoolGroups = new HashMap<String, String>();
             schoolGroups.put("3", "3");
             schoolGroups.put("4", "4");
             schoolGroups.put("5", "5");
             model.addAttribute("schoolGroups", schoolGroups);
+            session.setAttribute("schoolGroups", schoolGroups);
             return "/registrationGoogle";
         }
     }

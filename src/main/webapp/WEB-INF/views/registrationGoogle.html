@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{css/registration.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{img/siteImages/favicon.ico}"/>
+</head>
+<body class="landing">
+<div class="form">
+    <div class="tab-content">
+        <div id="signup">
+            <h1>Completa la registrazione</h1>
+            <form th:action="@{/addUserFromGoogle}" method="post" th:object="${student}"
+                       name="f1" onsubmit="return matchpass()">
+                <div class="top-row">
+                    <div th:if="${session.name != null}">
+                    <div class="field-wrap">
+                        <label th:text="Nome+':'+' '+${session.name}"/>
+                        <input type="hidden" th:value="${session.name}" th:field="*{name}"  placeholder="Nome"/>
+                    </div>
+                    </div>
+
+                    <div th:if="${session.surname!=null}">
+                    <div class="field-wrap">
+                        <label th:text="Cognome+':'+' '+${session.surname}"/>
+                        <input type="hidden" th:value="${session.surname}" th:field="*{surname}"  placeholder="Cognome"/>
+                    </div>
+                    </div>
+                    <div class="field-wrap">
+                        <label th:text="Email+':'+' '+${session.email}"/>
+                        <input type="hidden" th:value="${session.email}" th:field="*{email}"  placeholder="Email"/>
+                    </div>
+                    <br/>
+                    <div th:if="${session.name==null}">
+                        <div class="field-wrap">
+                        <label>Nome</label>
+                            <input type="text" placeholder="Nome" th:field="*{name}"/>
+                            <font size="3" color="red"><span th:text="${session.errName}"/></font>
+
+                        </div>
+                    </div>
+                    <br/>
+                    <div th:if="${session.surname==null}">
+                        <div class="field-wrap">
+                            <label>Cognome</label>
+                            <input type="text" placeholder="Cognome" th:field="*{surname}"/>
+                            <font size="3" color="red"><span th:text="${session.errSurname}"/></font>
+
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="field-wrap">
+                        <label> Scuola </label>
+                        <select th:field="*{school}">
+                            <option th:each="key : ${schools.keySet()}"
+                                    th:value="${key}"
+                                    th:utext="${schools.get(key)}"/>
+                        </select>
+                    </div>
+                    <div class="field-wrap">
+                        <label> Classe </label>
+                        <select th:field="*{schoolGroup}">
+                            <option th:each="key : ${schoolGroups.keySet()}"
+                                    th:value="${key}"
+                                    th:utext="${schoolGroups.get(key)}"/>
+                        </select>
+                    </div>
+                    <div class="field-wrap">
+                        <label> Sezione </label>
+                        <input type="text" th:field="*{section}" placeholder="Sezione"/>
+                        <font size="3" color="red"><span th:text="${session.errSection}"/></font>
+                    </div>
+                    <input type="hidden" th:field="*{username}" th:value="${session.id}" placeholder="Username"/>
+                    <button type="submit" class="button button-block">Conferma</button>
+                </div>
+            </form>
+        </div>
+        <div id="login"></div>
+    </div>
+    <!-- tab-content -->
+</div>
+<!-- /form -->
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.scrollex.min.js"></script>
+<script src="js/jquery.scrolly.min.js"></script>
+<script src="js/skel.min.js"></script>
+<script src="js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="js/ie/respond.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

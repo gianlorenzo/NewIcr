@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.List;
 
@@ -67,13 +68,16 @@ public class TaskControllerSupport {
 
     public String assingStudentTask(Task task, Student student, Model model,
                                     TaskWrapper taskResults, TaskService taskService,
-                                    SampleService sampleService, NegativeSampleService negativeSampleService, JsScriptService jsScriptService) {
+                                    SampleService sampleService, NegativeSampleService negativeSampleService, JsScriptService jsScriptService,
+                                    HttpSession session) {
         if ((task != null) && (task.getStudent() != null)) {
             task.setStudent(student);
             LOGGER.info("1 - assigned Task " + task.getId() + " to student " + student.getId() + " (" + task.getStudent().getId() + ")");
             if ((task.getJob().getSymbol() != null)) {
                 List<Sample> positiveSamples = sampleService.findAllSamplesBySymbolId(task.getJob().getSymbol().getId());
                 List<Sample> negativeSamples = negativeSampleService.findAllNegativeSamplesBySymbolId(task.getJob().getSymbol().getId());
+                session.setAttribute("positiveSamples", positiveSamples);
+                session.setAttribute("negativeSamples", negativeSamples);
                 model.addAttribute("positiveSamples", positiveSamples);
                 model.addAttribute("negativeSamples", negativeSamples);
             }
@@ -90,6 +94,12 @@ public class TaskControllerSupport {
             }
             task.setStudent(student);
             model.addAttribute("student", student);
+            session.setAttribute("student",student);
+            session.setAttribute("task",task);
+            session.setAttribute("hint",hint);
+            session.setAttribute("task",task);
+            session.setAttribute("jsPath",jsScriptService.getJsFile(jsScriptService.getScriptPath(),task.getJob().getTypology()));
+            session.setAttribute("taskResults", taskResults);
             model.addAttribute("task", task);
             model.addAttribute("jsPath",jsScriptService.getJsFile(jsScriptService.getScriptPath(),task.getJob().getTypology()));
             model.addAttribute("taskResults", taskResults);
@@ -100,13 +110,13 @@ public class TaskControllerSupport {
                     " size " + taskResults.getResultList().size() +
                     ") by student " + student.getId() + " (" +
                     taskResults.getResultList().get(0).getTask().getStudent().getId() + " - " + task.getStudent().getId() + ")");
-            return "users/newTaskImage";
+            return "users/newTask";
         }
         return "users/goodBye";
     }
 
     public String viewStudentTasks(Student s, Model model, TaskService taskService,
-                                   String social) {
+                                   String social, HttpSession session) {
         LOGGER.info("tasks:",s.getTaskEffettuati());
         if (s.getTaskEffettuati() > 0) {
             long secs = taskService.getWorkTime(s);
@@ -114,6 +124,7 @@ public class TaskControllerSupport {
             long minutes = (secs % 3600) / 60;
             long seconds = secs % 60;
             String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            session.setAttribute("time",timeString);
             model.addAttribute("time", timeString);
             model.addAttribute("s", s);
             model.addAttribute("social", social);

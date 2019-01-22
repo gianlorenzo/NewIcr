@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ICR</title>
+
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{img/siteImages/favicon.ico}"/>
+</head>
+<body class="landing">
+<div th:include="menu"></div>
+<div class="relative">
+    <h2>Hai completato la registrazione</h2>
+    <h2>Ora puoi effettuare il login (dal menu in alto a destra)</h2>
+</div>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Scuola</th>
+        <th>Anno</th>
+        <th>Sezione</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <th th:text="${student.name}"/>
+        <th th:text="${student.surname}"/>
+        <th th:text="${student.school}"/>
+        <th th:text="${student.schoolGroup}"/>
+        <th th:text="${student.section}"/>
+        <th th:text="${student.email}"/>
+    </tr>
+</table>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.scrollex.min.js"></script>
+<script src="js/jquery.scrolly.min.js"></script>
+<script src="js/skel.min.js"></script>
+<script src="js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="js/ie/respond.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

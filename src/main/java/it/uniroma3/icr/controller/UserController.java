@@ -34,6 +34,8 @@ import it.uniroma3.icr.service.impl.StudentServiceSocial;
 import it.uniroma3.icr.validator.studentValidator;
 import it.uniroma3.icr.validator.StudentValidator2;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 
@@ -77,7 +79,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String confirmUser(@ModelAttribute Student student, Model model) {
+    public String confirmUser(@ModelAttribute Student student, Model model, HttpSession session) {
 
         model.addAttribute("schools", setSchools.setSchools());
         Map<String, String> schoolGroups = new HashMap<String, String>();
@@ -89,7 +91,7 @@ public class UserController {
         Student u = userFacade.findUser(student.getUsername());
         Administrator a = adminService.findAdmin(student.getUsername());
 
-        if (studentValidator.validate(student, model, u, a)) {
+        if (studentValidator.validate(student, model, u, a,session)) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String passwordEncode = passwordEncoder.encode(student.getPassword());
             student.setPassword(passwordEncode);
@@ -104,7 +106,7 @@ public class UserController {
 
     @RequestMapping(value = "/addUserFromFB", method = RequestMethod.POST)
     public String confirmUserFB(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
-                                BindingResult bindingResult) {
+                                BindingResult bindingResult,HttpSession session) {
         model.addAttribute("schools", setSchools.setSchools());
 
         Map<String, String> schoolGroups = new HashMap<String, String>();
@@ -119,10 +121,10 @@ public class UserController {
         Administrator a = adminService.findAdmin(student.getUsername());
         if (u != null) {
             LOGGER.info("FB authorized (u) for " + u.toString());
-            LOGGER.info("FB validation (u) for " + u.toString() + " is " + StudentValidator2.validate(student, model, u, a));
+            LOGGER.info("FB validation (u) for " + u.toString() + " is " + StudentValidator2.validate(student, model,session));
         }
 
-        if (StudentValidator2.validate(student, model, u, a)) {
+        if (StudentValidator2.validate(student, model, session )) {
             model.addAttribute("student", student);
             userFacadesocial.saveUser(student);
             model.addAttribute("social", "fb");
@@ -135,7 +137,7 @@ public class UserController {
 
     @RequestMapping(value = "/addUserFromGoogle", method = RequestMethod.POST)
     public String confirmUserGoogle(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult,HttpSession session) {
         model.addAttribute("schools", setSchools.setSchools());
 
         Map<String, String> schoolGroups = new HashMap<String, String>();
@@ -150,10 +152,10 @@ public class UserController {
         Administrator a = adminService.findAdmin(student.getUsername());
         if (u != null) {
             LOGGER.info("Goo authorized (u) for " + u.toString());
-            LOGGER.info("Goo validation (u) for " + u.toString() + " is " + StudentValidator2.validate(student, model, u, a));
+            LOGGER.info("Goo validation (u) for " + u.toString() + " is " + StudentValidator2.validate(student, model,session ));
         }
 
-        if (StudentValidator2.validate(student, model, u, a)) {
+        if (StudentValidator2.validate(student, model, session)) {
             model.addAttribute("student", student);
             userFacadesocial.saveUser(student);
             model.addAttribute("social", "goo");
@@ -167,7 +169,7 @@ public class UserController {
 
     @RequestMapping(value = "/addUserFromInstagram", method = RequestMethod.POST)
     public String confirmUserInstagram(@ModelAttribute StudentSocial student, Model model, @Validated Student p,
-                                       BindingResult bindingResult) {
+                                       BindingResult bindingResult,HttpSession session) {
         model.addAttribute("schools", setSchools.setSchools());
 
         Map<String, String> schoolGroups = new HashMap<String, String>();
@@ -182,10 +184,10 @@ public class UserController {
         Administrator a = adminService.findAdmin(student.getUsername());
         if (u != null) {
             LOGGER.info("Goo authorized (u) for " + u.toString());
-            LOGGER.info("Goo validation (u) for " + u.toString() + " is " + StudentValidator2.validate(student, model, u, a));
+            LOGGER.info("Goo validation (u) for " + u.toString() + " is " + StudentValidator2.validate(student, model, session));
         }
 
-        if (StudentValidator2.validate(student, model, u, a)) {
+        if (StudentValidator2.validate(student, model,session)) {
             model.addAttribute("student", student);
             userFacadesocial.saveUser(student);
             return "registrationRecap";

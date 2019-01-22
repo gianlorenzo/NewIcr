@@ -98,12 +98,12 @@ public class AdminController {
 
     @RequestMapping(value = "admin/addAdmin", method = RequestMethod.POST)
     public String confirmAdmin(@ModelAttribute Administrator administrator, @Validated Administrator a,
-                               BindingResult bindingResult, Model model) {
+                               BindingResult bindingResult, Model model,HttpSession session) {
 
         Administrator a1 = adminService.findAdmin(administrator.getUsername());
         Student s1 = studentService.findUser(administrator.getUsername());
 
-        if (AdminValidator.validate(administrator, model, a1, s1)) {
+        if (AdminValidator.validate(administrator, model, a1, s1,session)) {
             administrator.setPassword(administrator.getPassword());
             model.addAttribute("administrator", administrator);
             adminService.addAdmin(administrator);
@@ -122,12 +122,12 @@ public class AdminController {
         List<Manuscript> listManuscripts = this.manuscriptService.findAllManuscript();
         if (listManuscripts.size() == 0)
             return "administration/noManuscriptForJob";
-
-        List<String> listManuscriptsName = new ArrayList<>();
+        Map<String,String> manucriptsName = new HashMap<>();
         for (Manuscript m : listManuscripts) {
-            listManuscriptsName.add(m.getName());
+            manucriptsName.put(m.getName(),m.getName());
         }
-        model.addAttribute("manuscripts", listManuscriptsName);
+        model.addAttribute("manuscript",manuscript);
+        model.addAttribute("manuscripts", manucriptsName);
         model.addAttribute("job", job);
         model.addAttribute("task", task);
         return "administration/selectImageByManuscript";
@@ -141,6 +141,7 @@ public class AdminController {
         List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
         Collections.sort(symbols, new ComparatoreSimboloPerNome());
         job.setManuscript(manuscript);
+        job.setTaskSize(1);
         model.addAttribute("typology", setTypology.setTypology());
         session.setAttribute("manuscript", manuscript);
         model.addAttribute("symbols", symbols);
@@ -163,7 +164,7 @@ public class AdminController {
         imagesTask = this.imageService.getImagesFromManuscriptName(manuscript.getId());
         bool = true;
 
-        if (jobValidator.validate(job, model)) {
+        if (jobValidator.validate(job, model,session)) {
             this.facadeJob.createJob(job, manuscript, imagesTask, bool, task);
             return "administration/jobRecap";
         } else {
@@ -171,6 +172,7 @@ public class AdminController {
             List<Symbol> symbols = symbolService.findSymbolByManuscriptName(manuscriptName);
             Collections.sort(symbols, new ComparatoreSimboloPerNome());
             job.setManuscript(manuscript);
+            job.setTaskSize(1);
             model.addAttribute("typology", setTypology.setTypology());
             session.setAttribute("manuscript", manuscript);
             model.addAttribute("symbols", symbols);
@@ -183,16 +185,16 @@ public class AdminController {
     public String selectManuscript(Model model, @ModelAttribute Manuscript manuscript)
             throws FileNotFoundException, IOException {
         List<Manuscript> listManuscripts = this.imageService.getManuscript();
-
-        List<String> listManuscriptsName = new ArrayList<>();
+        Map<String,String> manuscriptsList = new HashMap<>();
         for (Manuscript m : listManuscripts) {
             if (manuscriptService.findManuscriptByName(m.getName()) == null)
-                listManuscriptsName.add(m.getName());
+                manuscriptsList.put(m.getName(),m.getName());
         }
-        if (listManuscriptsName.isEmpty()) {
+        if (manuscriptsList.isEmpty()) {
             return "administration/noInsertManuscript";
         } else {
-            model.addAttribute("manuscripts", listManuscriptsName);
+            model.addAttribute("manuscript",manuscript);
+            model.addAttribute("manuscripts", manuscriptsList);
             return "administration/insertManuscript";
         }
     }
@@ -228,6 +230,7 @@ public class AdminController {
         path = path.concat(manuscriptName).concat("/");
         imageService.updateAllImages(path, m);
         this.manuscriptService.saveManuscript(manuscript);
+        model.addAttribute( "manuascript",manuscript);
         return "administration/insertRecap";
     }
 

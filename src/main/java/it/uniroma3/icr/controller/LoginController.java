@@ -2,10 +2,12 @@ package it.uniroma3.icr.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import it.uniroma3.icr.instagramConfig.InstagramJPService;
 import it.uniroma3.icr.instagramConfig.UserInstagram;
 import it.uniroma3.icr.model.StudentSocial;
+import it.uniroma3.icr.service.impl.AdminService;
 import it.uniroma3.icr.service.impl.StudentServiceSocial;
 import it.uniroma3.icr.supportControllerMethod.FacebookControllerSupport;
 import it.uniroma3.icr.supportControllerMethod.GoogleControllerSupport;
@@ -55,6 +57,9 @@ public class LoginController {
     @Autowired
     private StudentServiceSocial userFacadesocial;
 
+    @Autowired
+    private AdminService adminService;
+
     private ConnectionRepository connectionRepository;
 
     private SetSchools setSchools = new SetSchools();
@@ -76,7 +81,7 @@ public class LoginController {
 
     @RequestMapping(value = "/facebookLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public String helloFacebook(@RequestParam(value = "daFB", required = false) String daFB, Model model,
-                                @ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
+                                @ModelAttribute("social") String social, RedirectAttributes redirectAttributes, HttpSession session) {
 
         Facebook facebook = connectionRepository.findPrimaryConnection(Facebook.class).getApi();
         if (daFB == null)
@@ -84,7 +89,7 @@ public class LoginController {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null)
             return "redirect:/connect/facebook";
 
-        return facebookControllerSupport.facebookLogin(facebook, userFacadesocial, model, social, redirectAttributes);
+        return facebookControllerSupport.facebookLogin(facebook, userFacadesocial, model, social, redirectAttributes,session);
 
     }
 
@@ -103,14 +108,14 @@ public class LoginController {
 
     @RequestMapping(value = "/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public String helloGoogle(@RequestParam(value = "daGoogle", required = false) String daGoogle, Model model,
-                              @ModelAttribute("social") String social, RedirectAttributes redirectAttributes) {
+                              @ModelAttribute("social") String social, RedirectAttributes redirectAttributes, HttpSession session) {
 
         if (daGoogle == null)
             return "redirect:/login";
         if (this.connectionRepository.findPrimaryConnection(Google.class) == null)
             return "redirect:/connect/google";
 
-        return googleControllerSupport.googleLogin(google, connectionRepository, userFacadesocial, model, social, redirectAttributes);
+        return googleControllerSupport.googleLogin(google, connectionRepository, userFacadesocial, model, social, redirectAttributes,session);
 
     }
 
@@ -134,15 +139,18 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/role", method = RequestMethod.GET)
-    public String loginRole(Model model, HttpServletRequest request) {
+    public String loginRole(Model model, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString();
         Student student = studentService.findUser(auth.getName());
+        Administrator admin = adminService.findAdmin(auth.getName());
         String targetUrl = "";
         if (role.contains("ROLE_USER")) {
+            session.setAttribute("student",student);
             model.addAttribute("student", student);
             targetUrl = "redirect:/user/homeStudent";
         } else if (role.contains("ROLE_ADMIN")) {
+            session.setAttribute("admin",admin);
             targetUrl = "redirect:/admin/homeAdmin";
         }
         return targetUrl;

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ICR</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
+</head>
+<body class="landing">
+<div th:include="users/menu"></div>
+
+<div class="relative">
+    <h2 th:text="'Task Effettuati da: '+${session.s.name}"/>
+</div>
+<table>
+    <tr>
+        <th>Numero di Task Effettuati</th>
+    </tr>
+    <tr>
+        <th th:text="${session.s.taskEffettuati}"/>
+    </tr>
+    <tr>
+        <th>Tempo Impiegato</th>
+    </tr>
+    <tr>
+        <th th:text="${session.time}"/>
+    </tr>
+    <tr>
+        <th>Tempo medio per task (in secondi)</th>
+    </tr>
+    <tr>
+        <th th:text="${(session.s.tempoEffettuato - session.s.tempoEffettuato%session.s.taskEffettuati)/session.s.taskEffettuati}"/>
+    </tr>
+</table>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>-->
+<script src="/js/ie/respond.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

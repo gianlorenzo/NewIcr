@@ -12,18 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
-    @Autowired
-    private CloudController cloudController;
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String goToIndex(Model model) {
+    public String goToIndex() {
 
-
-       // String prova = this.cloudController.getProva();
-        //model.addAttribute("prova",prova);
         return "index";
+    }
+
+    @RequestMapping("/")
+    public void handleRequest() {
+        throw new RuntimeException("test exception");
     }
 
 
