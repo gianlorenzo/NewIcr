@@ -19,6 +19,13 @@ public class CloudController {
     public CloudController(RestClient restClient) {
         this.restClient = restClient;
     }
+
+
+    @RequestMapping(value = "/taskPolicy")
+    public String getTaskPolicy() {
+        return restClient.assignTaskPolicy();
+    }
+
 /*
     @RequestMapping(value = "/provaFeign")
     public String getProva() {

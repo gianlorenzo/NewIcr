@@ -21,6 +21,24 @@
             <form th:action="@{/admin/addJobByManuscript}" method="post" th:object="${job}"
                        name="form">
                 <div class="field-wrap">
+                    <label> Tipologia </label>
+                    <select th:id="tip"  th:field="*{typology}">
+                        <option th:each="key : ${typology.keySet()}"
+                                th:value="${key}"
+                                th:utext="${typology.get(key)}"/>
+                    </select>
+                </div>
+                <div class="symbolSelect">
+                    <label> Simbolo </label>
+                    <select th:field="*{symbol}">
+                        <option value="">nessun_simbolo</option>
+                        <option th:each="key : ${symbols}"
+                                th:value="${key.id}"
+                                th:utext="${key.transcription}"/>
+                    </select>
+                </div>
+                <br/>
+                <div class="field-wrap">
                     <label> Titolo </label>
                     <input type="text" th:field="*{title}"
                                 placeholder="Titolo"/>
@@ -38,24 +56,7 @@
                         <label> Descrizione </label>
                         <textarea th:field="*{description}" placeholder="Descrizione"/>
                     </div>
-                    <div class="field-wrap">
-                        <label> Tipologia </label>
-                        <select th:id="tip" th:field="*{typology}">
-                            <option th:each="key : ${typology.keySet()}"
-                                    th:value="${key}"
-                                    th:utext="${typology.get(key)}"/>
-                        </select>
-                    </div>
-                    <div class="symbolSelect">
-                        <label> Simbolo </label>
-                        <select th:field="*{symbol}">
-                            <option value="">nessun_simbolo</option>
-                            <option th:each="key : ${symbols}"
-                                    th:value="${key.id}"
-                                    th:utext="${key.transcription}"/>
-                        </select>
-                    </div>
-                    <br />
+
                     <div class="field-wrap">
                         <label> E' un tutorial? </label>
                         <select th:field="*{tutorial}">
@@ -82,32 +83,32 @@
 </div>
 <!-- /form -->
 
-
-<script src="/js/selectAll.js"></script>
-<script src="/js/jquery.min.js"></script>
-
-<script src="/js/jquery.scrollex.min.js"></script>
-<script src="/js/jquery.scrolly.min.js"></script>
-<script src="/js/skel.min.js"></script>
-<script src="/js/util.js"></script>
+<script th:src="@{/js/selectAll.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/js/jquery.scrolly.min.js}"></script>
+<!--
 <script>
     $(document).ready(function () {
         $('#tip').change(function () {
+            $('.symbolSelect').hide();
             var val = $('#tip').val();
             console.log(val);
-            $('.symbolSelect').hide();
             if (val == 'trovaPartiColorate' || val == 'trovaInteroSimbolo') {
                 $('.symbolSelect').show();
             }
         });
     });
 </script>
+-->
 
+<script th:src="@{/js/skel.min.js}"></script>
+<script th:src="@{/js/util.js}"></script>
 <!--[if lte IE 8]>-->
-<script src="/js/ie/respond.min.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/load.js"></script>
-<script src="/js/file.js"></script>
+<script th:src="@{/js/ie/respond.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/load.js}"></script>
+<script th:src="@{/js/file.js}"></script>
 
 </body>
 </html>

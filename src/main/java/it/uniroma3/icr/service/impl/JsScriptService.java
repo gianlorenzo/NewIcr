@@ -6,6 +6,8 @@ import it.uniroma3.icr.javascriptTools.GetScriptPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class JsScriptService {
 
@@ -21,5 +23,9 @@ public class JsScriptService {
 
     public String getScriptPath() {
         return this.getScriptPath.getPath();
+    }
+
+    public List<String> getAllJsDirectory(String path) {
+        return this.jsScriptDaoImpl.getAllJsDirectory(path);
     }
 }

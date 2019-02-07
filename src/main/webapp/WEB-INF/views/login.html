@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <title>ICR</title>
 
-    <link rel="stylesheet" th:href="@{css/registration.css}"/>
-    <link rel="stylesheet" th:href="@{css/socialButtons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" th:href="@{/css/socialButtons.css}"/>
     <!-- Favicon -->
-    <link rel="shortcut icon" th:href="@{img/siteImages/favicon.ico}"/>
+    <link rel="shortcut icon" th:href="@{/img/siteImages/favicon.ico}"/>
 </head>
 <body class="landing">
 <div th:include="menu"></div>
@@ -61,15 +61,13 @@
 </div>
 <!-- /form -->
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.scrollex.min.js"></script>
-<script src="js/jquery.scrolly.min.js"></script>
-<script src="js/skel.min.js"></script>
-<script src="js/util.js"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/js/jquery.scrolly.min.js}"></script>
+<script th:src="@{/js/skel.min.js}"></script>
+<script th:src="@{/js/util.js}"></script>
 <!--[if lte IE 8]>-->
-<script src="js/ie/respond.min.js"></script>
-<script src="js/main.js"></script>
-
-
+<script th:src="@{/js/ie/respond.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

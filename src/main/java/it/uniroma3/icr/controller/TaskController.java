@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.uniroma3.icr.cloud.controller.CloudController;
 import it.uniroma3.icr.service.impl.*;
 import it.uniroma3.icr.supportControllerMethod.TaskControllerSupport;
 import org.slf4j.Logger;
@@ -63,6 +64,9 @@ public class TaskController {
     @Autowired
     public JsScriptService jsScriptService;
 
+    @Autowired
+    private CloudController cloudController;
+
     private TaskControllerSupport taskControllerSupport = new TaskControllerSupport();
 
     @InitBinder
@@ -80,6 +84,12 @@ public class TaskController {
     public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
                              @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
                              @RequestParam(name = "social", required = false) String social, HttpSession session) {
+        Image image = this.imageService.retrieveImage(Long.valueOf(this.cloudController.getTaskPolicy()));
+        System.out.println("id immagine:" + image.getId());
+        /*String id = this.cloudController.getTaskPolicy();
+        System.out.println(id);
+        System.out.println(Long.valueOf(id));
+        task = this.taskService.retrieveTask(Long.valueOf(id));*/
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String s = auth.getName();
         model.addAttribute("social", social);
@@ -90,7 +100,7 @@ public class TaskController {
             student = studentFacadesocial.findUser(s);
         model.addAttribute("student", student);
         model.addAttribute("taskResults",taskResults);
-        task = taskService.assignTask(student);
+        task = taskService.assignTaskId(student,image);
         return taskControllerSupport.assingStudentTask(task, student, model, taskResults, taskService, sampleService, negativeSampleService, jsScriptService,session);
 
     }

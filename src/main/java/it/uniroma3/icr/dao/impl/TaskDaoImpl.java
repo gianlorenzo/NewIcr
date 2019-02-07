@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import it.uniroma3.icr.model.Image;
 import it.uniroma3.icr.model.Result;
 import it.uniroma3.icr.model.Student;
 import org.slf4j.Logger;
@@ -113,6 +114,74 @@ public class TaskDaoImpl implements TaskDaoCustom {
                 } else {
                     LOGGER.info("0.1 - race on task " + taskList.get(position) + ". Try another task for student " + student.getId());
                     task = assignTask(student);
+                }
+            } else { // i task sono finiti
+                return null;
+            }
+        }
+        return task;
+    }
+
+    @Transactional
+    @SuppressWarnings("unchecked")
+    public Task assignTaskId(Student student, Image image) {
+        System.out.println("Sono in assignTaskId: id immagine" +  image.getId());
+        Task task;
+        List<Object> taskList;
+        String select;
+        select = "SELECT t.id,t.batch,t.end_date,t.start_date,t.job_id,t.student_id FROM result r JOIN task t ON r.task_id = t.id WHERE (t.student_id= ?1 AND r.image_id =?2  AND t.end_Date IS NULL AND t.start_Date IS NOT NULL)";
+        Query query1 = this.entityManager.createNativeQuery(select,Task.class).setParameter(1, student.getId())
+               .setParameter(2,image.getId());
+
+
+        taskList = query1.getResultList();
+
+        if (taskList.size() != 0) {
+            System.out.println("Sono in task non ancora finito: lunghezza tasks" + taskList.size());
+            task = (Task)taskList.get(0);
+            System.out.println("Sono in task non ancora finito: id task" + task.getId());
+            task.setStudent(student);
+            System.out.println("assegnato task non ancora finito");
+            LOGGER.info("0 - Resumed task " + task.getId() + " for student " + student.getId());
+            return task;
+        } else {
+            select = "SELECT t.id,t.batch,t.end_date,t.start_date,t.job_id,t.student_id FROM Task t join result r on r.task_id = t.id "
+                    + "WHERE r.image_id=?2 and (t.batch, t.job_id) not in ( " // task già fatti dallo studente
+                    + " SELECT distinct t2.batch, t2.job_id "
+                    + " FROM task t2 "
+                    + " WHERE t2.student_id= ?1 and t2.end_Date IS NOT NULL) "
+                    + "AND (t.student_id IS NULL)"; // task non assegnati
+
+            query1 = this.entityManager.createNativeQuery(select,Task.class).setMaxResults(53).setParameter(1, student.getId()).
+                    setParameter(2,image.getId());
+            taskList = query1.getResultList(); // trova il task da eseguire
+
+            if (taskList.size() != 0) {  // ci sono ancora task
+                System.out.println("Sono in task non ancora assegnato: lunghezza tasks" + taskList.size());
+                int position = (int) (student.getId() % taskList.size());
+
+                Calendar calendar = Calendar.getInstance();
+                java.util.Date now = calendar.getTime();
+                java.sql.Timestamp date = new java.sql.Timestamp(now.getTime());
+
+                LOGGER.debug("SQL UPDATE update task set start_date = " + date + " student_id = " + student.getId() + " where id = " + taskList.get(position));
+
+                String update = "update task set start_date = ?1, student_id = ?2 where id = ?3 and student_id is null";
+                task = (Task)taskList.get(position);
+                System.out.println("Sono in task non ancora assegnato: id task" + task.getId());
+                System.out.println(task.getId());
+                query1 = this.entityManager.createNativeQuery(update).setParameter(1, date).setParameter(2, student.getId()).setParameter(3, task.getId());
+                int numRow = query1.executeUpdate();
+                if (numRow == 1) {
+                    task = (Task)taskList.get(position);
+                    task.setStudent(student);
+                    System.out.println("assegnato task non ancora finito");
+                    task.setStartDate(date);
+                    student.addTask(task);
+                } else {
+                    LOGGER.info("0.1 - race on task " + taskList.get(position) + ". Try another task for student " + student.getId());
+                    task = assignTask(student);
+                    System.out.println("assegnato task non ancora finito");
                 }
             } else { // i task sono finiti
                 return null;

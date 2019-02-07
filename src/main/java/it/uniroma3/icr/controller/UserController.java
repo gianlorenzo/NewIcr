@@ -66,17 +66,6 @@ public class UserController {
         binder.setValidator(validator);
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registrazione(@ModelAttribute Student student, Model model) {
-
-        Map<String, String> schoolGroups = new HashMap<String, String>();
-        schoolGroups.put("3", "3");
-        schoolGroups.put("4", "4");
-        schoolGroups.put("5", "5");
-        model.addAttribute("schoolGroups", schoolGroups);
-        model.addAttribute("schools", setSchools.setSchools());
-        return "registration";
-    }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String confirmUser(@ModelAttribute Student student, Model model, HttpSession session) {
@@ -99,7 +88,7 @@ public class UserController {
             userFacade.saveUser(student);
             return "registrationRecap";
         } else {
-            return "registration";
+            return "administration/registration";
         }
 
     }

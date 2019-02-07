@@ -62,7 +62,9 @@ public class TaskService {
         return this.taskDaoImpl.assignTask(student);
     }
 
-    public String findHintByTask(Task t) {
+    public Task assignTaskId(Student student, Image image) { return this.taskDaoImpl.assignTaskId(student,image);}
+
+        public String findHintByTask(Task t) {
         return this.taskDaoImpl.findHintByTask(t);
     }
 

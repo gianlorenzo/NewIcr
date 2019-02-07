@@ -15,20 +15,20 @@
 <section id="banner">
     <div class="inner">
         <div class="inner">
-            <h2 th:text="${session.student.name}+' hai completato tutti i Task Disponibili'">
+            <h2 th:text="${student.name}+' hai completato tutti i Task Disponibili'">
             </h2>
             <p>A breve ne saranno caricati altri!</p>
         </div>
     </div>
 </section>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/jquery.scrollex.min.js"></script>
-<script src="/js/jquery.scrolly.min.js"></script>
-<script src="/js/skel.min.js"></script>
-<script src="/js/util.js"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/js/jquery.scrolly.min.js}"></script>
+<script th:src="@{/js/skel.min.js}"></script>
+<script th:src="@{/js/util.js}"></script>
 <!--[if lte IE 8]>-->
-<script src="/js/ie/respond.min.js"></script>
-<script src="/js/main.js"></script>
+<script th:src="@{/js/ie/respond.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

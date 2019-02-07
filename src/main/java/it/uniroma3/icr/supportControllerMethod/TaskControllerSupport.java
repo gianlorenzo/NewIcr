@@ -49,6 +49,7 @@ public class TaskControllerSupport {
                     tempTask++;
                     LOGGER.debug("6 - task " + task.getId() + " accomplished by student " + student.getId() + " - result " + result.getId());
                 }
+
                 resultService.updateListResult(taskResults);
                 for (Result result : taskResults.getResultList()) {
                     LOGGER.debug("7 - AFTER update: task " + result.getTask().getId() + " accomplished by student " + student.getId() + " - result " + result.getId());
@@ -70,6 +71,9 @@ public class TaskControllerSupport {
                                     TaskWrapper taskResults, TaskService taskService,
                                     SampleService sampleService, NegativeSampleService negativeSampleService, JsScriptService jsScriptService,
                                     HttpSession session) {
+
+        System.out.println("sono in controllerSupport: id task= "+task.getId());
+
         if ((task != null) && (task.getStudent() != null)) {
             task.setStudent(student);
             LOGGER.info("1 - assigned Task " + task.getId() + " to student " + student.getId() + " (" + task.getStudent().getId() + ")");
@@ -100,8 +104,8 @@ public class TaskControllerSupport {
             session.setAttribute("task",task);
             session.setAttribute("jsPath",jsScriptService.getJsFile(jsScriptService.getScriptPath(),task.getJob().getTypology()));
             session.setAttribute("taskResults", taskResults);
-            model.addAttribute("task", task);
-            model.addAttribute("jsPath",jsScriptService.getJsFile(jsScriptService.getScriptPath(),task.getJob().getTypology()));
+            //model.addAttribute("task", task);
+            //model.addAttribute("jsPath",jsScriptService.getJsFile(jsScriptService.getScriptPath(),task.getJob().getTypology()));
             model.addAttribute("taskResults", taskResults);
             model.addAttribute("hint", hint);
             LOGGER.info("4 - end taskChoose task " +

@@ -12,6 +12,9 @@ public interface RestClient {
     @RequestMapping(value = "/prova", consumes = "application/json")
     Prova getProva();
 
+    @RequestMapping(value="/assignTaskPolicy")
+    String assignTaskPolicy();
+
 
 
     public class Prova {
