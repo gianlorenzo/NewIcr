@@ -84,8 +84,7 @@ public class TaskController {
     public String taskChoose(@ModelAttribute Task task, @ModelAttribute Job job, @ModelAttribute Result result,
                              @ModelAttribute("taskResults") TaskWrapper taskResults, Model model,
                              @RequestParam(name = "social", required = false) String social, HttpSession session) {
-        Image image = this.imageService.retrieveImage(Long.valueOf(this.cloudController.getTaskPolicy()));
-        System.out.println("id immagine:" + image.getId());
+
         /*String id = this.cloudController.getTaskPolicy();
         System.out.println(id);
         System.out.println(Long.valueOf(id));
@@ -98,6 +97,12 @@ public class TaskController {
             student = studentService.findUser(s);
         else
             student = studentFacadesocial.findUser(s);
+        if(this.cloudController.getTaskPolicy()==null) {
+            model.addAttribute("student", student);
+            return "users/goodBye";
+        }
+        Image image = this.imageService.retrieveImage(Long.valueOf(this.cloudController.getTaskPolicy()));
+        System.out.println("id immagine:" + image.getId());
         model.addAttribute("student", student);
         model.addAttribute("taskResults",taskResults);
         task = taskService.assignTaskId(student,image);
